@@ -11,7 +11,7 @@ export function getUserByPhone(phone_number) {
 export function getStudentByUserIdAndPhone(user_id, phone) {
     return new Student().where({ 'students.user_id': user_id, phone })
         .query(qb => {
-            qb.leftJoin('students_types', { 'student_types.key': 'students.student_type_id', 'student_types.user_id': 'students.user_id' })
+            qb.leftJoin('student_types', { 'student_types.key': 'students.student_type_id', 'student_types.user_id': 'students.user_id' })
             qb.select('students.*')
             qb.select({ student_type_name: 'student_types.name' })
         })
