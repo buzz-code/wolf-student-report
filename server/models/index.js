@@ -50,7 +50,7 @@ export const TeacherSalaryType = createModel('teacher_salary_types', {
     }
 })
 
-export const TeacherType = createModel('teacher_types', {
+export const StudentType = createModel('student_types', {
     user() {
         return this.belongsTo(User);
     }

@@ -11,7 +11,7 @@ const getFilters = () => [
   { field: 'name', label: 'שם', type: 'text', operator: 'like' },
 ];
 
-const TeacherTypesContainer = ({ entity, title }) => {
+const StudentTypesContainer = ({ entity, title }) => {
   const columns = useMemo(() => getColumns(), []);
   const filters = useMemo(() => getFilters(), []);
 
@@ -28,4 +28,4 @@ const TeacherTypesContainer = ({ entity, title }) => {
   );
 };
 
-export default TeacherTypesContainer;
+export default StudentTypesContainer;
