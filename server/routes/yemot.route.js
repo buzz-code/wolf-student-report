@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.route('/')
     .post((req, res) => {
+    console.log('got request', req.body);
         yemotCtrl.handleCall(req, res);
     })
 
