@@ -93,7 +93,10 @@ export class YemotCall extends CallBase {
                 await new AttReport().where({ id: this.existingReport.id }).destroy();
             }
 
-            await this.finishSavingReport();
+            await this.send(
+                this.id_list_message({ type: 'text', text: this.texts.dataWasSavedSuccessfully }),
+                this.hangup()
+            );
         }
         catch (e) {
             console.log('catch yemot exception', e);
@@ -227,12 +230,12 @@ export class YemotCall extends CallBase {
                 //הקישי שעת כניסה ב4 ספרות
                 await this.send(
                     this.read({ type: 'text', text: this.texts.askEnterHour },
-                        this.fields.enterHour, 'tap', { max: 1, min: 1, block_asterisk: true })
+                        this.fields.enterHour, 'tap', { max: 4, min: 4, block_asterisk: true })
                 );
                 //הקישי שעת יציאה ב4 ספרות
                 await this.send(
                     this.read({ type: 'text', text: this.texts.askExitHour },
-                        this.fields.exitHour, 'tap', { max: 1, min: 1, block_asterisk: true })
+                        this.fields.exitHour, 'tap', { max: 4, min: 4, block_asterisk: true })
                 );
             }
         }
@@ -242,12 +245,12 @@ export class YemotCall extends CallBase {
             //הקישי שעת כניסה ב4 ספרות
             await this.send(
                 this.read({ type: 'text', text: this.texts.askEnterHour },
-                    this.fields.enterHour, 'tap', { max: 1, min: 1, block_asterisk: true })
+                    this.fields.enterHour, 'tap', { max: 4, min: 4, block_asterisk: true })
             );
             //הקישי שעת יציאה ב4 ספרות
             await this.send(
                 this.read({ type: 'text', text: this.texts.askExitHour },
-                    this.fields.exitHour, 'tap', { max: 1, min: 1, block_asterisk: true })
+                    this.fields.exitHour, 'tap', { max: 4, min: 4, block_asterisk: true })
             );
             //האם מסרת שיעור? אם כן הקישי 1, אם לא הקישי 0
             await this.send(
