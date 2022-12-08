@@ -32,9 +32,12 @@ export class YemotCall extends CallBase {
     }
 
     async start() {
+        console.log('start call');
         await this.getTexts();
+        console.log('gt texts');
         try {
             this.student = await queryHelper.getStudentByUserIdAndPhone(this.user.id, this.params.ApiPhone);
+            console.log('got student')
             if (!this.student) {
                 await this.send(
                     this.id_list_message({ type: 'text', text: this.texts.phoneIsNotRecognizedInTheSystem }),
