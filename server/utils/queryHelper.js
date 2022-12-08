@@ -8,16 +8,20 @@ export function getUserByPhone(phone_number) {
         .then(res => res.toJSON());
 }
 
-export function getTeacherByUserIdAndPhone(user_id, phone) {
-    return new Teacher().where({ 'teachers.user_id': user_id, phone })
+export function getStudentByUserIdAndPhone(user_id, phone) {
+    return new Student().where({ 'students.user_id': user_id, phone })
         .query(qb => {
-            qb.leftJoin('teacher_types', { 'teacher_types.key': 'teachers.teacher_type_id', 'teacher_types.user_id': 'teachers.user_id' })
-            qb.select('teachers.*')
-            qb.select({ teacher_type_name: 'teacher_types.name' })
+            qb.leftJoin('students_types', { 'student_types.key': 'students.student_type_id', 'student_types.user_id': 'students.user_id' })
+            qb.select('students.*')
+            qb.select({ student_type_name: 'student_types.name' })
         })
         .fetch({ require: false })
         .then(res => res ? res.toJSON() : null);
 }
+
+
+
+
 
 export function getReportByTeacherIdAndToday(user_id, teacher_id, report_date) {
     return new AttReport().where({ user_id, teacher_id, report_date })
