@@ -1,6 +1,6 @@
 {
-  "name": "wolf-teacher-reports",
-  "displayName": "דיווחי מורות",
+  "name": "wolf-student-reports",
+  "displayName": "דיווחי תלמידות",
   "customDomain": true,
   "version": "1.0.0",
   "description": "MySQL, Express, React/Redux Boilerplate Application",
