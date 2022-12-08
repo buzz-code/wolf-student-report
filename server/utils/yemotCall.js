@@ -83,7 +83,7 @@ export class YemotCall extends CallBase {
         try {
             const attReport = {
                 user_id: this.user.id,
-                student_id: this.teacher.id,
+                student_id: this.student.id,
                 report_date: new Date(),
                 update_date: new Date(),
             };
