@@ -19,6 +19,8 @@ export async function handleCall(req, res) {
     }
 
     const callId = req.body.ApiCallId;
+    console.log('callId ', callId);
+    console.log('body ', req.body);
     const call = await CallListHandler.getCallById(callId, req.body, YemotCall);
 
     call.process(req.body, res);
