@@ -44,6 +44,9 @@ const getColumns = ({ students, studentTypes }) => [
   { field: 'trainingLessonType', title: 'סוג שיעור עבודה מעשית' },
   { field: 'trainingReadingType', title: 'סוג שיעור קריאה' },
   { field: 'wasLessonTeaching', title: 'האם מסרת שיעור' },
+  { field: 'phoneDiscussing', title: 'דיון טלפוני' },
+  { field: 'specialEdicationType', title: 'סוג דיווח ח"מ' },
+  { field: 'snoozlenDay', title: 'יום סנוזלן' },
 ];
 const getFilters = ({ students, studentTypes }) => [
   { field: 'students.name', label: 'תלמידה', type: 'text', operator: 'like' },

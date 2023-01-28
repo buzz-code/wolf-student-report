@@ -29,6 +29,9 @@ export class YemotCall extends CallBase {
         trainingLessonType: 'trainingLessonType',
         trainingReadingType: 'trainingReadingType',
         wasLessonTeaching: 'wasLessonTeaching',
+        phoneDiscussing: 'phoneDiscussing',
+        specialEdicationType: 'specialEdicationType',
+        snoozlenDay: 'snoozlenDay',
     }
 
     async start() {
@@ -74,6 +77,18 @@ export class YemotCall extends CallBase {
             case 4:
                 //הוראה מתקנת
                 await this.getTrainingReport();
+                break;
+            case 5:
+                //הומ שנה ב
+                await this.getTraining2Report();
+                break;
+            case 6:
+                //ח"מ שנה א'
+                await this.getSpecialEducationReport();
+                break;
+            case 7:
+                //ח"מ    שנה ב'
+                await this.getSpecialEducation2Report();
                 break;
             default:
                 await this.send(
@@ -259,6 +274,83 @@ export class YemotCall extends CallBase {
             await this.send(
                 this.read({ type: 'text', text: this.texts.askWasLessonTeaching },
                     this.fields.wasLessonTeaching, 'tap', { max: 1, min: 1, block_asterisk: true })
+            );
+        }
+    }
+
+    async getTraining2Report() {
+        //הקישי שעת כניסה ב4 ספרות
+        await this.send(
+            this.globalMsgIfExists(),
+            this.read({ type: 'text', text: this.texts.askEnterHour },
+                this.fields.enterHour, 'tap', { max: 4, min: 4, block_asterisk: true })
+        );
+        //הקישי שעת יציאה ב4 ספרות
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askExitHour },
+                this.fields.exitHour, 'tap', { max: 4, min: 4, block_asterisk: true })
+        );
+        //  אם השתתפת בדיון טלפוני עם המורה הקישי 1 אם לא הקישי 0
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askPhoneDiscussing },
+                this.fields.phoneDiscussing, 'tap', { max: 1, min: 1, block_asterisk: true })
+        );
+        //  אם מסרת שעור הקישי 1 אם לא הקישי 0
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askWasLessonTeaching },
+                this.fields.wasLessonTeaching, 'tap', { max: 1, min: 1, block_asterisk: true })
+        );
+    }
+
+    async getSpecialEducationReport() {
+        //הקישי שעת כניסה ב4 ספרות
+        await this.send(
+            this.globalMsgIfExists(),
+            this.read({ type: 'text', text: this.texts.askEnterHour },
+                this.fields.enterHour, 'tap', { max: 4, min: 4, block_asterisk: true })
+        );
+        //הקישי שעת יציאה ב4 ספרות
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askExitHour },
+                this.fields.exitHour, 'tap', { max: 4, min: 4, block_asterisk: true })
+        );
+        //  אם השתתפת בדיון טלפוני עם המורה הקישי 1 אם לא הקישי 0
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askPhoneDiscussing },
+                this.fields.phoneDiscussing, 'tap', { max: 1, min: 1, block_asterisk: true })
+        );
+        //  אם מסרת שעור הקישי 1 אם לא הקישי 0
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askWasLessonTeaching },
+                this.fields.wasLessonTeaching, 'tap', { max: 1, min: 1, block_asterisk: true })
+        );
+    }
+
+    async getSpecialEducation2Report() {
+        //לתיקוף צפיה הקישי 1 לתיקוף סנוזלן הקישי 2 
+        await this.send(
+            this.globalMsgIfExists(),
+            this.read({ type: 'text', text: this.texts.askSpecialEdicationType },
+                this.fields.specialEdicationType, 'tap', { max: 1, min: 1, block_asterisk: true })
+        );
+            //הקישי שעת כניסה ב4 ספרות
+            await this.send(
+                this.read({ type: 'text', text: this.texts.askEnterHour },
+                    this.fields.enterHour, 'tap', { max: 4, min: 4, block_asterisk: true })
+            );
+            //הקישי שעת יציאה ב4 ספרות
+            await this.send(
+                this.read({ type: 'text', text: this.texts.askExitHour },
+                    this.fields.exitHour, 'tap', { max: 4, min: 4, block_asterisk: true })
+            );
+        // צפיה
+        if (this.params[this.fields.trainingType] === '1') {
+        // סנוזלן
+        } else {
+            // הקישי מ-1 עד 5 את היום בשבוע של מפגש הסנוזלן
+            await this.send(
+                this.read({ type: 'text', text: this.texts.askSnoozlenDay },
+                    this.fields.snoozlenDay, 'tap', { max: 1, min: 1, block_asterisk: true })
             );
         }
     }
