@@ -106,7 +106,9 @@ export class YemotCall extends CallBase {
                 update_date: new Date(),
             };
             Object.values(this.fields).forEach(key => attReport[key] = this.params[key]);
+            console.log('before save', attReport);
             await new AttReport(attReport).save();
+            console.log('after save', attReport);
             if (this.existingReport) {
                 await new AttReport().where({ id: this.existingReport.id }).destroy();
             }
