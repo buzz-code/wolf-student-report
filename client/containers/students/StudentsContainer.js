@@ -18,7 +18,7 @@ const getColumns = ({ studentTypes }) => [
 ];
 const getFilters = () => [
   { field: 'tz', label: 'תעודת זהות', type: 'text', operator: 'like' },
-  { field: 'name', label: 'שם', type: 'text', operator: 'like' },
+  { field: 'students.name', label: 'שם', type: 'text', operator: 'like' },
   { field: 'phone', label: 'טלפון', type: 'text', operator: 'like' },
   { field: 'klass', label: 'כיתה', type: 'text', operator: 'like' },
   { field: 'student_types.name', label: 'סוג התלמידה', type: 'text', operator: 'like' },
