@@ -7,7 +7,7 @@ import { getPropsForAutoComplete } from '../../../common-modules/client/utils/fo
 
 const getColumns = ({ studentTypes }) => [
   { field: 'tz', title: 'תעודת זהות' },
-  { field: 'name', title: 'שם' },
+  { field: 'name', title: 'שם', columnOrder: 'students.name' },
   { field: 'phone', title: 'טלפון' },
   { field: 'klass', title: 'כיתה' },
   {
