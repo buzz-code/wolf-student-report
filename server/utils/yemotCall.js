@@ -113,10 +113,16 @@ export class YemotCall extends CallBase {
                 await new AttReport().where({ id: this.existingReport.id }).destroy();
             }
 
-            await this.send(
-                this.id_list_message({ type: 'text', text: this.texts.dataWasSavedSuccessfully }),
-                this.hangup()
-            );
+            this.globalMsg = this.texts.dataWasSavedSuccessfully;
+
+            if ([4].includes(this.student.student_type_id)) {
+                this.askForNewReport();
+            } else {
+                await this.send(
+                    this.globalMsgIfExists(),
+                    this.hangup()
+                );
+            }
         }
         catch (e) {
             console.log('catch yemot exception', e);
@@ -335,24 +341,40 @@ export class YemotCall extends CallBase {
             this.read({ type: 'text', text: this.texts.askSpecialEdicationType },
                 this.fields.specialEdicationType, 'tap', { max: 1, min: 1, block_asterisk: true })
         );
-            //הקישי שעת כניסה ב4 ספרות
-            await this.send(
-                this.read({ type: 'text', text: this.texts.askEnterHour },
-                    this.fields.enterHour, 'tap', { max: 4, min: 4, block_asterisk: true })
-            );
-            //הקישי שעת יציאה ב4 ספרות
-            await this.send(
-                this.read({ type: 'text', text: this.texts.askExitHour },
-                    this.fields.exitHour, 'tap', { max: 4, min: 4, block_asterisk: true })
-            );
+        //הקישי שעת כניסה ב4 ספרות
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askEnterHour },
+                this.fields.enterHour, 'tap', { max: 4, min: 4, block_asterisk: true })
+        );
+        //הקישי שעת יציאה ב4 ספרות
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askExitHour },
+                this.fields.exitHour, 'tap', { max: 4, min: 4, block_asterisk: true })
+        );
         // צפיה
         if (this.params[this.fields.trainingType] === '1') {
-        // סנוזלן
+            // סנוזלן
         } else {
             // הקישי מ-1 עד 5 את היום בשבוע של מפגש הסנוזלן
             await this.send(
                 this.read({ type: 'text', text: this.texts.askSnoozlenDay },
                     this.fields.snoozlenDay, 'tap', { max: 1, min: 1, block_asterisk: true })
+            );
+        }
+    }
+
+
+    async askForNewReport() {
+        await this.send(
+            this.globalMsgIfExists(),
+            this.read({ type: 'text', text: this.texts.askIsNewReport },
+                'isNewReport', 'tap', { max: 1, min: 1, block_asterisk: true })
+        );
+        if (this.params.isNewReport == 1) {
+            this.getReportAndSave();
+        } else {
+            this.send(
+                this.hangup(),
             );
         }
     }
