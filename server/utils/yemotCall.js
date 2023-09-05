@@ -16,15 +16,6 @@ export class YemotCall extends CallBase {
         kindergartenActivity: 'kindergartenActivity',
         kubaseTime: 'kubaseTime',
         fluteTime: 'fluteTime',
-        exercizeType: 'exercizeType',
-        exercizeHeart: 'exercizeHeart',
-        exercizeStomach: 'exercizeStomach',
-        exercizeBreast: 'exercizeBreast',
-        exercizeLegs: 'exercizeLegs',
-        exercizePlank: 'exercizePlank',
-        exercizeLaying: 'exercizeLaying',
-        exercizeJump: 'exercizeJump',
-        exercizeShortRun: 'exercizeShortRun',
         trainingType: 'trainingType',
         trainingLessonType: 'trainingLessonType',
         trainingReadingType: 'trainingReadingType',
@@ -173,59 +164,7 @@ export class YemotCall extends CallBase {
     }
 
     async getExerciseReport() {
-        //לאימון כללי הקישי 1 לאימון ספציפי הקישי 2
-        await this.send(
-            this.globalMsgIfExists(),
-            this.read({ type: 'text', text: this.texts.askExercizeType },
-                this.fields.exercizeType, 'tap', { max: 1, min: 1, block_asterisk: true })
-        );
-        //אימון כללי
-        if (this.params[this.fields.exercizeType] === '1') {
-            //אם התאמנת על סיבולת לב ריאה הקישי 1 אם לא הקישי 0 
-            await this.send(
-                this.read({ type: 'text', text: this.texts.askExercizeHeart },
-                    this.fields.exercizeHeart, 'tap', { max: 1, min: 1, block_asterisk: true })
-            );
-            //אם התאמנת על שרירי בטן הקישי 1 אם לא הקישי 0
-            await this.send(
-                this.read({ type: 'text', text: this.texts.askExercizeStomach },
-                    this.fields.exercizeStomach, 'tap', { max: 1, min: 1, block_asterisk: true })
-            );
-            //אם התאמנת על שרירי חזה וזרועות הקישי 1 אם לא הקישי 0
-            await this.send(
-                this.read({ type: 'text', text: this.texts.askExercizeBreast },
-                    this.fields.exercizeBreast, 'tap', { max: 1, min: 1, block_asterisk: true })
-            );
-            //אם התאמנת על שרירי רגליים הקישי 1 אם לא הקישי 0
-            await this.send(
-                this.read({ type: 'text', text: this.texts.askExercizeLegs },
-                    this.fields.exercizeLegs, 'tap', { max: 1, min: 1, block_asterisk: true })
-            );
-        }
-        //אימון ספציפי
-        // if (this.params[this.fields.exercizeType] === '2')
-        else {
-            //הקישי מ1 עד 100 את יחידות האימון  בפלאנק
-            await this.send(
-                this.read({ type: 'text', text: this.texts.askExercizePlank },
-                    this.fields.exercizePlank, 'tap', { max: 4, min: 1, block_asterisk: true })
-            );
-            //הקישי מ1 עד 100 את יחידות האימון  בשכיבות שמיכה
-            await this.send(
-                this.read({ type: 'text', text: this.texts.askExercizeLaying },
-                    this.fields.exercizeLaying, 'tap', { max: 4, min: 1, block_asterisk: true })
-            );
-            //הקישי מ1 עד 100 את יחידות האימון  בקפיצות בחבל
-            await this.send(
-                this.read({ type: 'text', text: this.texts.askExercizeJump },
-                    this.fields.exercizeJump, 'tap', { max: 4, min: 1, block_asterisk: true })
-            );
-            //הקישי מ1 עד 100 את יחידות האימון  בריצה קצרה
-            await this.send(
-                this.read({ type: 'text', text: this.texts.askExercizeShortRun },
-                    this.fields.exercizeShortRun, 'tap', { max: 4, min: 1, block_asterisk: true })
-            );
-        }
+        // todo: change questions
     }
 
     async getTrainingReport() {
