@@ -16,6 +16,12 @@ export class YemotCall extends CallBase {
         kindergartenActivity: 'kindergartenActivity',
         kubaseTime: 'kubaseTime',
         fluteTime: 'fluteTime',
+        exercizeTime: 'exercizeTime',
+        exercize1: 'exercize1',
+        exercize2: 'exercize2',
+        exercize3: 'exercize3',
+        exercize4: 'exercize4',
+        exercize5: 'exercize5',
         trainingType: 'trainingType',
         trainingLessonType: 'trainingLessonType',
         trainingReadingType: 'trainingReadingType',
@@ -164,7 +170,49 @@ export class YemotCall extends CallBase {
     }
 
     async getExerciseReport() {
-        // todo: change questions
+        // "כמה דקות התעמלת היום?" - עד 2 ספרות
+        await this.send(
+            this.globalMsgIfExists(),
+            this.read({ type: 'text', text: this.texts.askExercizeTime },
+                this.fields.exercizeTime, 'tap', { min: 1, max: 2, block_asterisk: true })
+        );
+        // "תרגיל 1 האם ביצעת? הקישי אחת אם לא הקישי 0"
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askExercize1 },
+                this.fields.exercize1, 'tap', { min: 1, max: 1, block_asterisk: true, digits_allowed: [0, 1] })
+        );
+        // "תרגיל 2 האם ביצעת? הקישי אחת אם לא הקישי 0"
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askExercize2 },
+                this.fields.exercize2, 'tap', { min: 1, max: 1, block_asterisk: true, digits_allowed: [0, 1] })
+        );
+        // "תרגיל 3 האם ביצעת? הקישי אחת אם לא הקישי 0"
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askExercize3 },
+                this.fields.exercize3, 'tap', { min: 1, max: 1, block_asterisk: true, digits_allowed: [0, 1] })
+        );
+        // "תרגיל 4 האם ביצעת? הקישי אחת אם לא הקישי 0"
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askExercize4 },
+                this.fields.exercize4, 'tap', { min: 1, max: 1, block_asterisk: true, digits_allowed: [0, 1] })
+        );
+        // "תרגיל 5 האם ביצעת? הקישי אחת אם לא הקישי 0"
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askExercize5 },
+                this.fields.exercize5, 'tap', { min: 1, max: 1, block_asterisk: true, digits_allowed: [0, 1] })
+        );
+
+        // on end - ask student to confirm what she did
+        const confirmationMessage = format(this.texts.askExercizeReportConfirm, this.fields.exercizeTime, this.fields.exercize1, this.fields.exercize2, this.fields.exercize3, this.fields.exercize4, this.fields.exercize5);
+        await this.send(
+            this.read({ type: 'text', text: confirmationMessage },
+                this.fields.confirmReport, 'tap', { min: 1, max: 1, block_asterisk: true, digits_allowed: [0, 1] })
+        );
+        if (this.params[this.fields.confirmReport] === '0') {
+            this.globalMsg = this.texts.notConfirmedAskingAgain;
+            return this.getExerciseReport();
+        }
+        delete this.params[this.fields.confirmReport];
     }
 
     async getTrainingReport() {
