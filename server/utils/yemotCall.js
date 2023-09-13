@@ -203,7 +203,7 @@ export class YemotCall extends CallBase {
         );
 
         // on end - ask student to confirm what she did
-        const confirmationMessage = format(this.texts.askExercizeReportConfirm, this.fields.exercizeTime, this.fields.exercize1, this.fields.exercize2, this.fields.exercize3, this.fields.exercize4, this.fields.exercize5);
+        const confirmationMessage = format(this.texts.askExercizeReportConfirm, this.params[this.fields.exercizeTime], this.params[this.fields.exercize1], this.params[this.fields.exercize2], this.params[this.fields.exercize3], this.params[this.fields.exercize4], this.params[this.fields.exercize5]);
         await this.send(
             this.read({ type: 'text', text: confirmationMessage },
                 this.fields.confirmReport, 'tap', { min: 1, max: 1, block_asterisk: true, digits_allowed: [0, 1] })
