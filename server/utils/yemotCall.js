@@ -196,11 +196,11 @@ export class YemotCall extends CallBase {
             this.read({ type: 'text', text: this.texts.askExercize4 },
                 this.fields.exercize4, 'tap', { min: 1, max: 1, block_asterisk: true, digits_allowed: [0, 1] })
         );
-        // "תרגיל 5 האם ביצעת? הקישי אחת אם לא הקישי 0"
-        await this.send(
-            this.read({ type: 'text', text: this.texts.askExercize5 },
-                this.fields.exercize5, 'tap', { min: 1, max: 1, block_asterisk: true, digits_allowed: [0, 1] })
-        );
+        // // "תרגיל 5 האם ביצעת? הקישי אחת אם לא הקישי 0"
+        // await this.send(
+        //     this.read({ type: 'text', text: this.texts.askExercize5 },
+        //         this.fields.exercize5, 'tap', { min: 1, max: 1, block_asterisk: true, digits_allowed: [0, 1] })
+        // );
 
         // on end - ask student to confirm what she did
         const confirmationMessage = format(this.texts.askExercizeReportConfirm, this.params[this.fields.exercizeTime], this.params[this.fields.exercize1], this.params[this.fields.exercize2], this.params[this.fields.exercize3], this.params[this.fields.exercize4], this.params[this.fields.exercize5]);
