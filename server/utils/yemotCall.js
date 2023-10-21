@@ -356,7 +356,7 @@ export class YemotCall extends CallBase {
         }
     }
 
-    async getExcellencyReport(){
+    async getExcellencyReport() {
         // עם 2 שאלות - לשאול סתם - נוכחות ושיעורי בית
         await this.send(
             this.read({ type: 'text', text: this.texts.askExcellencyAtt },
@@ -368,6 +368,8 @@ export class YemotCall extends CallBase {
         );
     }
 
+
+    // helpers
     async askForNewReport() {
         await this.send(
             this.globalMsgIfExists(),
