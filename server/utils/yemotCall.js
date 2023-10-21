@@ -29,6 +29,8 @@ export class YemotCall extends CallBase {
         phoneDiscussing: 'phoneDiscussing',
         specialEdicationType: 'specialEdicationType',
         snoozlenDay: 'snoozlenDay',
+        excellencyAtt: 'excellencyAtt',
+        excellencyHomework: 'excellencyHomework',
     }
 
     async start() {
@@ -86,6 +88,10 @@ export class YemotCall extends CallBase {
             case 7:
                 //ח"מ    שנה ב'
                 await this.getSpecialEducation2Report();
+                break;
+            case 8:
+                // מצוינות בהוראה
+                await this.getExcellencyReport();
                 break;
             default:
                 await this.send(
@@ -350,6 +356,17 @@ export class YemotCall extends CallBase {
         }
     }
 
+    async getExcellencyReport(){
+        // עם 2 שאלות - לשאול סתם - נוכחות ושיעורי בית
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askExcellencyAtt },
+                this.fields.excellencyAtt, 'tap', { max: 1, min: 1, block_asterisk: true })
+        );
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askExcellencyHomework },
+                this.fields.excellencyHomework, 'tap', { max: 1, min: 1, block_asterisk: true })
+        );
+    }
 
     async askForNewReport() {
         await this.send(

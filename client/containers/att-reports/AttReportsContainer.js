@@ -44,6 +44,8 @@ const getColumns = ({ students, studentTypes }) => [
   { field: 'phoneDiscussing', title: 'דיון טלפוני' },
   { field: 'specialEdicationType', title: 'סוג דיווח ח"מ' },
   { field: 'snoozlenDay', title: 'יום סנוזלן' },
+  { field: 'excellencyAtt', title: 'מצוינות - נוכחות' },
+  { field: 'excellencyHomework', title: 'מצוינות - ש"ב' },
 ];
 const getFilters = ({ students, studentTypes }) => [
   { field: 'students.name', label: 'תלמידה', type: 'text', operator: 'like' },
