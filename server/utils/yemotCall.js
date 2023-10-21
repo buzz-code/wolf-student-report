@@ -101,6 +101,8 @@ export class YemotCall extends CallBase {
                 break;
         }
 
+        await this.confirmReport();
+
         try {
             const attReport = {
                 user_id: this.user.id,
@@ -207,18 +209,6 @@ export class YemotCall extends CallBase {
         //     this.read({ type: 'text', text: this.texts.askExercize5 },
         //         this.fields.exercize5, 'tap', { min: 1, max: 1, block_asterisk: true, digits_allowed: [0, 1] })
         // );
-
-        // on end - ask student to confirm what she did
-        const confirmationMessage = format(this.texts.askExercizeReportConfirm, this.params[this.fields.exercizeTime], this.params[this.fields.exercize1], this.params[this.fields.exercize2], this.params[this.fields.exercize3], this.params[this.fields.exercize4], this.params[this.fields.exercize5]);
-        await this.send(
-            this.read({ type: 'text', text: confirmationMessage },
-                this.fields.confirmReport, 'tap', { min: 1, max: 1, block_asterisk: true, digits_allowed: [0, 1] })
-        );
-        if (this.params[this.fields.confirmReport] === '0') {
-            this.globalMsg = this.texts.notConfirmedAskingAgain;
-            return this.getExerciseReport();
-        }
-        delete this.params[this.fields.confirmReport];
     }
 
     async getTrainingReport() {
@@ -382,6 +372,53 @@ export class YemotCall extends CallBase {
             this.send(
                 this.hangup(),
             );
+        }
+    }
+
+    async confirmReport() {
+        // on end - ask student to confirm what she did
+        const confirmationMessage = this.getConfirmationMessage();
+        if (!confirmationMessage) {
+            return;
+        }
+
+        await this.send(
+            this.read({ type: 'text', text: confirmationMessage },
+                this.fields.confirmReport, 'tap', { min: 1, max: 1, block_asterisk: true, digits_allowed: [0, 1] })
+        );
+        if (this.params[this.fields.confirmReport] === '0') {
+            this.globalMsg = this.texts.notConfirmedAskingAgain;
+            return this.getExerciseReport();
+        }
+        delete this.params[this.fields.confirmReport];
+    }
+
+    getConfirmationMessage() {
+        switch (this.student.student_type_id) {
+            case 1:
+                //גננות
+                break;
+            case 2:
+                //מוזיקה
+                break;
+            case 3:
+                //התעמלות
+                return format(this.texts.askExercizeReportConfirm, this.params[this.fields.exercizeTime], this.params[this.fields.exercize1], this.params[this.fields.exercize2], this.params[this.fields.exercize3], this.params[this.fields.exercize4], this.params[this.fields.exercize5]);
+            case 4:
+                //הוראה מתקנת
+                break;
+            case 5:
+                //הומ שנה ב
+                break;
+            case 6:
+                //ח"מ שנה א'
+                break;
+            case 7:
+                //ח"מ    שנה ב'
+                break;
+            case 8:
+                // מצוינות בהוראה
+                break;
         }
     }
 }
