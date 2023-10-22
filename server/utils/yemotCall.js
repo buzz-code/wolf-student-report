@@ -33,6 +33,9 @@ export class YemotCall extends CallBase {
         excellencyHomework: 'excellencyHomework',
         lessonLengthHavana: 'lessonLengthHavana',
         lessonLengthKtiv: 'lessonLengthKtiv',
+        haknayaLessons: 'haknayaLessons',
+        tikunLessons: 'tikunLessons',
+        mathLessons: 'mathLessons',
     }
 
     async start() {
@@ -122,7 +125,7 @@ export class YemotCall extends CallBase {
 
             this.globalMsg = this.texts.dataWasSavedSuccessfully;
 
-            if ([4].includes(this.student.student_type_id)) {
+            if ([].includes(this.student.student_type_id)) {
                 this.askForNewReport();
             } else {
                 await this.send(
@@ -214,61 +217,23 @@ export class YemotCall extends CallBase {
     }
 
     async getTrainingReport() {
-        //לתיקוף שעורי עבודה מעשית הקישי 1, לתיקוף נוכחות בצפיה הקישי 2
+        //כמה שיעורי הקנית קריאה מסרת היום?
         await this.send(
             this.globalMsgIfExists(),
-            this.read({ type: 'text', text: this.texts.askTrainingType },
-                this.fields.trainingType, 'tap', { max: 1, min: 1, block_asterisk: true })
+            this.read({ type: 'text', text: this.texts.askHaknayaLessons },
+                this.fields.haknayaLessons, 'tap', { max: 1, min: 1, block_asterisk: true })
         );
-        //עבודה מעשית
-        if (this.params[this.fields.trainingType] === '1') {
-            //לשיעור בקריאה הקישי 1, לשיעור בחשבון הקישי 2
-            await this.send(
-                this.read({ type: 'text', text: this.texts.askTrainingLessonType },
-                    this.fields.trainingLessonType, 'tap', { max: 1, min: 1, block_asterisk: true })
-            );
-            //קריאה
-            if (this.params[this.fields.trainingLessonType] === '1') {
-                //לשיעור הקניה הקישי 1, לשיעור תיקון קריאה הקישי 2
-                await this.send(
-                    this.read({ type: 'text', text: this.texts.askTrainingReadingType },
-                        this.fields.trainingReadingType, 'tap', { max: 1, min: 1, block_asterisk: true })
-                );
-            }
-            //חשבון
-            // if (this.params[this.fields.trainingLessonType] === '2')
-            else {
-                //הקישי שעת כניסה ב4 ספרות
-                await this.send(
-                    this.read({ type: 'text', text: this.texts.askEnterHour },
-                        this.fields.enterHour, 'tap', { max: 4, min: 4, block_asterisk: true })
-                );
-                //הקישי שעת יציאה ב4 ספרות
-                await this.send(
-                    this.read({ type: 'text', text: this.texts.askExitHour },
-                        this.fields.exitHour, 'tap', { max: 4, min: 4, block_asterisk: true })
-                );
-            }
-        }
-        //נוכחות בצפיה
-        // if(this.params[this.fields.trainingType] === '2')
-        else {
-            //הקישי שעת כניסה ב4 ספרות
-            await this.send(
-                this.read({ type: 'text', text: this.texts.askEnterHour },
-                    this.fields.enterHour, 'tap', { max: 4, min: 4, block_asterisk: true })
-            );
-            //הקישי שעת יציאה ב4 ספרות
-            await this.send(
-                this.read({ type: 'text', text: this.texts.askExitHour },
-                    this.fields.exitHour, 'tap', { max: 4, min: 4, block_asterisk: true })
-            );
-            //האם מסרת שיעור? אם כן הקישי 1, אם לא הקישי 0
-            await this.send(
-                this.read({ type: 'text', text: this.texts.askWasLessonTeaching },
-                    this.fields.wasLessonTeaching, 'tap', { max: 1, min: 1, block_asterisk: true })
-            );
-        }
+        //כמה שיעורי תיקון קריאה מסרת היום
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askTikunLessons },
+                this.fields.tikunLessons, 'tap', { max: 1, min: 1, block_asterisk: true })
+        );
+        //כמה שיעורי חשבון מסרת היום
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askMathLessons },
+                this.fields.mathLessons, 'tap', { max: 1, min: 1, block_asterisk: true })
+        );
+        //סך הכל מסרת 2 שיעורים בקריאה ו3 שיעורים בחשבון, לאישור הקישי 1
     }
 
     async getTraining2Report() {
@@ -427,7 +392,8 @@ export class YemotCall extends CallBase {
                 return format(this.texts.askExercizeReportConfirm, this.params[this.fields.exercizeTime], this.params[this.fields.exercize1], this.params[this.fields.exercize2], this.params[this.fields.exercize3], this.params[this.fields.exercize4], this.params[this.fields.exercize5]);
             case 4:
                 //הוראה מתקנת
-                break;
+                const readingLessons = parseInt(this.params[this.fields.haknayaLessons]) + parseInt(this.params[this.fields.tikunLessons]);
+                return format(this.texts.askTrainingReportConfirm, readingLessons, this.params[this.fields.mathLessons]);
             case 5:
                 //הומ שנה ב
                 //עבודה מעשית
