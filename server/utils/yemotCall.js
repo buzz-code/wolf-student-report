@@ -31,6 +31,8 @@ export class YemotCall extends CallBase {
         snoozlenDay: 'snoozlenDay',
         excellencyAtt: 'excellencyAtt',
         excellencyHomework: 'excellencyHomework',
+        lessonLengthHavana: 'lessonLengthHavana',
+        lessonLengthKtiv: 'lessonLengthKtiv',
     }
 
     async start() {
@@ -270,27 +272,46 @@ export class YemotCall extends CallBase {
     }
 
     async getTraining2Report() {
-        //הקישי שעת כניסה ב4 ספרות
+        //לתיקוף שעורי עבודה מעשית הקישי 1, לתיקוף פרטני הקישי 2
         await this.send(
             this.globalMsgIfExists(),
-            this.read({ type: 'text', text: this.texts.askEnterHour },
-                this.fields.enterHour, 'tap', { max: 4, min: 4, block_asterisk: true })
+            this.read({ type: 'text', text: this.texts.askTrainingTypeSecondYear },
+                this.fields.trainingType, 'tap', { max: 1, min: 1, block_asterisk: true })
         );
-        //הקישי שעת יציאה ב4 ספרות
-        await this.send(
-            this.read({ type: 'text', text: this.texts.askExitHour },
-                this.fields.exitHour, 'tap', { max: 4, min: 4, block_asterisk: true })
-        );
-        //  אם השתתפת בדיון טלפוני עם המורה הקישי 1 אם לא הקישי 0
-        await this.send(
-            this.read({ type: 'text', text: this.texts.askPhoneDiscussing },
-                this.fields.phoneDiscussing, 'tap', { max: 1, min: 1, block_asterisk: true })
-        );
-        //  אם מסרת שעור הקישי 1 אם לא הקישי 0
-        await this.send(
-            this.read({ type: 'text', text: this.texts.askWasLessonTeaching },
-                this.fields.wasLessonTeaching, 'tap', { max: 1, min: 1, block_asterisk: true })
-        );
+        //עבודה מעשית
+        if (this.params[this.fields.trainingType] === '1') {
+            //הקישי שעת כניסה ב4 ספרות
+            await this.send(
+                this.read({ type: 'text', text: this.texts.askEnterHour },
+                    this.fields.enterHour, 'tap', { max: 4, min: 4, block_asterisk: true })
+            );
+            //הקישי שעת יציאה ב4 ספרות
+            await this.send(
+                this.read({ type: 'text', text: this.texts.askExitHour },
+                    this.fields.exitHour, 'tap', { max: 4, min: 4, block_asterisk: true })
+            );
+            //האם מסרת שיעור? אם כן הקישי 1, אם לא הקישי 0
+            await this.send(
+                this.read({ type: 'text', text: this.texts.askWasLessonTeaching },
+                    this.fields.wasLessonTeaching, 'tap', { max: 1, min: 1, block_asterisk: true })
+            );
+            // לשמוע סיכום
+        }
+        //פרטני
+        // if(this.params[this.fields.trainingType] === '2')
+        else {
+            // הקישי את אורך השיעור בהבנת הנקרא
+            await this.send(
+                this.read({ type: 'text', text: this.texts.askLessonLengthHavana },
+                    this.fields.lessonLengthHavana, 'tap', { max: 2, min: 1, block_asterisk: true })
+            );
+            // הקישי את אורך השיעור בכתיב
+            await this.send(
+                this.read({ type: 'text', text: this.texts.askLessonLengthKtiv },
+                    this.fields.lessonLengthKtiv, 'tap', { max: 2, min: 1, block_asterisk: true })
+            );
+            // לשמוע סיכום
+        }
     }
 
     async getSpecialEducationReport() {
@@ -409,7 +430,15 @@ export class YemotCall extends CallBase {
                 break;
             case 5:
                 //הומ שנה ב
-                break;
+                //עבודה מעשית
+                if (this.params[this.fields.trainingType] === '1') {
+                    return format(this.texts.askTraining21ReportConfirm, this.params[this.fields.enterHour], this.params[this.fields.exitHour], this.params[this.fields.wasLessonTeaching]);
+                }
+                //פרטני
+                // if(this.params[this.fields.trainingType] === '2')
+                else {
+                    return format(this.texts.askTraining22ReportConfirm, this.params[this.fields.lessonLengthHavana], this.params[this.fields.lessonLengthKtiv]);
+                }
             case 6:
                 //ח"מ שנה א'
                 break;

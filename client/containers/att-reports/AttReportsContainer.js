@@ -41,6 +41,8 @@ const getColumns = ({ students, studentTypes }) => [
   { field: 'trainingLessonType', title: 'סוג שיעור עבודה מעשית' },
   { field: 'trainingReadingType', title: 'סוג שיעור קריאה' },
   { field: 'wasLessonTeaching', title: 'האם מסרת שיעור' },
+  { field: 'lessonLengthHavana', title: 'אורך שיעור הבנת הנקרא' },
+  { field: 'lessonLengthKtiv', title: 'אורך שיעור כתיב' },
   { field: 'phoneDiscussing', title: 'דיון טלפוני' },
   { field: 'specialEdicationType', title: 'סוג דיווח ח"מ' },
   { field: 'snoozlenDay', title: 'יום סנוזלן' },
