@@ -36,7 +36,7 @@ const getColumns = ({ students, studentTypes }) => [
   { field: 'exercize2', title: 'תרגיל 2' },
   { field: 'exercize3', title: 'תרגיל 3' },
   { field: 'exercize4', title: 'תרגיל 4' },
-  { field: 'exercize5', title: 'תרגיל 5' },
+  // { field: 'exercize5', title: 'תרגיל 5' },
   { field: 'haknayaLessons', title: 'שיעור הקנית קריאה' },
   { field: 'tikunLessons', title: 'שיעורי תיקון קריאה' },
   { field: 'mathLessons', title: 'שיעור חשבון' },
