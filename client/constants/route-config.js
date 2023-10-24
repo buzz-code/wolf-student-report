@@ -48,6 +48,7 @@ import AttReports5Container from '../containers/att-reports/AttReports5Container
 import AttReports6Container from '../containers/att-reports/AttReports6Container';
 import AttReports7Container from '../containers/att-reports/AttReports7Container';
 import AttReports8Container from '../containers/att-reports/AttReports8Container';
+import ExcellencyDatesContainer from '../containers/excellency-dates/ExcellencyDatesContainer';
 
 export default [
   [
@@ -103,6 +104,13 @@ export default [
           icon: ChatIcon,
           title: titles.TEXTS,
           props: { entity: entities.TEXTS, title: titles.TEXTS },
+        },
+        {
+          path: '/excellency-dates',
+          component: ExcellencyDatesContainer,
+          icon: CalendarTodayIcon,
+          title: titles.EXCELLENCY_DATE,
+          props: { entity: entities.EXCELLENCY_DATE, title: titles.EXCELLENCY_DATE },
         },
         // {
         //   path: '/questions',

@@ -13,6 +13,7 @@ import dashboardRoutes from './dashboard.route';
 import questionRoutes from './question.route';
 import answerRoutes from './answer.route';
 import workingDateRoutes from './working-date.route';
+import excellencyDateRoutes from './excellency-date.route';
 
 const router = express.Router();
 
@@ -30,5 +31,6 @@ router.use('/dashboard', require('./dashboard.route').default);
 router.use('/questions', require('./question.route').default);
 router.use('/answers', require('./answer.route').default);
 router.use('/working-dates', require('./working-date.route').default);
+router.use('/excellency-dates', require('./excellency-date.route').default);
 
 export default router;

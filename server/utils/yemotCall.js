@@ -333,6 +333,14 @@ export class YemotCall extends CallBase {
     }
 
     async getExcellencyReport() {
+        const isValidExcellencyReportDate = queryHelper.validateExcellencyReportDate(this.user.id, this.student.id);
+        if (!isValidExcellencyReportDate) {
+            return this.send(
+                this.id_list_message({ type: 'text', text: this.texts.excellencyReportDateIsInvalid }),
+                this.hangup()
+            );
+        }
+
         // עם 2 שאלות - לשאול סתם - נוכחות ושיעורי בית
         await this.send(
             this.read({ type: 'text', text: this.texts.askExcellencyAtt },

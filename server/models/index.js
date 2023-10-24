@@ -73,3 +73,9 @@ export const WorkingDate = createModel('working_dates', {
         return this.belongsTo(User);
     }
 })
+
+export const ExcellencyDate = createModel('excellency_dates', {
+    user() {
+        return this.belongsTo(User);
+    }
+})

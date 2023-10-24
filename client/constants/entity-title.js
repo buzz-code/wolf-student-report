@@ -25,3 +25,4 @@ export const ATT_REPORTS_5 = 'תיקופי הוראה מתקנת ב';
 export const ATT_REPORTS_6 = 'תיקופי חינוך מיוחד א';
 export const ATT_REPORTS_7 = 'תיקופי חינוך מיוחד ב';
 export const ATT_REPORTS_8 = 'תיקופי מצוינות בהוראה';
+export const EXCELLENCY_DATE = 'תאריכי מצוינות בהוראה';

@@ -1,4 +1,4 @@
-import { Teacher, AttReport, User, Question, Answer, WorkingDate, Student, Price } from "../models";
+import { Teacher, AttReport, User, Question, Answer, WorkingDate, Student, Price, ExcellencyDate } from "../models";
 
 import moment from 'moment';
 
@@ -134,4 +134,20 @@ export async function getPrices(user_id) {
         .then(result => result.toJSON());
     const dict = data.reduce((a, b) => ({ ...a, [b.key]: b.price }), {});
     return dict;
+}
+
+export async function validateExcellencyReportDate(user_id, student_id) {
+    const report_date = moment().format('YYYY-MM-DD');
+    const date = await new ExcellencyDate()
+        .where({ user_id, report_date })
+        .fetch({ require: false })
+        .then(res => res ? res.toJSON() : null);
+    if (!date) {
+        return false;
+    }
+    const existing = await new AttReport()
+        .where({ user_id, student_id, report_date })
+        .fetch({ require: false })
+        .then(res => res ? res.toJSON() : null);
+    return !existing;
 }
