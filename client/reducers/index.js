@@ -24,6 +24,14 @@ import {
   WORKING_DATES,
   KINDERGARTEN_REPORTS,
   SPECIAL_EDUCATION_REPORTS,
+  ATT_REPORTS_1,
+  ATT_REPORTS_2,
+  ATT_REPORTS_3,
+  ATT_REPORTS_4,
+  ATT_REPORTS_5,
+  ATT_REPORTS_6,
+  ATT_REPORTS_7,
+  ATT_REPORTS_8,
 } from '../constants/entity';
 
 const appReducer = (history) =>
@@ -49,6 +57,14 @@ const appReducer = (history) =>
     [QUESTIONS]: crudReducer(QUESTIONS),
     [ANSWERS]: crudReducer(ANSWERS),
     [WORKING_DATES]: crudReducer(WORKING_DATES),
+    [ATT_REPORTS_1]: crudReducer(ATT_REPORTS_1),
+    [ATT_REPORTS_2]: crudReducer(ATT_REPORTS_2),
+    [ATT_REPORTS_3]: crudReducer(ATT_REPORTS_3),
+    [ATT_REPORTS_4]: crudReducer(ATT_REPORTS_4),
+    [ATT_REPORTS_5]: crudReducer(ATT_REPORTS_5),
+    [ATT_REPORTS_6]: crudReducer(ATT_REPORTS_6),
+    [ATT_REPORTS_7]: crudReducer(ATT_REPORTS_7),
+    [ATT_REPORTS_8]: crudReducer(ATT_REPORTS_8),
   });
 
 const rootReducer = (state, action) => {

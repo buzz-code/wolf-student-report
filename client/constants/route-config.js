@@ -40,6 +40,14 @@ import SpecialEducationReports from '../containers/unused/SpecialEducationReport
 import KindergartenReports from '../containers/unused/KindergartenReportsContainer';
 import ExcelImport from '../containers/excel-import/ExcelImportContainer';
 import WorkingDates from '../containers/working-dates/WorkingDatesContainer';
+import AttReports1Container from '../containers/att-reports/AttReports1Container';
+import AttReports2Container from '../containers/att-reports/AttReports2Container';
+import AttReports3Container from '../containers/att-reports/AttReports3Container';
+import AttReports4Container from '../containers/att-reports/AttReports4Container';
+import AttReports5Container from '../containers/att-reports/AttReports5Container';
+import AttReports6Container from '../containers/att-reports/AttReports6Container';
+import AttReports7Container from '../containers/att-reports/AttReports7Container';
+import AttReports8Container from '../containers/att-reports/AttReports8Container';
 
 export default [
   [
@@ -125,6 +133,62 @@ export default [
           icon: StorageIcon,
           title: titles.ATT_REPORTS,
           props: { entity: entities.ATT_REPORTS, title: titles.ATT_REPORTS },
+        },
+        {
+          path: '/att-reports-1',
+          component: AttReports1Container,
+          icon: StorageIcon,
+          title: titles.ATT_REPORTS_1,
+          props: { entity: entities.ATT_REPORTS_1, title: titles.ATT_REPORTS_1 },
+        },
+        {
+          path: '/att-reports-2',
+          component: AttReports2Container,
+          icon: StorageIcon,
+          title: titles.ATT_REPORTS_2,
+          props: { entity: entities.ATT_REPORTS_2, title: titles.ATT_REPORTS_2 },
+        },
+        {
+          path: '/att-reports-3',
+          component: AttReports3Container,
+          icon: StorageIcon,
+          title: titles.ATT_REPORTS_3,
+          props: { entity: entities.ATT_REPORTS_3, title: titles.ATT_REPORTS_3 },
+        },
+        {
+          path: '/att-reports-4',
+          component: AttReports4Container,
+          icon: StorageIcon,
+          title: titles.ATT_REPORTS_4,
+          props: { entity: entities.ATT_REPORTS_4, title: titles.ATT_REPORTS_4 },
+        },
+        {
+          path: '/att-reports-5',
+          component: AttReports5Container,
+          icon: StorageIcon,
+          title: titles.ATT_REPORTS_5,
+          props: { entity: entities.ATT_REPORTS_5, title: titles.ATT_REPORTS_5 },
+        },
+        {
+          path: '/att-reports-6',
+          component: AttReports6Container,
+          icon: StorageIcon,
+          title: titles.ATT_REPORTS_6,
+          props: { entity: entities.ATT_REPORTS_6, title: titles.ATT_REPORTS_6 },
+        },
+        {
+          path: '/att-reports-7',
+          component: AttReports7Container,
+          icon: StorageIcon,
+          title: titles.ATT_REPORTS_7,
+          props: { entity: entities.ATT_REPORTS_7, title: titles.ATT_REPORTS_7 },
+        },
+        {
+          path: '/att-reports-8',
+          component: AttReports8Container,
+          icon: StorageIcon,
+          title: titles.ATT_REPORTS_8,
+          props: { entity: entities.ATT_REPORTS_8, title: titles.ATT_REPORTS_8 },
         },
         // {
         //   path: '/seminar-kita-reports',
