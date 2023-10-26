@@ -100,6 +100,10 @@ export class YemotCall extends CallBase {
                 // מצוינות בהוראה
                 await this.getExcellencyReport();
                 break;
+            case 9:
+                // מצוינות בהוראה שנה ב
+                await this.getExcellencyReport();
+                break;
             default:
                 await this.send(
                     this.id_list_message({ type: 'text', text: this.texts.studentTypeIsNotRecognizedInTheSystem }),
@@ -415,6 +419,9 @@ export class YemotCall extends CallBase {
                 break;
             case 8:
                 // מצוינות בהוראה
+                break;
+            case 9:
+                // מצוינות בהוראה שנה ב
                 break;
         }
     }
