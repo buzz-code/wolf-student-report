@@ -136,10 +136,10 @@ export async function getPrices(user_id) {
     return dict;
 }
 
-export async function validateExcellencyReportDate(user_id, student_id) {
+export async function validateReportDate(user_id, student_type_id, student_id) {
     const report_date = moment().format('YYYY-MM-DD');
     const date = await new ExcellencyDate()
-        .where({ user_id, report_date })
+        .where({ user_id, student_type_id, report_date })
         .fetch({ require: false })
         .then(res => res ? res.toJSON() : null);
     if (!date) {

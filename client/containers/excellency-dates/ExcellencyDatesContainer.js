@@ -6,23 +6,23 @@ import Table from '../../../common-modules/client/components/table/Table';
 import * as crudAction from '../../../common-modules/client/actions/crudAction';
 import { getPropsForAutoComplete } from '../../../common-modules/client/utils/formUtil';
 
-const getColumns = ({ teacherTypes }) => [
-  // {
-  //   field: 'teacher_type_id',
-  //   title: 'סוג המורה',
-  //   ...getPropsForAutoComplete('teacher_type_id', teacherTypes, 'key'),
-  // },
+const getColumns = ({ studentTypes }) => [
+  {
+    field: 'student_type_id',
+    title: 'סוג התלמידה',
+    ...getPropsForAutoComplete('student_type_id', studentTypes, 'key'),
+  },
   { field: 'report_date', title: 'תאריך', type: 'date' },
 ];
-const getFilters = ({ teacherTypes }) => [
-  // {
-  //   field: 'teacher_types.key',
-  //   label: 'סוג מורה',
-  //   type: 'list',
-  //   list: teacherTypes,
-  //   operator: 'eq',
-  //   idField: 'key',
-  // },
+const getFilters = ({ studentTypes }) => [
+  {
+    field: 'student_types.key',
+    label: 'סוג תלמידה',
+    type: 'list',
+    list: studentTypes,
+    operator: 'eq',
+    idField: 'key',
+  },
 ];
 
 const ExcellencyDatesContainer = ({ entity, title }) => {
