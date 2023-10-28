@@ -65,7 +65,7 @@ export class YemotCall extends CallBase {
     }
 
     async getReportAndSave() {
-        await validateReportDate();
+        await this.validateReportDate();
 
         switch (this.student.student_type_id) {
             case 1:
