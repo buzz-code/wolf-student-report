@@ -426,8 +426,8 @@ export class YemotCall extends CallBase {
         }
     }
 
-    validateReportDate() {
-        const isValidReportDate = queryHelper.validateReportDate(this.user.id, this.student.student_type_id, this.student.id);
+    async validateReportDate() {
+        const isValidReportDate = await queryHelper.validateReportDate(this.user.id, this.student.student_type_id, this.student.id);
         if (!isValidReportDate) {
             return this.send(
                 this.id_list_message({ type: 'text', text: this.texts.excellencyReportDateIsInvalid }),
