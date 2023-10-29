@@ -101,7 +101,7 @@ export class YemotCall extends CallBase {
                 await this.getExcellencyReport();
                 break;
             case 9:
-                // מצוינות בהוראה שנה ב
+                // הוראה לתיכונים שנה ב
                 await this.getExcellencyReport();
                 break;
             default:
@@ -421,7 +421,7 @@ export class YemotCall extends CallBase {
                 // מצוינות בהוראה
                 break;
             case 9:
-                // מצוינות בהוראה שנה ב
+                // הוראה לתיכונים שנה ב
                 break;
         }
     }
