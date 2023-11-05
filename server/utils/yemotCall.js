@@ -36,6 +36,7 @@ export class YemotCall extends CallBase {
         haknayaLessons: 'haknayaLessons',
         tikunLessons: 'tikunLessons',
         mathLessons: 'mathLessons',
+        openQuestion: 'openQuestion',
     }
 
     async start() {
@@ -103,6 +104,10 @@ export class YemotCall extends CallBase {
             case 9:
                 // הוראה לתיכונים שנה ב
                 await this.getExcellencyReport();
+                break;
+            case 10:
+                //תלמידות ו
+                await this.getVavReport();
                 break;
             default:
                 await this.send(
@@ -350,6 +355,14 @@ export class YemotCall extends CallBase {
         );
     }
 
+    async getVavReport() {
+        // שאלה פתוחה
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askOpenQuestion },
+                this.fields.openQuestion, 'tap', { max: 1, min: 1, block_asterisk: true })
+        );
+    }
+
 
     // helpers
     async askForNewReport() {
@@ -422,6 +435,9 @@ export class YemotCall extends CallBase {
                 break;
             case 9:
                 // הוראה לתיכונים שנה ב
+                break;
+            case 10:
+                //תלמידות ו
                 break;
         }
     }

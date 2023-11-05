@@ -33,6 +33,7 @@ import {
   ATT_REPORTS_7,
   ATT_REPORTS_8,
   ATT_REPORTS_9,
+  ATT_REPORTS_10,
   EXCELLENCY_DATE,
 } from '../constants/entity';
 
@@ -68,6 +69,7 @@ const appReducer = (history) =>
     [ATT_REPORTS_7]: crudReducer(ATT_REPORTS_7),
     [ATT_REPORTS_8]: crudReducer(ATT_REPORTS_8),
     [ATT_REPORTS_9]: crudReducer(ATT_REPORTS_9),
+    [ATT_REPORTS_10]: crudReducer(ATT_REPORTS_10),
     [EXCELLENCY_DATE]: crudReducer(EXCELLENCY_DATE),
   });
 

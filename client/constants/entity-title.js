@@ -26,4 +26,5 @@ export const ATT_REPORTS_6 = 'תיקופי חינוך מיוחד א';
 export const ATT_REPORTS_7 = 'תיקופי חינוך מיוחד ב';
 export const ATT_REPORTS_8 = 'תיקופי מצוינות בהוראה';
 export const ATT_REPORTS_9 = 'תיקופי הוראה לתיכונים שנה ב';
+export const ATT_REPORTS_10 = 'תיקופי תלמידות ו';
 export const EXCELLENCY_DATE = 'תאריכי תיקוף';
