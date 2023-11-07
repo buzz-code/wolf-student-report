@@ -28,4 +28,5 @@ export const ATT_REPORTS_8 = 'att-reports';
 export const ATT_REPORTS_9 = 'att-reports';
 export const ATT_REPORTS_10 = 'att-reports';
 export const ATT_REPORTS_11 = 'att-reports';
+export const ATT_REPORTS_PIVOT = 'att-reports/get-pivot-data';
 export const EXCELLENCY_DATE = 'excellency-dates';

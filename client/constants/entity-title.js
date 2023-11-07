@@ -28,4 +28,5 @@ export const ATT_REPORTS_8 = 'תיקופי מצוינות בהוראה';
 export const ATT_REPORTS_9 = 'תיקופי הוראה לתיכונים שנה ב';
 export const ATT_REPORTS_10 = 'תיקופי תלמידות ו';
 export const ATT_REPORTS_11 = 'תיקופי התעמלות ו';
+export const ATT_REPORTS_PIVOT = 'תיקופים פיבוט';
 export const EXCELLENCY_DATE = 'תאריכי תיקוף';

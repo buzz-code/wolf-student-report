@@ -7,6 +7,11 @@ const router = genericRouteWithController('att-report', 'AttReport', (router, ct
             ctrl.getEditData(req, res);
         });
 
+    router.route('/get-pivot-data')
+        .get(async (req, res) => {
+            await ctrl.getPivotData(req, res);
+        });
+
     router.route('/getSeminarKitaReport')
         .get((req, res) => {
             ctrl.getSeminarKitaReport(req, res);
