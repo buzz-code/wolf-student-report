@@ -109,6 +109,10 @@ export class YemotCall extends CallBase {
                 //תלמידות ו
                 await this.getVavReport();
                 break;
+            case 11:
+                // התעמלות ו
+                await this.getExerciseReport();
+                break;
             default:
                 await this.send(
                     this.id_list_message({ type: 'text', text: this.texts.studentTypeIsNotRecognizedInTheSystem }),
@@ -438,6 +442,9 @@ export class YemotCall extends CallBase {
                 break;
             case 10:
                 //תלמידות ו
+                break;
+            case 11:
+                // התעמלות ו
                 break;
         }
     }

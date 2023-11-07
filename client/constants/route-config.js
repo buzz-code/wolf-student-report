@@ -50,6 +50,7 @@ import AttReports7Container from '../containers/att-reports/AttReports7Container
 import AttReports8Container from '../containers/att-reports/AttReports8Container';
 import AttReports9Container from '../containers/att-reports/AttReports9Container';
 import AttReports10Container from '../containers/att-reports/AttReports10Container';
+import AttReports11Container from '../containers/att-reports/AttReports11Container';
 import ExcellencyDatesContainer from '../containers/excellency-dates/ExcellencyDatesContainer';
 
 export default [
@@ -213,6 +214,13 @@ export default [
           icon: StorageIcon,
           title: titles.ATT_REPORTS_10,
           props: { entity: entities.ATT_REPORTS_10, title: titles.ATT_REPORTS_10 },
+        },
+        {
+          path: '/att-reports-11',
+          component: AttReports11Container,
+          icon: StorageIcon,
+          title: titles.ATT_REPORTS_11,
+          props: { entity: entities.ATT_REPORTS_11, title: titles.ATT_REPORTS_11 },
         },
         // {
         //   path: '/seminar-kita-reports',
