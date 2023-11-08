@@ -59,7 +59,7 @@ export async function getPivotData(req, res) {
         .where({ 'students.user_id': req.currentUser.id })
         .query(qb => {
             qb.leftJoin('student_types', { 'student_types.key': 'students.student_type_id', 'student_types.user_id': 'students.user_id' })
-            qb.select({ id: 'students.id', student_tz: 'students.tz', student_type_name: 'student_types.name' })
+            qb.select({ student_id: 'students.id', student_tz: 'students.tz', student_type_name: 'student_types.name' })
         });
 
     applyFilters(dbQuery, JSON.stringify(studentFilters));
@@ -70,15 +70,14 @@ export async function getPivotData(req, res) {
         .then(res => res[0].count);
     const studentsRes = await fetchPagePromise({ dbQuery, countQuery }, req.query);
 
-    console.log('ids', studentsRes.data.map(item => item.id))
     const pivotQuery = new AttReport()
-        .where('att_reports.student_id', 'in', studentsRes.data.map(item => item.id));
+        .where('att_reports.student_id', 'in', studentsRes.data.map(item => item.student_id));
 
     applyFilters(pivotQuery, JSON.stringify(reportFilters));
     const pivotRes = await fetchPagePromise({ dbQuery: pivotQuery }, { page: 0, pageSize: 1000 * req.query.pageSize, /* todo:orderBy */ });
 
     const pivotData = studentsRes.data;
-    const pivotDict = pivotData.reduce((prev, curr) => ({ ...prev, [curr.id]: curr }), {});
+    const pivotDict = pivotData.reduce((prev, curr) => ({ ...prev, [curr.student_id]: curr }), {});
     pivotRes.data.forEach(item => {
         if (pivotDict[item.student_id].total === undefined) {
             pivotDict[item.student_id].total = 0;
