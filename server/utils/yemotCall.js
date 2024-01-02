@@ -450,7 +450,7 @@ export class YemotCall extends CallBase {
     }
 
     async validateReportDate() {
-        if ([2, 3, 11].includes(this.student.student_type_id)) {
+        if (![8].includes(this.student.student_type_id)) {
             return;
         }
         const isValidReportDate = await queryHelper.validateReportDate(this.user.id, this.student.student_type_id, this.student.id);
