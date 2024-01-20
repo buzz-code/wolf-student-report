@@ -22,7 +22,7 @@ const StudentTypesContainer = ({ entity, title }) => {
       columns={columns}
       filters={filters}
       disableAdd={true}
-      disableUpdate={false}
+      disableUpdate={true}
       disableDelete={true}
     />
   );
