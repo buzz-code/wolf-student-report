@@ -25,6 +25,7 @@ const getColumns = ({ students, studentTypes }) => [
     editable: 'never',
   },
   { field: 'report_date', title: 'תאריך הדיווח', type: 'date' },
+  { field: 'report_date', title: 'תאריך', render: ({ report_date }) => report_date && formatJewishDateHebrew(getJewishDate(new Date(report_date))), isHebrewDate: true },
   // { field: 'update_date', title: 'תאריך עדכון', type: 'date' },
   { field: 'enterHour', title: 'שעת כניסה' },
   { field: 'exitHour', title: 'שעת יציאה' },
