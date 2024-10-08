@@ -179,7 +179,7 @@ export class YemotCall extends CallBase {
         //מהי הפעילות שבצעת היום בגן, 	למסירת פעילות באוכל הקישי 1 , 	למסירת שיחה הקישי 2, 	למסירת פעילות תפילה או ברכת המזון הקישי 3
         await this.send(
             this.read({ type: 'text', text: this.texts.askKindergartenActivity },
-                this.fields.kindergartenActivity, 'tap', { max: 3, min: 1, block_asterisk: true })
+                this.fields.kindergartenActivity, 'tap', { max: 3, min: 1, block_asterisk: true, digits_allowed: [1, 2, 3] })
         );
     }
 
@@ -256,7 +256,7 @@ export class YemotCall extends CallBase {
         await this.send(
             this.globalMsgIfExists(),
             this.read({ type: 'text', text: this.texts.askTrainingTypeSecondYear },
-                this.fields.trainingType, 'tap', { max: 1, min: 1, block_asterisk: true })
+                this.fields.trainingType, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [1, 2] })
         );
         //עבודה מעשית
         if (this.params[this.fields.trainingType] === '1') {
@@ -273,7 +273,7 @@ export class YemotCall extends CallBase {
             //האם מסרת שיעור? אם כן הקישי 1, אם לא הקישי 0
             await this.send(
                 this.read({ type: 'text', text: this.texts.askWasLessonTeaching },
-                    this.fields.wasLessonTeaching, 'tap', { max: 1, min: 1, block_asterisk: true })
+                    this.fields.wasLessonTeaching, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
             );
             // לשמוע סיכום
         }
@@ -309,12 +309,12 @@ export class YemotCall extends CallBase {
         //  אם השתתפת בדיון טלפוני עם המורה הקישי 1 אם לא הקישי 0
         await this.send(
             this.read({ type: 'text', text: this.texts.askPhoneDiscussing },
-                this.fields.phoneDiscussing, 'tap', { max: 1, min: 1, block_asterisk: true })
+                this.fields.phoneDiscussing, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
         );
         //  אם מסרת שעור הקישי 1 אם לא הקישי 0
         await this.send(
             this.read({ type: 'text', text: this.texts.askWasLessonTeaching },
-                this.fields.wasLessonTeaching, 'tap', { max: 1, min: 1, block_asterisk: true })
+                this.fields.wasLessonTeaching, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
         );
     }
 
@@ -323,7 +323,7 @@ export class YemotCall extends CallBase {
         await this.send(
             this.globalMsgIfExists(),
             this.read({ type: 'text', text: this.texts.askSpecialEdicationType },
-                this.fields.specialEdicationType, 'tap', { max: 1, min: 1, block_asterisk: true })
+                this.fields.specialEdicationType, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [1, 2] })
         );
         //הקישי שעת כניסה ב4 ספרות
         await this.send(
@@ -342,7 +342,7 @@ export class YemotCall extends CallBase {
             // הקישי מ-1 עד 5 את היום בשבוע של מפגש הסנוזלן
             await this.send(
                 this.read({ type: 'text', text: this.texts.askSnoozlenDay },
-                    this.fields.snoozlenDay, 'tap', { max: 1, min: 1, block_asterisk: true })
+                    this.fields.snoozlenDay, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [1, 2, 3, 4, 5] })
             );
         }
     }
@@ -351,11 +351,11 @@ export class YemotCall extends CallBase {
         // עם 2 שאלות - לשאול סתם - נוכחות ושיעורי בית
         await this.send(
             this.read({ type: 'text', text: this.texts.askExcellencyAtt },
-                this.fields.excellencyAtt, 'tap', { max: 1, min: 1, block_asterisk: true })
+                this.fields.excellencyAtt, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1, 2, 3] })
         );
         await this.send(
             this.read({ type: 'text', text: this.texts.askExcellencyHomework },
-                this.fields.excellencyHomework, 'tap', { max: 1, min: 1, block_asterisk: true })
+                this.fields.excellencyHomework, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1, 2, 3] })
         );
     }
 
