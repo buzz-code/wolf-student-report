@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
+import { getJewishDate, formatJewishDateHebrew } from 'jewish-dates-core';
 
 import Table from '../../../common-modules/client/components/table/Table';
 import * as crudAction from '../../../common-modules/client/actions/crudAction';
@@ -25,6 +26,7 @@ const getColumns = ({ students, studentTypes }) => [
     editable: 'never',
   },
   { field: 'report_date', title: 'תאריך הדיווח', type: 'date' },
+  { field: 'report_date', title: 'תאריך עברי', render: ({ report_date }) => report_date && formatJewishDateHebrew(getJewishDate(new Date(report_date))), isHebrewDate: true },
   // { field: 'update_date', title: 'תאריך עדכון', type: 'date' },
   { field: 'kubaseTime', title: 'זמן אימון קיובייס' },
   { field: 'fluteTime', title: 'זמן אימון חלילית' },
