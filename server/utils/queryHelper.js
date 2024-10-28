@@ -143,11 +143,14 @@ export async function validateReportDate(user_id, student_type_id, student_id) {
         .fetch({ require: false })
         .then(res => res ? res.toJSON() : null);
     if (!date) {
-        return false;
+        return null;
     }
     const existing = await new AttReport()
         .where({ user_id, student_id, report_date })
         .fetch({ require: false })
         .then(res => res ? res.toJSON() : null);
-    return !existing;
+    if (existing) {
+        return null;
+    }
+    return date;
 }

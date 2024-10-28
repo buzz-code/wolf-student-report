@@ -30,6 +30,8 @@ const getColumns = ({ students, studentTypes }) => [
   // { field: 'update_date', title: 'תאריך עדכון', type: 'date' },
   { field: 'excellencyAtt', title: 'מצוינות - נוכחות' },
   { field: 'excellencyHomework', title: 'מצוינות - ש"ב' },
+  { field: 'excellencyExtra1', title: 'מרצה 1' },
+  { field: 'excellencyExtra2', title: 'מרצה 2' },
 ];
 const getFilters = ({ students, studentTypes }) => [
   { field: 'students.name', label: 'תלמידה', type: 'text', operator: 'like' },

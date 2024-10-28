@@ -13,6 +13,8 @@ const getColumns = ({ studentTypes }) => [
     ...getPropsForAutoComplete('student_type_id', studentTypes, 'key'),
   },
   { field: 'report_date', title: 'תאריך', type: 'date' },
+  { field: 'extra_1', title: 'שיעור 1' },
+  { field: 'extra_2', title: 'שיעור 2' },
 ];
 const getFilters = ({ studentTypes }) => [
   {

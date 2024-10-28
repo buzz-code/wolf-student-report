@@ -131,6 +131,11 @@ export class YemotCall extends CallBase {
                 update_date: new Date(),
             };
             Object.values(this.fields).forEach(key => attReport[key] = this.params[key]);
+            if (this.reportDateData) {
+                // לשמור את שמות המרצים בדיווח
+                this.params.excellencyExtra1 = this.reportDateData.extra_1;
+                this.params.excellencyExtra2 = this.reportDateData.extra_2;
+            }
             console.log('before save', attReport);
             await new AttReport(attReport).save();
             console.log('after save', attReport);
@@ -453,8 +458,8 @@ export class YemotCall extends CallBase {
         if (![8].includes(this.student.student_type_id)) {
             return;
         }
-        const isValidReportDate = await queryHelper.validateReportDate(this.user.id, this.student.student_type_id, this.student.id);
-        if (!isValidReportDate) {
+        this.reportDateData = await queryHelper.validateReportDate(this.user.id, this.student.student_type_id, this.student.id);
+        if (!this.reportDateData) {
             return this.send(
                 this.id_list_message({ type: 'text', text: this.texts.excellencyReportDateIsInvalid }),
                 this.hangup()
