@@ -27,6 +27,8 @@ const getColumns = ({ students, studentTypes }) => [
   { field: 'total_lessons', title: 'מספר שיעורים' },
   { field: 'att_lessons', title: 'שיעורים שנכחה' },
   { field: 'abs_lessons', title: 'שיעורים שחסרה' },
+  { field: 'att_percents', title: 'שיעורים שחסרה' },
+  { field: 'abs_percents', title: 'שיעורים שחסרה' },
 ];
 const getFilters = ({ students, studentTypes }) => [
   { field: 'students.name', label: 'תלמידה', type: 'text', operator: 'like' },
