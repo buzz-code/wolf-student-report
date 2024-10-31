@@ -1,6 +1,7 @@
-import { AttReport, Student, StudentType } from '../models';
+import { AttReport, Student, StudentType, ExcellencyDate } from '../models';
 import { applyFilters, fetchPage, fetchPagePromise } from '../../common-modules/server/controllers/generic.controller';
 import { getListFromTable } from '../../common-modules/server/utils/common';
+import bookshelf from '../../common-modules/server/config/bookshelf';
 import moment from 'moment';
 import { formatJewishDateHebrew, getJewishDate } from 'jewish-dates-core';
 
@@ -103,15 +104,33 @@ function getWeekStart(reportDate) {
     return moment(reportDate).startOf('week').toDate().getTime();
 }
 
-export async function getExcellencyTotalReport(req, res){
-    const dbQuery = new AttReport().where({ 'att_reports.user_id': req.currentUser.id })
+export async function getExcellencyTotalReport(req, res) {
+    const dbQuery = new ExcellencyDate().where({ 'excellency_dates.user_id': req.currentUser.id })
         .query(qb => {
-            qb.leftJoin('students', 'students.id', 'att_reports.student_id')
+            qb.leftJoin('att_reports', 'att_reports.user_id', req.currentUser.id)
+            qb.leftJoin('students', { 'students.id': 'att_reports.student_id', 'students.student_type_id': 'excellency_dates.student_type_id' })
             qb.leftJoin('student_types', { 'student_types.key': 'students.student_type_id', 'student_types.user_id': 'students.user_id' })
-            qb.select('att_reports.*')
-            qb.select({ student_tz: 'students.tz', student_type_name: 'student_types.name' })
-            qb.where('student_types.key', 'in', [8,9])
+            qb.where('student_types.key', 'in', [8, 9])
         });
     applyFilters(dbQuery, req.query.filters);
-    fetchPage({ dbQuery }, req.query, res);
+
+    const groupByColumns = ['students.id'];
+
+    const countQuery = dbQuery.clone().query()
+        .countDistinct({ count: groupByColumns })
+        .then(res => res[0].count);
+
+    dbQuery.query(qb => {
+        qb.groupBy(groupByColumns)
+        qb.select({
+            student_name: 'students.name',
+            student_id: 'students.id',
+            student_tz: 'students.tz',
+            student_type_name: 'student_types.name'
+        })
+        qb.select({
+            lessons_number: bookshelf.knex.raw('COUNT(excellency_dates.id) * 2'),
+        })
+    });
+    fetchPage({ dbQuery, countQuery }, req.query, res);
 }

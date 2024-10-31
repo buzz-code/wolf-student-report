@@ -25,13 +25,7 @@ const getColumns = ({ students, studentTypes }) => [
     columnOrder: 'student_types.name',
     editable: 'never',
   },
-  { field: 'report_date', title: 'תאריך הדיווח', type: 'date' },
-  { field: 'report_date', title: 'תאריך עברי', render: ({ report_date }) => report_date && formatJewishDateHebrew(getJewishDate(new Date(report_date))), isHebrewDate: true },
-  // { field: 'update_date', title: 'תאריך עדכון', type: 'date' },
-  { field: 'excellencyAtt', title: 'מצוינות - נוכחות' },
-  { field: 'excellencyHomework', title: 'מצוינות - ש"ב' },
-  { field: 'excellencyExtra1', title: 'מרצה 1' },
-  { field: 'excellencyExtra2', title: 'מרצה 2' },
+  { field: 'lessons_number', title: 'מספר שיעורים' },
 ];
 const getFilters = ({ students, studentTypes }) => [
   { field: 'students.name', label: 'תלמידה', type: 'text', operator: 'like' },
@@ -43,8 +37,8 @@ const getFilters = ({ students, studentTypes }) => [
     operator: 'eq',
     idField: 'key',
   },
-  { field: 'report_date', label: 'מתאריך', type: 'date', operator: 'date-before' },
-  { field: 'report_date', label: 'עד תאריך', type: 'date', operator: 'date-after' },
+  // { field: 'report_date', label: 'מתאריך', type: 'date', operator: 'date-before' },
+  // { field: 'report_date', label: 'עד תאריך', type: 'date', operator: 'date-after' },
   // { field: 'update_date', label: 'מתאריך עדכון', type: 'date', operator: 'date-before' },
   // { field: 'update_date', label: 'עד תאריך עדכון', type: 'date', operator: 'date-after' },
 ];
@@ -58,14 +52,6 @@ const ExcellencyTotalReportContainer = ({ entity, title }) => {
   const columns = useMemo(() => getColumns(editData || {}), [editData]);
   const filters = useMemo(() => getFilters(editData || {}), [editData]);
 
-  const manipulateDataToSave = (dataToSave) => ({
-    ...dataToSave,
-    report_date: dataToSave.report_date && moment(dataToSave.report_date).format('yyyy-MM-DD'),
-    update_date: dataToSave.update_date && moment(dataToSave.update_date).format('yyyy-MM-DD'),
-    student_type_name: undefined,
-    student_tz: undefined,
-  });
-
   useEffect(() => {
     dispatch(crudAction.customHttpRequest(entity, 'GET', 'get-edit-data'));
   }, []);
@@ -76,7 +62,9 @@ const ExcellencyTotalReportContainer = ({ entity, title }) => {
       title={title}
       columns={columns}
       filters={filters}
-      manipulateDataToSave={manipulateDataToSave}
+      disableAdd={true}
+      disableUpdate={true}
+      disableDelete={true}
     />
   );
 };
