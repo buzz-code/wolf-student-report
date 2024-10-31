@@ -11,7 +11,6 @@ const getColumns = ({ students, studentTypes }) => [
   {
     field: 'student_tz',
     title: 'תז תלמידה',
-    editable: 'never',
   },
   {
     field: 'student_id',
@@ -20,12 +19,14 @@ const getColumns = ({ students, studentTypes }) => [
     columnOrder: 'students.name',
   },
   {
-    field: 'student_type_name',
+    field: 'student_type_id',
     title: 'סוג תלמידה',
+    ...getPropsForAutoComplete('student_type_id', studentTypes),
     columnOrder: 'student_types.name',
-    editable: 'never',
   },
-  { field: 'lessons_number', title: 'מספר שיעורים' },
+  { field: 'total_lessons', title: 'מספר שיעורים' },
+  { field: 'att_lessons', title: 'שיעורים שנכחה' },
+  { field: 'abs_lessons', title: 'שיעורים שחסרה' },
 ];
 const getFilters = ({ students, studentTypes }) => [
   { field: 'students.name', label: 'תלמידה', type: 'text', operator: 'like' },

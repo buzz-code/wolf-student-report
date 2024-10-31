@@ -126,10 +126,12 @@ export async function getExcellencyTotalReport(req, res) {
             student_name: 'students.name',
             student_id: 'students.id',
             student_tz: 'students.tz',
-            student_type_name: 'student_types.name'
+            student_type_id: 'students.student_type_id'
         })
         qb.select({
-            lessons_number: bookshelf.knex.raw('COUNT(excellency_dates.id) * 2'),
+            total_lessons: bookshelf.knex.raw('COUNT(excellency_dates.id) * 2'),
+            att_lessons: bookshelf.knex.raw('SUM(att_reports.excellencyAtt) + SUM(att_reports.excellencyHomework)'),
+            abs_lessons: bookshelf.knex.raw('(COUNT(excellency_dates.id) * 2) - (SUM(att_reports.excellencyAtt) + SUM(att_reports.excellencyHomework)ß)'),
         })
     });
     fetchPage({ dbQuery, countQuery }, req.query, res);
