@@ -108,9 +108,9 @@ export async function getExcellencyTotalReport(req, res) {
     console.log('test log to prove update')
     const dbQuery = new ExcellencyDate().where({ 'excellency_dates.user_id': req.currentUser.id })
         .query(qb => {
-            qb.leftJoin('att_reports', 'att_reports.user_id', req.currentUser.id)
-            qb.leftJoin('students', { 'students.id': 'att_reports.student_id', 'students.student_type_id': 'excellency_dates.student_type_id' })
-            qb.leftJoin('student_types', { 'student_types.key': 'students.student_type_id', 'student_types.user_id': 'students.user_id' })
+            qb.leftJoin('student_types', { 'student_types.key': 'excellency_dates.student_type_id', 'student_types.user_id': req.currentUser.id })
+            qb.leftJoin('students', { 'students.student_type_id': 'excellency_dates.student_type_id' })
+            qb.leftJoin('att_reports', { 'students.id': 'att_reports.student_id' })
             qb.where('student_types.key', 'in', [8, 9])
         });
     applyFilters(dbQuery, req.query.filters);
