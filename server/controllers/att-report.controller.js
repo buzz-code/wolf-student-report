@@ -105,6 +105,7 @@ function getWeekStart(reportDate) {
 }
 
 export async function getExcellencyTotalReport(req, res) {
+    console.log('test log to prove update')
     const dbQuery = new ExcellencyDate().where({ 'excellency_dates.user_id': req.currentUser.id })
         .query(qb => {
             qb.leftJoin('att_reports', 'att_reports.user_id', req.currentUser.id)

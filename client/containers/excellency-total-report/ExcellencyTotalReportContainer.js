@@ -51,6 +51,7 @@ const ExcellencyTotalReportContainer = ({ entity, title }) => {
   const {
     GET: { '../get-edit-data': editData },
   } = useSelector((state) => state[entity]);
+  console.log('test log to prove update')
 
   const columns = useMemo(() => getColumns(editData || {}), [editData]);
   const filters = useMemo(() => getFilters(editData || {}), [editData]);
