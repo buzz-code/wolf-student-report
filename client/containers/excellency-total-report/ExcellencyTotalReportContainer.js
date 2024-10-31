@@ -21,7 +21,7 @@ const getColumns = ({ students, studentTypes }) => [
   {
     field: 'student_type_id',
     title: 'סוג תלמידה',
-    ...getPropsForAutoComplete('student_type_id', studentTypes),
+    ...getPropsForAutoComplete('student_type_id', studentTypes, 'key'),
     columnOrder: 'student_types.name',
   },
   { field: 'total_lessons', title: 'מספר שיעורים' },
