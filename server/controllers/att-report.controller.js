@@ -110,7 +110,7 @@ export async function getExcellencyTotalReport(req, res) {
         .query(qb => {
             qb.leftJoin('student_types', { 'student_types.key': 'excellency_dates.student_type_id', 'student_types.user_id': req.currentUser.id })
             qb.leftJoin('students', { 'students.student_type_id': 'excellency_dates.student_type_id' })
-            qb.leftJoin('att_reports2', { 'students.id': 'att_reports.student_id' })
+            qb.leftJoin('att_reports', { 'students.id': 'att_reports.student_id', 'att_reports.report_date': 'excellency_dates.report_date' })
             qb.where('student_types.key', 'in', [8, 9])
         });
     applyFilters(dbQuery, req.query.filters);
@@ -130,7 +130,8 @@ export async function getExcellencyTotalReport(req, res) {
             student_type_id: 'students.student_type_id'
         })
         const total_lessons = '(COUNT(excellency_dates.id) * 2)';
-        const att_lessons = '(SUM(att_reports.excellencyAtt) + SUM(att_reports.excellencyHomework))';
+        const getColumnCount = (column) => `(COUNT(IF(${column} = 0, NULL, ${column})`
+        const att_lessons = `${getColumnCount('att_reports.excellencyAtt')} + ${'att_reports.excellencyHomework'}`;
         const abs_lessons = `(${total_lessons} - ${att_lessons})`;
         const getPercents = (selection) => `CONCAT(ROUND(${selection} * 100), '%')`
         qb.select({
