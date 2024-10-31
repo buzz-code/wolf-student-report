@@ -1,7 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import moment from 'moment';
-import { getJewishDate, formatJewishDateHebrew } from 'jewish-dates-core';
 
 import Table from '../../../common-modules/client/components/table/Table';
 import * as crudAction from '../../../common-modules/client/actions/crudAction';
@@ -46,7 +44,7 @@ const getFilters = ({ students, studentTypes }) => [
   // { field: 'update_date', label: 'עד תאריך עדכון', type: 'date', operator: 'date-after' },
 ];
 
-const ExcellencyTotalReportContainer = ({ entity, title }) => {
+const ExcellencyTotalReportContainer2 = ({ entity, title }) => {
   const dispatch = useDispatch();
   const {
     GET: { '../get-edit-data': editData },
@@ -73,4 +71,4 @@ const ExcellencyTotalReportContainer = ({ entity, title }) => {
   );
 };
 
-export default ExcellencyTotalReportContainer;
+export default ExcellencyTotalReportContainer2;

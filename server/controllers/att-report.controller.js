@@ -129,17 +129,17 @@ export async function getExcellencyTotalReport(req, res) {
             student_tz: 'students.tz',
             student_type_id: 'students.student_type_id'
         })
-        // const total_lessons = '(COUNT(excellency_dates.id) * 2)';
-        // const att_lessons = '(SUM(att_reports.excellencyAtt) + SUM(att_reports.excellencyHomework))';
-        // const abs_lessons = `(${total_lessons} - ${att_lessons})`;
-        // const getPercents = (selection) => `CONCAT(ROUND(${selection} * 100), '%')`
-        // qb.select({
-        //     total_lessons: bookshelf.knex.raw(total_lessons),
-        //     att_lessons: bookshelf.knex.raw(att_lessons),
-        //     abs_lessons: bookshelf.knex.raw(abs_lessons),
-        //     att_percents: bookshelf.knex.raw(getPercents(`${att_lessons} / ${total_lessons}`)),
-        //     abs_percents: bookshelf.knex.raw(getPercents(`${abs_lessons} / ${total_lessons}`)),
-        // })
+        const total_lessons = '(COUNT(excellency_dates.id) * 2)';
+        const att_lessons = '(SUM(att_reports.excellencyAtt) + SUM(att_reports.excellencyHomework))';
+        const abs_lessons = `(${total_lessons} - ${att_lessons})`;
+        const getPercents = (selection) => `CONCAT(ROUND(${selection} * 100), '%')`
+        qb.select({
+            total_lessons: bookshelf.knex.raw(total_lessons),
+            att_lessons: bookshelf.knex.raw(att_lessons),
+            abs_lessons: bookshelf.knex.raw(abs_lessons),
+            att_percents: bookshelf.knex.raw(getPercents(`${att_lessons} / ${total_lessons}`)),
+            abs_percents: bookshelf.knex.raw(getPercents(`${abs_lessons} / ${total_lessons}`)),
+        })
     });
     fetchPage({ dbQuery, countQuery }, req.query, res);
 }
