@@ -53,6 +53,7 @@ import AttReports10Container from '../containers/att-reports/AttReports10Contain
 import AttReports11Container from '../containers/att-reports/AttReports11Container';
 import AttReportsPivotContainer from '../containers/att-reports/AttReportsPivotContainer';
 import ExcellencyDatesContainer from '../containers/excellency-dates/ExcellencyDatesContainer';
+import ExcellencyTotalReportContainer from '../containers/excellency-total-report/ExcellencyTotalReportContainer';
 
 export default [
   [
@@ -229,6 +230,13 @@ export default [
           icon: StorageIcon,
           title: titles.ATT_REPORTS_PIVOT,
           props: { entity: entities.ATT_REPORTS_PIVOT, title: titles.ATT_REPORTS_PIVOT },
+        },
+        {
+          path: '/excellency-total-report',
+          component: ExcellencyTotalReportContainer,
+          icon: FormatListNumberedRtlIcon,
+          title: titles.EXCELLENCY_TOTAL_REPORT,
+          props: { entity: entities.EXCELLENCY_TOTAL_REPORT, title: titles.EXCELLENCY_TOTAL_REPORT },
         },
         // {
         //   path: '/seminar-kita-reports',

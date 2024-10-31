@@ -47,6 +47,11 @@ const router = genericRouteWithController('att-report', 'AttReport', (router, ct
             ctrl.getKindergartenReport(req, res);
         });
 
+    router.route('/getExcellencyTotalReport')
+        .get((req, res) => {
+            ctrl.getExcellencyTotalReport(req, res);
+        });
+
     router.route('/:report/export-pdf')
         .post((req, res) => {
             exportPdf(req, res);

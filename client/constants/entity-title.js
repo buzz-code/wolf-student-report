@@ -30,3 +30,4 @@ export const ATT_REPORTS_10 = 'תיקופי תלמידות ו';
 export const ATT_REPORTS_11 = 'תיקופי התעמלות ו';
 export const ATT_REPORTS_PIVOT = 'תיקופים פיבוט';
 export const EXCELLENCY_DATE = 'תאריכי תיקוף';
+export const EXCELLENCY_TOTAL_REPORT = 'דוח מצוינות בהוראה';

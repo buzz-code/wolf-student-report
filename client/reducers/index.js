@@ -37,6 +37,7 @@ import {
   ATT_REPORTS_11,
   EXCELLENCY_DATE,
   ATT_REPORTS_PIVOT,
+  EXCELLENCY_TOTAL_REPORT,
 } from '../constants/entity';
 
 const appReducer = (history) =>
@@ -75,6 +76,7 @@ const appReducer = (history) =>
     [ATT_REPORTS_11]: crudReducer(ATT_REPORTS_11),
     [ATT_REPORTS_PIVOT]: crudReducer(ATT_REPORTS_PIVOT),
     [EXCELLENCY_DATE]: crudReducer(EXCELLENCY_DATE),
+    [EXCELLENCY_TOTAL_REPORT]: crudReducer(EXCELLENCY_TOTAL_REPORT),
   });
 
 const rootReducer = (state, action) => {

@@ -102,3 +102,16 @@ export async function getPivotData(req, res) {
 function getWeekStart(reportDate) {
     return moment(reportDate).startOf('week').toDate().getTime();
 }
+
+export async function getExcellencyTotalReport(req, res){
+    const dbQuery = new AttReport().where({ 'att_reports.user_id': req.currentUser.id })
+        .query(qb => {
+            qb.leftJoin('students', 'students.id', 'att_reports.student_id')
+            qb.leftJoin('student_types', { 'student_types.key': 'students.student_type_id', 'student_types.user_id': 'students.user_id' })
+            qb.select('att_reports.*')
+            qb.select({ student_tz: 'students.tz', student_type_name: 'student_types.name' })
+            qb.where('student_types.key', 'in', [8,9])
+        });
+    applyFilters(dbQuery, req.query.filters);
+    fetchPage({ dbQuery }, req.query, res);
+}
