@@ -49,7 +49,7 @@ const getFilters = ({ students, studentTypes }) => [
 const ExcellencyTotalReportContainer = ({ entity, title }) => {
   const dispatch = useDispatch();
   const {
-    GET: { 'get-edit-data': editData },
+    GET: { '../get-edit-data': editData },
   } = useSelector((state) => state[entity]);
 
   const columns = useMemo(() => getColumns(editData || {}), [editData]);
