@@ -53,7 +53,7 @@ import AttReports10Container from '../containers/att-reports/AttReports10Contain
 import AttReports11Container from '../containers/att-reports/AttReports11Container';
 import AttReportsPivotContainer from '../containers/att-reports/AttReportsPivotContainer';
 import ExcellencyDatesContainer from '../containers/excellency-dates/ExcellencyDatesContainer';
-import ExcellencyTotalReportContainer2 from '../containers/excellency-total-report/ExcellencyTotalReportContainer2';
+import ExcellencyTotalReportContainer from '../containers/excellency-total-report/ExcellencyTotalReportContainer';
 
 export default [
   [
@@ -233,7 +233,7 @@ export default [
         },
         {
           path: '/excellency-total-report',
-          component: ExcellencyTotalReportContainer2,
+          component: ExcellencyTotalReportContainer,
           icon: FormatListNumberedRtlIcon,
           title: titles.EXCELLENCY_TOTAL_REPORT,
           props: { entity: entities.EXCELLENCY_TOTAL_REPORT, title: titles.EXCELLENCY_TOTAL_REPORT },
