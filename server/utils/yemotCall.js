@@ -102,7 +102,11 @@ export class YemotCall extends CallBase {
                 await this.getExcellencyReport();
                 break;
             case 9:
-                // הוראה לתיכונים שנה ב
+                // הוראה לתיכונים שנה ב קב 1
+                await this.getExcellencyReport();
+                break;
+            case 12:
+                // הוראה לתיכונים שנה ב קב 2
                 await this.getExcellencyReport();
                 break;
             case 10:
@@ -443,7 +447,10 @@ export class YemotCall extends CallBase {
                 // מצוינות בהוראה
                 break;
             case 9:
-                // הוראה לתיכונים שנה ב
+                // הוראה לתיכונים שנה ב קב 1
+                break;
+            case 12:
+                // הוראה לתיכונים שנה ב קב 3
                 break;
             case 10:
                 //תלמידות ו
