@@ -109,7 +109,7 @@ export async function getExcellencyTotalReport(req, res) {
     const dbQuery = new ExcellencyDate().where({ 'excellency_dates.user_id': req.currentUser.id })
         .query(qb => {
             qb.leftJoin('student_types', { 'student_types.key': 'excellency_dates.student_type_id', 'student_types.user_id': req.currentUser.id })
-            qb.leftJoin('students', { 'students.student_type_id': 'excellency_dates.student_type_id' })
+            qb.leftJoin('students', { 'students.student_type_id': 'excellency_dates.student_type_id', 'students.user_id': req.currentUser.id })
             qb.leftJoin('att_reports', { 'students.id': 'att_reports.student_id', 'att_reports.report_date': 'excellency_dates.report_date' })
             qb.where('student_types.key', 'in', [8, 9, 12])
         });
