@@ -121,6 +121,13 @@ export default [
           title: titles.EXCELLENCY_DATE,
           props: { entity: entities.EXCELLENCY_DATE, title: titles.EXCELLENCY_DATE },
         },
+        {
+          path: '/report-periods',
+          component: ReportPeriodsContainer,
+          icon: CalendarTodayIcon,
+          title: titles.REPORT_PERIODS,
+          props: { entity: entities.REPORT_PERIODS, title: titles.REPORT_PERIODS },
+        },
         // {
         //   path: '/questions',
         //   component: Questions,

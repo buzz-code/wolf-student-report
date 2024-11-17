@@ -17,6 +17,7 @@ export const DASHBOARD = 'מחוונים';
 export const QUESTIONS = 'שאלות למורה';
 export const ANSWERS = 'תשובות לשאלות';
 export const WORKING_DATES = 'תאריכי עבודה';
+export const REPORT_PERIODS = 'תקופות דיווח';
 export const ATT_REPORTS_1 = 'תיקופי גננות';
 export const ATT_REPORTS_2 = 'תיקופי מוזיקה';
 export const ATT_REPORTS_3 = 'תיקופי התעמלות ה';

@@ -17,6 +17,7 @@ export const DASHBOARD = 'dashboard';
 export const QUESTIONS = 'questions';
 export const ANSWERS = 'answers';
 export const WORKING_DATES = 'working-dates';
+export const REPORT_PERIODS = 'report-periods';
 export const ATT_REPORTS_1 = 'att-reports';
 export const ATT_REPORTS_2 = 'att-reports';
 export const ATT_REPORTS_3 = 'att-reports';

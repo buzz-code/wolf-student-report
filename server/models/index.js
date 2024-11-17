@@ -79,3 +79,9 @@ export const ExcellencyDate = createModel('excellency_dates', {
         return this.belongsTo(User);
     }
 })
+
+export const ReportPeriod = createModel('report_periods', {
+    user() {
+        return this.belongsTo(User);
+    }
+})

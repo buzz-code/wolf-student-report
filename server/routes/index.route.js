@@ -32,5 +32,6 @@ router.use('/questions', require('./question.route').default);
 router.use('/answers', require('./answer.route').default);
 router.use('/working-dates', require('./working-date.route').default);
 router.use('/excellency-dates', require('./excellency-date.route').default);
+router.use('/report-periods', require('./report-period.route').default);
 
 export default router;
