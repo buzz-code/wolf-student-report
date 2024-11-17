@@ -154,3 +154,11 @@ export async function validateReportDate(user_id, student_type_id, student_id) {
     }
     return date;
 }
+
+export async function getExistingStudentReport(user_id, student_id) {
+    const report_date = moment().format('YYYY-MM-DD');
+    return new AttReport()
+        .where({ user_id, student_id, report_date })
+        .fetch({ require: false })
+        .then(res => res ? res.toJSON() : null);
+}

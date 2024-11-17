@@ -37,6 +37,15 @@ export class YemotCall extends CallBase {
         tikunLessons: 'tikunLessons',
         mathLessons: 'mathLessons',
         openQuestion: 'openQuestion',
+        prayerOrLecture: 'prayerOrLecture',
+        prayer1: 'prayer1',
+        prayer2: 'prayer2',
+        prayer3: 'prayer3',
+        prayer4: 'prayer4',
+        prayer5: 'prayer5',
+        lecture1: 'lecture1',
+        lecture2: 'lecture2',
+        lecture3: 'lecture3',
     }
 
     async start() {
@@ -116,6 +125,14 @@ export class YemotCall extends CallBase {
             case 11:
                 // התעמלות ו
                 await this.getExerciseReport();
+                break;
+            case 13:
+                // תלמידות ה - תפילה והרצאות
+                await this.getPrayerAndLecturesReport();
+                break;
+            case 14:
+                // תלמידות ו - הרצאות
+                await this.getLecturesReport();
                 break;
             default:
                 await this.send(
@@ -376,6 +393,65 @@ export class YemotCall extends CallBase {
         );
     }
 
+    async getPrayerAndLecturesReport() {
+        this.existingReport ??= await queryHelper.getExistingStudentReport(this.user.id, this.student.id);
+        await this.send(
+            this.globalMsgIfExists(),
+            this.read({ type: 'text', text: this.texts.askPrayerOrLecture },
+                this.fields.prayerOrLecture, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [1, 2] })
+        );
+
+        if (this.params[this.fields.prayerOrLecture] === '1') {
+            await this.getPrayerReport();
+        } else {
+            await this.getLecturesReport();
+        }
+    }
+
+    async getPrayerReport() {
+        this.existingReport ??= await queryHelper.getExistingStudentReport(this.user.id, this.student.id);
+        await this.send(
+            this.globalMsgIfExists(),
+            this.read({ type: 'text', text: this.texts.askPrayer1 },
+                this.fields.prayer1, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
+        );
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askPrayer2 },
+                this.fields.prayer2, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
+        );
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askPrayer3 },
+                this.fields.prayer3, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
+        );
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askPrayer4 },
+                this.fields.prayer4, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
+        );
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askPrayer5 },
+                this.fields.prayer5, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
+        );
+    }
+
+    async getLecturesReport() {
+        this.existingReport ??= await queryHelper.getExistingStudentReport(this.user.id, this.student.id);
+        await this.send(
+            this.globalMsgIfExists(),
+            this.read({ type: 'text', text: this.texts.askLecture1 },
+                this.fields.lecture1, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
+        );
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askLecture2 },
+                this.fields.lecture2, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
+        );
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askLecture3 },
+                this.fields.lecture3, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
+        );
+    }
+
+
+
 
     // helpers
     async askForNewReport() {
@@ -457,6 +533,12 @@ export class YemotCall extends CallBase {
                 break;
             case 11:
                 // התעמלות ו
+                break;
+            case 13:
+                // תלמידות ה - תפילה והרצאות
+                break;
+            case 14:
+                // תלמידות ו - הרצאות
                 break;
         }
     }

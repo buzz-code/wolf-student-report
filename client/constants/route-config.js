@@ -52,9 +52,12 @@ import AttReports9Container from '../containers/att-reports/AttReports9Container
 import AttReports10Container from '../containers/att-reports/AttReports10Container';
 import AttReports11Container from '../containers/att-reports/AttReports11Container';
 import AttReports12Container from '../containers/att-reports/AttReports12Container';
+import AttReports13Container from '../containers/att-reports/AttReports13Container';
+import AttReports14Container from '../containers/att-reports/AttReports14Container';
 import AttReportsPivotContainer from '../containers/att-reports/AttReportsPivotContainer';
 import ExcellencyDatesContainer from '../containers/excellency-dates/ExcellencyDatesContainer';
 import ExcellencyTotalReportContainer from '../containers/excellency-total-report/ExcellencyTotalReportContainer';
+import { path } from 'temp';
 
 export default [
   [
@@ -231,6 +234,20 @@ export default [
           icon: StorageIcon,
           title: titles.ATT_REPORTS_11,
           props: { entity: entities.ATT_REPORTS_11, title: titles.ATT_REPORTS_11 },
+        },
+        {
+          path: '/att-reports-13',
+          component: AttReports13Container,
+          icon: StorageIcon,
+          title: titles.ATT_REPORTS_13,
+          props: { entity: entities.ATT_REPORTS_13, title: titles.ATT_REPORTS_13 },
+        },
+        {
+          path: '/att-reports-14',
+          component: AttReports14Container,
+          icon: StorageIcon,
+          title: titles.ATT_REPORTS_14,
+          props: { entity: entities.ATT_REPORTS_14, title: titles.ATT_REPORTS_14 },
         },
         {
           path: '/att-reports-pivot',
