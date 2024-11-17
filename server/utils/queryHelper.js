@@ -1,4 +1,4 @@
-import { Teacher, AttReport, User, Question, Answer, WorkingDate, Student, Price, ExcellencyDate } from "../models";
+import { Teacher, AttReport, User, Question, Answer, WorkingDate, Student, Price, ExcellencyDate, ReportPeriod } from "../models";
 
 import moment from 'moment';
 
@@ -159,6 +159,16 @@ export async function getExistingStudentReport(user_id, student_id) {
     const report_date = moment().format('YYYY-MM-DD');
     return new AttReport()
         .where({ user_id, student_id, report_date })
+        .fetch({ require: false })
+        .then(res => res ? res.toJSON() : null);
+}
+
+export async function getCurrentReportPeriod(user_id, report_type) {
+    const report_date = moment().format('YYYY-MM-DD');
+    return new ReportPeriod()
+        .where({ user_id, report_type })
+        .where('start_report_date', '<=', report_date)
+        .where('end_report_date', '>=', report_date)
         .fetch({ require: false })
         .then(res => res ? res.toJSON() : null);
 }

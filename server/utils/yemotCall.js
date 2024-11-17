@@ -5,6 +5,11 @@ import * as queryHelper from './queryHelper';
 import { AttReport } from "../models";
 import { formatJewishDateHebrew, getJewishDate } from "jewish-dates-core";
 
+const reportTypes = {
+    prayer: 1,
+    lecture: 2,
+}
+
 export class YemotCall extends CallBase {
     constructor(params, callId, user) {
         super(params, callId, user);
@@ -74,9 +79,7 @@ export class YemotCall extends CallBase {
         }
     }
 
-    async getReportAndSave() {
-        await this.validateReportDate();
-
+    async getReport() {
         switch (this.student.student_type_id) {
             case 1:
                 //גננות
@@ -143,6 +146,11 @@ export class YemotCall extends CallBase {
         }
 
         await this.confirmReport();
+    }
+
+    async getReportAndSave() {
+        await this.validateReportDate();
+        await this.getReport();
 
         try {
             const attReport = {
@@ -156,6 +164,9 @@ export class YemotCall extends CallBase {
                 // לשמור את שמות המרצים בדיווח
                 this.params.excellencyExtra1 = this.reportDateData.extra_1;
                 this.params.excellencyExtra2 = this.reportDateData.extra_2;
+            }
+            if (this.reportPeriodData) {
+                attReport.report_period_id = this.reportPeriodData.id;
             }
             console.log('before save', attReport);
             await new AttReport(attReport).save();
@@ -409,7 +420,8 @@ export class YemotCall extends CallBase {
     }
 
     async getPrayerReport() {
-        this.existingReport ??= await queryHelper.getExistingStudentReport(this.user.id, this.student.id);
+        await this.checkReportPeriod(reportTypes.prayer);
+        this.existingReport ??= await queryHelper.getExistingStudentReport(this.user.id, this.student.id, reportTypes.prayer);
         await this.send(
             this.globalMsgIfExists(),
             this.read({ type: 'text', text: this.texts.askPrayer1 },
@@ -434,7 +446,8 @@ export class YemotCall extends CallBase {
     }
 
     async getLecturesReport() {
-        this.existingReport ??= await queryHelper.getExistingStudentReport(this.user.id, this.student.id);
+        await this.checkReportPeriod(reportTypes.lecture);
+        this.existingReport ??= await queryHelper.getExistingStudentReport(this.user.id, this.student.id, reportTypes.lecture);
         await this.send(
             this.globalMsgIfExists(),
             this.read({ type: 'text', text: this.texts.askLecture1 },
@@ -469,6 +482,16 @@ export class YemotCall extends CallBase {
         }
     }
 
+    async checkReportPeriod(reportType) {
+        this.reportPeriodData = await queryHelper.getCurrentReportPeriod(this.user.id, reportType);
+        if (!this.reportPeriodData) {
+            return this.send(
+                this.id_list_message({ type: 'text', text: this.texts.reportPeriodIsInvalid }),
+                this.hangup()
+            );
+        }
+    }
+
     async confirmReport() {
         // on end - ask student to confirm what she did
         const confirmationMessage = this.getConfirmationMessage();
@@ -482,7 +505,7 @@ export class YemotCall extends CallBase {
         );
         if (this.params[this.fields.confirmReport] === '0') {
             this.globalMsg = this.texts.notConfirmedAskingAgain;
-            return this.getExerciseReport();
+            return this.getReport();
         }
         delete this.params[this.fields.confirmReport];
     }
@@ -536,10 +559,14 @@ export class YemotCall extends CallBase {
                 break;
             case 13:
                 // תלמידות ה - תפילה והרצאות
-                break;
+                if (this.params[this.fields.prayerOrLecture] === '1') {
+                    return format(this.texts.askPrayerReportConfirm, this.params[this.fields.prayer1], this.params[this.fields.prayer2], this.params[this.fields.prayer3], this.params[this.fields.prayer4], this.params[this.fields.prayer5]);
+                } else {
+                    return format(this.texts.askLecturesReportConfirm, this.params[this.fields.lecture1], this.params[this.fields.lecture2], this.params[this.fields.lecture3]);
+                }
             case 14:
                 // תלמידות ו - הרצאות
-                break;
+                return format(this.texts.askLecturesReportConfirm, this.params[this.fields.lecture1], this.params[this.fields.lecture2], this.params[this.fields.lecture3]);
         }
     }
 
