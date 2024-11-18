@@ -12,7 +12,7 @@ import { getListFromTable } from '../../common-modules/server/utils/common';
 export async function findAll(req, res) {
     const dbQuery = new ReportPeriod().where({ 'report_periods.user_id': req.currentUser.id })
         .query(qb => {
-            qb.leftJoin('student_types', { 'student_types.key': 'report_periods.student_type_id', 'teacher_types.user_id': 'report_periods.user_id' })
+            // qb.leftJoin('student_types', { 'student_types.key': 'report_periods.student_type_id', 'teacher_types.user_id': 'report_periods.user_id' })
             qb.select('report_periods.*')
         });
     applyFilters(dbQuery, req.query.filters);
