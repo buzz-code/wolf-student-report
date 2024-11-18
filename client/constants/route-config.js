@@ -58,7 +58,6 @@ import AttReports14Container from '../containers/att-reports/AttReports14Contain
 import AttReportsPivotContainer from '../containers/att-reports/AttReportsPivotContainer';
 import ExcellencyDatesContainer from '../containers/excellency-dates/ExcellencyDatesContainer';
 import ExcellencyTotalReportContainer from '../containers/excellency-total-report/ExcellencyTotalReportContainer';
-import { path } from 'temp';
 
 export default [
   [
