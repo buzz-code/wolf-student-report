@@ -1,4 +1,4 @@
-import {WorkingDate, StudentType} from '../models';
+import {ReportPeriod, StudentType} from '../models';
 import { applyFilters, fetchPage } from '../../common-modules/server/controllers/generic.controller';
 import { getListFromTable } from '../../common-modules/server/utils/common';
 
@@ -10,7 +10,7 @@ import { getListFromTable } from '../../common-modules/server/utils/common';
  * @returns {*}
  */
 export async function findAll(req, res) {
-    const dbQuery = new WorkingDate().where({ 'report_periods.user_id': req.currentUser.id })
+    const dbQuery = new ReportPeriod().where({ 'report_periods.user_id': req.currentUser.id })
         .query(qb => {
             qb.leftJoin('student_types', { 'teacher_types.key': 'report_periods.student_type_id', 'teacher_types.user_id': 'report_periods.user_id' })
             qb.select('report_periods.*')
