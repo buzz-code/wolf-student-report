@@ -40,6 +40,7 @@ import SpecialEducationReports from '../containers/unused/SpecialEducationReport
 import KindergartenReports from '../containers/unused/KindergartenReportsContainer';
 import ExcelImport from '../containers/excel-import/ExcelImportContainer';
 import WorkingDates from '../containers/working-dates/WorkingDatesContainer';
+import ReportPeriodsContainer from '../containers/report-periods/ReportPeriodsContainer';
 import AttReports1Container from '../containers/att-reports/AttReports1Container';
 import AttReports2Container from '../containers/att-reports/AttReports2Container';
 import AttReports3Container from '../containers/att-reports/AttReports3Container';
