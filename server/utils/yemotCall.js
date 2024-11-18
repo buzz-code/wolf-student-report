@@ -405,7 +405,6 @@ export class YemotCall extends CallBase {
     }
 
     async getPrayerAndLecturesReport() {
-        this.existingReport ??= await queryHelper.getExistingStudentReport(this.user.id, this.student.id);
         await this.send(
             this.globalMsgIfExists(),
             this.read({ type: 'text', text: this.texts.askPrayerOrLecture },
@@ -421,7 +420,10 @@ export class YemotCall extends CallBase {
 
     async getPrayerReport() {
         await this.checkReportPeriod(reportTypes.prayer);
-        this.existingReport ??= await queryHelper.getExistingStudentReport(this.user.id, this.student.id, reportTypes.prayer);
+        if (!this.existingReport) {
+            this.existingReport = await queryHelper.getExistingStudentReport(this.user.id, this.student.id, this.reportPeriodData.id);
+        }
+       
         await this.send(
             this.globalMsgIfExists(),
             this.read({ type: 'text', text: this.texts.askPrayer1 },
@@ -447,7 +449,10 @@ export class YemotCall extends CallBase {
 
     async getLecturesReport() {
         await this.checkReportPeriod(reportTypes.lecture);
-        this.existingReport ??= await queryHelper.getExistingStudentReport(this.user.id, this.student.id, reportTypes.lecture);
+        if (!this.existingReport) {
+            this.existingReport = await queryHelper.getExistingStudentReport(this.user.id, this.student.id, this.reportPeriodData.id);
+        }
+     
         await this.send(
             this.globalMsgIfExists(),
             this.read({ type: 'text', text: this.texts.askLecture1 },
