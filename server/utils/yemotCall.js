@@ -423,27 +423,27 @@ export class YemotCall extends CallBase {
         if (!this.existingReport) {
             this.existingReport = await queryHelper.getExistingStudentReport(this.user.id, this.student.id, this.reportPeriodData.id);
         }
-       
+
         await this.send(
             this.globalMsgIfExists(),
             this.read({ type: 'text', text: this.texts.askPrayer1 },
-                this.fields.prayer1, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
+                this.fields.prayer1, 'tap', { max: 1, min: 1, block_asterisk: true })
         );
         await this.send(
             this.read({ type: 'text', text: this.texts.askPrayer2 },
-                this.fields.prayer2, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
+                this.fields.prayer2, 'tap', { max: 1, min: 1, block_asterisk: true })
         );
         await this.send(
             this.read({ type: 'text', text: this.texts.askPrayer3 },
-                this.fields.prayer3, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
+                this.fields.prayer3, 'tap', { max: 1, min: 1, block_asterisk: true })
         );
         await this.send(
             this.read({ type: 'text', text: this.texts.askPrayer4 },
-                this.fields.prayer4, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
+                this.fields.prayer4, 'tap', { max: 1, min: 1, block_asterisk: true })
         );
         await this.send(
             this.read({ type: 'text', text: this.texts.askPrayer5 },
-                this.fields.prayer5, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
+                this.fields.prayer5, 'tap', { max: 1, min: 1, block_asterisk: true })
         );
     }
 
@@ -452,19 +452,19 @@ export class YemotCall extends CallBase {
         if (!this.existingReport) {
             this.existingReport = await queryHelper.getExistingStudentReport(this.user.id, this.student.id, this.reportPeriodData.id);
         }
-     
+
         await this.send(
             this.globalMsgIfExists(),
             this.read({ type: 'text', text: this.texts.askLecture1 },
-                this.fields.lecture1, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
+                this.fields.lecture1, 'tap', { max: 1, min: 1, block_asterisk: true })
         );
         await this.send(
             this.read({ type: 'text', text: this.texts.askLecture2 },
-                this.fields.lecture2, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
+                this.fields.lecture2, 'tap', { max: 1, min: 1, block_asterisk: true })
         );
         await this.send(
             this.read({ type: 'text', text: this.texts.askLecture3 },
-                this.fields.lecture3, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
+                this.fields.lecture3, 'tap', { max: 1, min: 1, block_asterisk: true })
         );
     }
 
