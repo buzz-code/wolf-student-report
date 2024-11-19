@@ -130,7 +130,7 @@ export async function getExcellencyTotalReport(req, res) {
             student_type_id: 'students.student_type_id'
         })
         const total_lessons = '(COUNT(excellency_dates.id) * 2)';
-        const getColumnCount = (column) => `(COUNT(IF(${column} = 0, NULL, ${column})))`
+        const getColumnCount = (column) => `(SUM(IF(${column} = 1, 1, IF(${column} = 3, 0.5, 0))))`;
         const att_lessons = `(${getColumnCount('att_reports.excellencyAtt')} + ${getColumnCount('att_reports.excellencyHomework')})`;
         const abs_lessons = `(${total_lessons} - ${att_lessons})`;
         const getPercents = (selection) => `CONCAT(ROUND(${selection} * 100), '%')`
