@@ -30,7 +30,9 @@ const getColumns = ({ students, studentTypes }) => [
   // { field: 'update_date', title: 'תאריך עדכון', type: 'date' },
   { field: 'enterHour', title: 'שעת כניסה' },
   { field: 'exitHour', title: 'שעת יציאה' },
+  { field: 'kindergartenType', title: 'סוג דיווח' },
   { field: 'kindergartenActivity', title: 'פעילות בגן' },
+  { field: 'kindergartenNumber', title: 'מספר הגן' },
 ];
 const getFilters = ({ students, studentTypes }) => [
   { field: 'students.name', label: 'תלמידה', type: 'text', operator: 'like' },
