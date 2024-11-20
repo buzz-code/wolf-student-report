@@ -165,8 +165,8 @@ export class YemotCall extends CallBase {
             if (this.reportDateData) {
                 console.log('reportDateData', this.reportDateData);
                 // לשמור את שמות המרצים בדיווח
-                this.params.excellencyExtra1 = this.reportDateData.extra_1;
-                this.params.excellencyExtra2 = this.reportDateData.extra_2;
+                attReport.excellencyExtra1 = this.reportDateData.extra_1;
+                attReport.excellencyExtra2 = this.reportDateData.extra_2;
             }
             if (this.reportPeriodData) {
                 attReport.report_period_id = this.reportPeriodData.id;
