@@ -205,22 +205,39 @@ export class YemotCall extends CallBase {
     }
 
     async getKindergartenReport() {
+        if (!this.existingReport) {
+            this.existingReport = await queryHelper.getExistingStudentReportByReportDate(this.user.id, this.student.id);
+        }
+
         // לדיווח על עבודה מעשית הקישי 1, לדיווח על מלגות הקישי 2
         await this.send(
             this.globalMsgIfExists(),
             this.read({ type: 'text', text: this.texts.askKindergartenType },
                 this.fields.kindergartenType, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [1, 2] })
         );
-        //הקישי שעת כניסה ב4 ספרות
+        // //הקישי שעת כניסה ב4 ספרות
+        // await this.send(
+        //     this.read({ type: 'text', text: this.texts.askEnterHour },
+        //         this.fields.enterHour, 'tap', { max: 4, min: 4, block_asterisk: true })
+        // );
+        // //הקישי שעת יציאה ב4 ספרות
+        // await this.send(
+        //     this.read({ type: 'text', text: this.texts.askExitHour },
+        //         this.fields.exitHour, 'tap', { max: 4, min: 4, block_asterisk: true })
+        // );
+
+        // לתיקוף כניסה הקישי 1 לתיקוף יציאה הקישי 2 
         await this.send(
-            this.read({ type: 'text', text: this.texts.askEnterHour },
-                this.fields.enterHour, 'tap', { max: 4, min: 4, block_asterisk: true })
+            this.read({ type: 'text', text: this.texts.askEnterExitHour },
+                'enterExitHour', 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [1, 2] })
         );
-        //הקישי שעת יציאה ב4 ספרות
-        await this.send(
-            this.read({ type: 'text', text: this.texts.askExitHour },
-                this.fields.exitHour, 'tap', { max: 4, min: 4, block_asterisk: true })
-        );
+        if (this.params.enterExitHour === '1') {
+            this.params[this.fields.enterHour] = moment().format('HHmm');
+            return;
+        } else {
+            this.params[this.fields.enterHour] = this.existingReport?.enterHour;
+            this.params[this.fields.exitHour] = moment().format('HHmm');
+        }
 
         if (this.params[this.fields.kindergartenType] === '1') {
             //מהי הפעילות שבצעת היום בגן, 	למסירת פעילות באוכל הקישי 1 , 	למסירת שיחה הקישי 2, 	למסירת פעילות תפילה או ברכת המזון הקישי 3
@@ -438,7 +455,7 @@ export class YemotCall extends CallBase {
     async getPrayerReport() {
         await this.checkReportPeriod(reportTypes.prayer);
         if (!this.existingReport) {
-            this.existingReport = await queryHelper.getExistingStudentReport(this.user.id, this.student.id, this.reportPeriodData.id);
+            this.existingReport = await queryHelper.getExistingStudentReportByReportPeriod(this.user.id, this.student.id, this.reportPeriodData.id);
         }
 
         await this.send(
@@ -467,7 +484,7 @@ export class YemotCall extends CallBase {
     async getLecturesReport() {
         await this.checkReportPeriod(reportTypes.lecture);
         if (!this.existingReport) {
-            this.existingReport = await queryHelper.getExistingStudentReport(this.user.id, this.student.id, this.reportPeriodData.id);
+            this.existingReport = await queryHelper.getExistingStudentReportByReportPeriod(this.user.id, this.student.id, this.reportPeriodData.id);
         }
 
         await this.send(
