@@ -20,6 +20,9 @@ export class YemotCall extends CallBase {
         exitHour: 'exitHour',
         kindergartenType: 'kindergartenType',
         kindergartenActivity: 'kindergartenActivity',
+        kindergartenActivity1: 'kindergartenActivity1',
+        kindergartenActivity2: 'kindergartenActivity2',
+        kindergartenActivity3: 'kindergartenActivity3',
         kindergartenNumber: 'kindergartenNumber',
         kubaseTime: 'kubaseTime',
         fluteTime: 'fluteTime',
@@ -246,10 +249,25 @@ export class YemotCall extends CallBase {
         }
 
         if (this.params[this.fields.kindergartenType] === '1') {
-            //מהי הפעילות שבצעת היום בגן, 	למסירת פעילות באוכל הקישי 1 , 	למסירת שיחה הקישי 2, 	למסירת פעילות תפילה או ברכת המזון הקישי 3
+            // //מהי הפעילות שבצעת היום בגן, 	למסירת פעילות באוכל הקישי 1 , 	למסירת שיחה הקישי 2, 	למסירת פעילות תפילה או ברכת המזון הקישי 3
+            // await this.send(
+            //     this.read({ type: 'text', text: this.texts.askKindergartenActivity },
+            //         this.fields.kindergartenActivity, 'tap', { max: 3, min: 1, block_asterisk: true, digits_allowed: [0, 1, 2, 3] })
+            // );
+            // האם תרצי לדווח על תפילה 
             await this.send(
-                this.read({ type: 'text', text: this.texts.askKindergartenActivity },
-                    this.fields.kindergartenActivity, 'tap', { max: 3, min: 1, block_asterisk: true, digits_allowed: [0, 1, 2, 3] })
+                this.read({ type: 'text', text: this.texts.askKindergartenActivity1 },
+                    this.fields.kindergartenActivity1, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
+            );
+            // האם תרצי לדווח על פעילות 
+            await this.send(
+                this.read({ type: 'text', text: this.texts.askKindergartenActivity2 },
+                    this.fields.kindergartenActivity2, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
+            );
+            // האם תרצי לדווח על שיחה
+            await this.send(
+                this.read({ type: 'text', text: this.texts.askKindergartenActivity3 },
+                    this.fields.kindergartenActivity3, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
             );
         } else {
             //הקישי את מספר הגן

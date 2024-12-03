@@ -32,6 +32,9 @@ const getColumns = ({ students, studentTypes }) => [
   { field: 'exitHour', title: 'שעת יציאה' },
   { field: 'kindergartenType', title: 'סוג דיווח' },
   { field: 'kindergartenActivity', title: 'פעילות בגן' },
+  { field: 'kindergartenActivity1', title: 'תפילה' },
+  { field: 'kindergartenActivity2', title: 'פעילות' },
+  { field: 'kindergartenActivity3', title: 'שיחה' },
   { field: 'kindergartenNumber', title: 'מספר הגן' },
 ];
 const getFilters = ({ students, studentTypes }) => [
