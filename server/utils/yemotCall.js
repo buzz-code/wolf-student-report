@@ -243,7 +243,7 @@ export class YemotCall extends CallBase {
             //מהי הפעילות שבצעת היום בגן, 	למסירת פעילות באוכל הקישי 1 , 	למסירת שיחה הקישי 2, 	למסירת פעילות תפילה או ברכת המזון הקישי 3
             await this.send(
                 this.read({ type: 'text', text: this.texts.askKindergartenActivity },
-                    this.fields.kindergartenActivity, 'tap', { max: 3, min: 1, block_asterisk: true, digits_allowed: [1, 2, 3] })
+                    this.fields.kindergartenActivity, 'tap', { max: 3, min: 1, block_asterisk: true, digits_allowed: [0, 1, 2, 3] })
             );
         } else {
             //הקישי את מספר הגן
