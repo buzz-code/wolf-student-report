@@ -171,6 +171,12 @@ export class YemotCall extends CallBase {
             if (this.reportPeriodData) {
                 attReport.report_period_id = this.reportPeriodData.id;
             }
+            if (attReport.enterHour) {
+                attReport.enterHour = moment(attReport.enterHour, 'HHmm').format('HH:mm');
+            }
+            if (attReport.exitHour) {
+                attReport.exitHour = moment(attReport.exitHour, 'HHmm').format('HH:mm');
+            }
             console.log('before save', attReport);
             await new AttReport(attReport).save();
             console.log('after save', attReport);
