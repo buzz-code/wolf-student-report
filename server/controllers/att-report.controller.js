@@ -18,7 +18,11 @@ export async function findAll(req, res) {
             qb.leftJoin('students', 'students.id', 'att_reports.student_id')
             qb.leftJoin('student_types', { 'student_types.key': 'students.student_type_id', 'student_types.user_id': 'students.user_id' })
             qb.select('att_reports.*')
-            qb.select({ student_tz: 'students.tz', student_type_name: 'student_types.name' })
+            qb.select({
+                student_tz: 'students.tz',
+                student_klass_name: 'students.klass',
+                student_type_name: 'student_types.name'
+            })
         });
     applyFilters(dbQuery, req.query.filters);
     fetchPage({ dbQuery }, req.query, res);

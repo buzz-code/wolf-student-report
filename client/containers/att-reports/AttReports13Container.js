@@ -25,6 +25,9 @@ const getColumns = ({ students, studentTypes }) => [
     columnOrder: 'student_types.name',
     editable: 'never',
   },
+  {
+    field: 'student_klass_name', title: 'כיתה', editable: 'never'
+  },
   { field: 'report_date', title: 'תאריך הדיווח', type: 'date' },
   { field: 'report_date', title: 'תאריך עברי', render: ({ report_date }) => report_date && formatJewishDateHebrew(getJewishDate(new Date(report_date))), isHebrewDate: true },
   // { field: 'update_date', title: 'תאריך עדכון', type: 'date' },
@@ -50,6 +53,7 @@ const getFilters = ({ students, studentTypes }) => [
     defaultValue: 13,
     disabled: true,
   },
+  { field: 'student_klass_name', label: 'כיתה', type: 'text', operator: 'like' },
   { field: 'report_date', label: 'מתאריך', type: 'date', operator: 'date-before' },
   { field: 'report_date', label: 'עד תאריך', type: 'date', operator: 'date-after' },
   // { field: 'update_date', label: 'מתאריך עדכון', type: 'date', operator: 'date-before' },
