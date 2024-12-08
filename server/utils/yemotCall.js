@@ -1,6 +1,6 @@
 import { CallBase } from "../../common-modules/server/utils/callBase";
 import format from 'string-format';
-import moment from "moment";
+import moment from 'moment-timezone';
 import * as queryHelper from './queryHelper';
 import { AttReport } from "../models";
 import { formatJewishDateHebrew, getJewishDate } from "jewish-dates-core";
@@ -241,11 +241,11 @@ export class YemotCall extends CallBase {
                 'enterExitHour', 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [1, 2] })
         );
         if (this.params.enterExitHour === '1') {
-            this.params[this.fields.enterHour] = moment().format('HHmm');
+            this.params[this.fields.enterHour] = moment().tz('Asia/Jerusalem').format('HHmm');
             return;
         } else {
             this.params[this.fields.enterHour] = this.existingReport?.enterHour;
-            this.params[this.fields.exitHour] = moment().format('HHmm');
+            this.params[this.fields.exitHour] = moment().tz('Asia/Jerusalem').format('HHmm');
         }
 
         if (this.params[this.fields.kindergartenType] === '1') {
