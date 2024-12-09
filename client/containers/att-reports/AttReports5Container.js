@@ -26,7 +26,13 @@ const getColumns = ({ students, studentTypes }) => [
     editable: 'never',
   },
   { field: 'report_date', title: 'תאריך הדיווח', type: 'date' },
-  { field: 'report_date', title: 'תאריך עברי', render: ({ report_date }) => report_date && formatJewishDateHebrew(getJewishDate(new Date(report_date))), isHebrewDate: true },
+  {
+    field: 'report_date',
+    title: 'תאריך עברי',
+    render: ({ report_date }) =>
+      report_date && formatJewishDateHebrew(getJewishDate(new Date(report_date))),
+    isHebrewDate: true,
+  },
   // { field: 'update_date', title: 'תאריך עדכון', type: 'date' },
   { field: 'trainingType', title: 'סוג תיקוף הוראה מתקנת' },
   { field: 'enterHour', title: 'שעת כניסה' },
@@ -67,6 +73,7 @@ const AttReports5Container = ({ entity, title }) => {
     report_date: dataToSave.report_date && moment(dataToSave.report_date).format('yyyy-MM-DD'),
     update_date: dataToSave.update_date && moment(dataToSave.update_date).format('yyyy-MM-DD'),
     student_type_name: undefined,
+    student_klass_name: undefined,
     student_tz: undefined,
   });
 
