@@ -520,10 +520,10 @@ export class YemotCall extends CallBase {
             this.read({ type: 'text', text: this.texts.askLecture2 },
                 this.fields.lecture2, 'tap', { max: 2, min: 1, block_asterisk: true })
         );
-        await this.send(
-            this.read({ type: 'text', text: this.texts.askLecture3 },
-                this.fields.lecture3, 'tap', { max: 2, min: 1, block_asterisk: true })
-        );
+        // await this.send(
+        //     this.read({ type: 'text', text: this.texts.askLecture3 },
+        //         this.fields.lecture3, 'tap', { max: 2, min: 1, block_asterisk: true })
+        // );
     }
 
 
