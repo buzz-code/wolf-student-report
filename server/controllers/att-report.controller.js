@@ -49,11 +49,14 @@ export async function getEditData(req, res) {
 export async function getPivotData(req, res) {
     const studentFilters = [];
     const reportFilters = [];
+    let pivotGroupBy = getWeekStart;
     if (req.query.filters) {
         const filtersObj = JSON.parse(req.query.filters);
         for (const filter of Object.values(filtersObj)) {
             if (filter.field.startsWith('student')) {
                 studentFilters.push(filter);
+            } else if (filter.field === 'pivotGropuBy') {
+                pivotGroupBy = filter.value === 'day' ? getDayStart : getWeekStart;
             } else {
                 reportFilters.push(filter);
             }
@@ -87,7 +90,7 @@ export async function getPivotData(req, res) {
         if (pivotDict[item.student_id].total === undefined) {
             pivotDict[item.student_id].total = 0;
         }
-        const key = getWeekStart(item.report_date);
+        const key = pivotGroupBy(item.report_date);
         if (pivotDict[item.student_id][key] === undefined) {
             pivotDict[item.student_id][key] = 0;
             pivotDict[item.student_id][key + '_title'] = formatJewishDateHebrew(getJewishDate(new Date(key)));
@@ -106,6 +109,10 @@ export async function getPivotData(req, res) {
 
 function getWeekStart(reportDate) {
     return moment(reportDate).startOf('week').toDate().getTime();
+}
+
+function getDayStart(reportDate) {
+    return moment(reportDate).startOf('day').toDate().getTime();
 }
 
 export async function getExcellencyTotalReport(req, res) {

@@ -43,6 +43,17 @@ const getFilters = ({ students, studentTypes }) => [
   { field: 'report_date', label: 'עד תאריך', type: 'date', operator: 'date-after' },
   // { field: 'update_date', label: 'מתאריך עדכון', type: 'date', operator: 'date-before' },
   // { field: 'update_date', label: 'עד תאריך עדכון', type: 'date', operator: 'date-after' },
+  {
+    field: 'pivotGropuBy',
+    label: 'קיבוץ לפי',
+    type: 'list',
+    list: [
+      { key: 'day', name: 'יום' },
+      { key: 'week', name: 'שבוע' },
+    ],
+    operator: 'eq',
+    idField: 'key',
+  },
 ];
 
 const AttReportsPivotContainer = ({ entity, title }) => {
