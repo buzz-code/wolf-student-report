@@ -51,6 +51,7 @@ const getFilters = ({ students, studentTypes }) => [
       { key: 'day', name: 'יום' },
       { key: 'week', name: 'שבוע' },
     ],
+    defaultValue: 'week',
     operator: 'eq',
     idField: 'key',
   },
