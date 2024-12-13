@@ -156,7 +156,7 @@ export async function getExcellencyTotalReport(req, res) {
     fetchPage({ dbQuery, countQuery }, req.query, res);
 }
 
-export async function getStudentAndDates(req, res) {
+export async function getAttReportsAndDates(req, res) {
     const dbQuery = new Student().where({ 'students.user_id': req.currentUser.id })
         .query(qb => {
             qb.leftJoin('student_types', { 'student_types.key': 'students.student_type_id', 'student_types.user_id': 'students.user_id' })
