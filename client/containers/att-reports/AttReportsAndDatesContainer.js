@@ -50,8 +50,13 @@ const getFilters = ({ students, studentTypes }) => [
     idField: 'key',
     defaultValue: 8,
   },
-  { field: 'report_date', label: 'מתאריך', type: 'date', operator: 'date-before' },
-  { field: 'report_date', label: 'עד תאריך', type: 'date', operator: 'date-after' },
+  { field: 'excellency_dates.report_date', label: 'מתאריך', type: 'date', operator: 'date-before' },
+  {
+    field: 'excellency_dates.report_date',
+    label: 'עד תאריך',
+    type: 'date',
+    operator: 'date-after',
+  },
 ];
 
 const AttReportsAndDatesContainer = ({ entity, title }) => {
