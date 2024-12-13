@@ -155,3 +155,22 @@ export async function getExcellencyTotalReport(req, res) {
     });
     fetchPage({ dbQuery, countQuery }, req.query, res);
 }
+
+export async function getStudentAndDates(req, res) {
+    const dbQuery = new Student().where({ 'students.user_id': req.currentUser.id })
+        .query(qb => {
+            qb.leftJoin('student_types', { 'student_types.key': 'students.student_type_id', 'student_types.user_id': 'students.user_id' })
+            qb.leftJoin('excellency_dates', { 'excellency_dates.student_type_id': 'student_types.key', 'excellency_dates.user_id': 'students.user_id' })
+            qb.leftJoin('att_reports', { 'students.id': 'att_reports.student_id', 'att_reports.report_date': 'excellency_dates.report_date' })
+            qb.select('att_reports.*')
+            qb.select({
+                student_tz: 'students.tz',
+                student_type_name: 'student_types.name',
+                excellency_date: 'excellency_dates.report_date',
+                report_date: 'att_reports.report_date'
+            })
+        });
+
+    applyFilters(dbQuery, req.query.filters);
+    fetchPage({ dbQuery }, req.query, res);
+}
