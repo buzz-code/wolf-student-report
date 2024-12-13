@@ -57,14 +57,14 @@ const getFilters = ({ students, studentTypes }) => [
 const AttReportsAndDatesContainer = ({ entity, title }) => {
   const dispatch = useDispatch();
   const {
-    GET: { 'get-edit-data': editData },
+    GET: { '../get-edit-data': editData },
   } = useSelector((state) => state[entity]);
 
   const columns = useMemo(() => getColumns(editData || {}), [editData]);
   const filters = useMemo(() => getFilters(editData || {}), [editData]);
 
   useEffect(() => {
-    dispatch(crudAction.customHttpRequest(entity, 'GET', 'get-edit-data'));
+    dispatch(crudAction.customHttpRequest(entity, 'GET', '../get-edit-data'));
   }, []);
 
   return (
