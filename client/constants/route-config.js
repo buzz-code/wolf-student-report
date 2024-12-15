@@ -58,7 +58,8 @@ import AttReports14Container from '../containers/att-reports/AttReports14Contain
 import AttReportsPivotContainer from '../containers/att-reports/AttReportsPivotContainer';
 import ExcellencyDatesContainer from '../containers/excellency-dates/ExcellencyDatesContainer';
 import ExcellencyTotalReportContainer from '../containers/excellency-total-report/ExcellencyTotalReportContainer';
-import AttReportsAndDatesContainer from '../containers/att-reports/AttReportsAndDatesContainer';
+import AttReportsAndDates1Container from '../containers/att-reports/AttReportsAndDates1Container';
+import AttReportsAndDates8Container from '../containers/att-reports/AttReportsAndDates8Container';
 
 export default [
   [
@@ -275,11 +276,24 @@ export default [
           },
         },
         {
-          path: '/att-reports-and-dates',
-          component: AttReportsAndDatesContainer,
+          path: '/att-reports-and-dates-1',
+          component: AttReportsAndDates1Container,
           icon: StorageIcon,
-          title: titles.ATT_REPORTS_AND_DATES,
-          props: { entity: entities.ATT_REPORTS_AND_DATES, title: titles.ATT_REPORTS_AND_DATES },
+          title: titles.ATT_REPORTS_AND_DATES_1,
+          props: {
+            entity: entities.ATT_REPORTS_AND_DATES_1,
+            title: titles.ATT_REPORTS_AND_DATES_1,
+          },
+        },
+        {
+          path: '/att-reports-and-dates-8',
+          component: AttReportsAndDates8Container,
+          icon: StorageIcon,
+          title: titles.ATT_REPORTS_AND_DATES_8,
+          props: {
+            entity: entities.ATT_REPORTS_AND_DATES_8,
+            title: titles.ATT_REPORTS_AND_DATES_8,
+          },
         },
         // {
         //   path: '/seminar-kita-reports',

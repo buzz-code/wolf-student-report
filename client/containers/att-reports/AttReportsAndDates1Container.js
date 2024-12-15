@@ -33,10 +33,14 @@ const getColumns = ({ students, studentTypes }) => [
       report_date && formatJewishDateHebrew(getJewishDate(new Date(report_date))),
     isHebrewDate: true,
   },
-  { field: 'excellencyAtt', title: 'מצוינות - נוכחות' },
-  { field: 'excellencyHomework', title: 'מצוינות - ש"ב' },
-  { field: 'excellencyExtra1', title: 'מרצה 1' },
-  { field: 'excellencyExtra2', title: 'מרצה 2' },
+  { field: 'enterHour', title: 'שעת כניסה' },
+  { field: 'exitHour', title: 'שעת יציאה' },
+  { field: 'kindergartenType', title: 'סוג דיווח' },
+  { field: 'kindergartenActivity', title: 'פעילות בגן' },
+  { field: 'kindergartenActivity1', title: 'תפילה' },
+  { field: 'kindergartenActivity2', title: 'פעילות' },
+  { field: 'kindergartenActivity3', title: 'שיחה' },
+  { field: 'kindergartenNumber', title: 'מספר הגן' },
 ];
 
 const getFilters = ({ students, studentTypes }) => [
@@ -48,7 +52,8 @@ const getFilters = ({ students, studentTypes }) => [
     list: studentTypes,
     operator: 'eq',
     idField: 'key',
-    defaultValue: 8,
+    defaultValue: 1,
+    disabled: true,
   },
   { field: 'excellency_dates.report_date', label: 'מתאריך', type: 'date', operator: 'date-before' },
   {
@@ -59,7 +64,7 @@ const getFilters = ({ students, studentTypes }) => [
   },
 ];
 
-const AttReportsAndDatesContainer = ({ entity, title }) => {
+const AttReportsAndDates1Container = ({ entity, title }) => {
   const dispatch = useDispatch();
   const {
     GET: { '../get-edit-data': editData },
@@ -85,4 +90,4 @@ const AttReportsAndDatesContainer = ({ entity, title }) => {
   );
 };
 
-export default AttReportsAndDatesContainer;
+export default AttReportsAndDates1Container;
