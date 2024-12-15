@@ -165,6 +165,7 @@ export async function getAttReportsAndDates(req, res) {
             qb.select('att_reports.*')
             qb.select({
                 student_tz: 'students.tz',
+                student_id: 'students.id',
                 student_type_name: 'student_types.name',
                 excellency_date: 'excellency_dates.report_date',
                 report_date: 'att_reports.report_date'
