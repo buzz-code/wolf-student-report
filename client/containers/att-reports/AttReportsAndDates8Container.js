@@ -49,7 +49,6 @@ const getFilters = ({ students, studentTypes }) => [
     operator: 'eq',
     idField: 'key',
     defaultValue: 8,
-    disabled: true,
   },
   { field: 'excellency_dates.report_date', label: 'מתאריך', type: 'date', operator: 'date-before' },
   {
