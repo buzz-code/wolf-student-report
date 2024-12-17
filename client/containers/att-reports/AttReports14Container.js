@@ -20,6 +20,12 @@ const getColumns = ({ students, studentTypes }) => [
     columnOrder: 'students.name',
   },
   {
+    field: 'student_klass_name',
+    title: 'כיתה',
+    columnOrder: 'students.klass',
+    editable: 'never',
+  },
+  {
     field: 'student_type_name',
     title: 'סוג תלמידה',
     columnOrder: 'student_types.name',
