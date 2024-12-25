@@ -48,6 +48,7 @@ export class YemotCall extends CallBase {
         mathLessons: 'mathLessons',
         openQuestion: 'openQuestion',
         prayerOrLecture: 'prayerOrLecture',
+        prayer0: 'prayer0',
         prayer1: 'prayer1',
         prayer2: 'prayer2',
         prayer3: 'prayer3',
@@ -484,6 +485,10 @@ export class YemotCall extends CallBase {
 
         await this.send(
             this.globalMsgIfExists(),
+            this.read({ type: 'text', text: this.texts.askPrayer0 },
+                this.fields.prayer0, 'tap', { max: 2, min: 1, block_asterisk: true })
+        );
+        await this.send(
             this.read({ type: 'text', text: this.texts.askPrayer1 },
                 this.fields.prayer1, 'tap', { max: 2, min: 1, block_asterisk: true })
         );
@@ -623,7 +628,7 @@ export class YemotCall extends CallBase {
             case 13:
                 // תלמידות ה - תפילה והרצאות
                 if (this.params[this.fields.prayerOrLecture] === '1') {
-                    return format(this.texts.askPrayerReportConfirm, this.params[this.fields.prayer1], this.params[this.fields.prayer2], this.params[this.fields.prayer3], this.params[this.fields.prayer4], this.params[this.fields.prayer5]);
+                    return format(this.texts.askPrayerReportConfirm, this.params[this.fields.prayer0], this.params[this.fields.prayer1], this.params[this.fields.prayer2], this.params[this.fields.prayer3], this.params[this.fields.prayer4], this.params[this.fields.prayer5]);
                 } else {
                     return format(this.texts.askLecturesReportConfirm, this.params[this.fields.lecture1], this.params[this.fields.lecture2], this.params[this.fields.lecture3]);
                 }

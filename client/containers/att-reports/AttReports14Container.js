@@ -41,6 +41,7 @@ const getColumns = ({ students, studentTypes }) => [
   },
   // { field: 'update_date', title: 'תאריך עדכון', type: 'date' },
   // { field: 'prayerOrLecture', title: 'תפילה/הרצאה' },
+  // { field: 'prayer0', title: 'תפילה 0' },
   // { field: 'prayer1', title: 'תפילה 1' },
   // { field: 'prayer2', title: 'תפילה 2' },
   // { field: 'prayer3', title: 'תפילה 3' },
