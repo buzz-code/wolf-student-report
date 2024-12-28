@@ -57,6 +57,7 @@ export class YemotCall extends CallBase {
         lecture1: 'lecture1',
         lecture2: 'lecture2',
         lecture3: 'lecture3',
+        confirmReport: 'confirmReport',
     }
 
     async start() {
