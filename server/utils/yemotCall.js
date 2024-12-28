@@ -57,7 +57,6 @@ export class YemotCall extends CallBase {
         lecture1: 'lecture1',
         lecture2: 'lecture2',
         lecture3: 'lecture3',
-        confirmReport: 'confirmReport',
     }
 
     async start() {
@@ -570,13 +569,13 @@ export class YemotCall extends CallBase {
 
         await this.send(
             this.read({ type: 'text', text: confirmationMessage },
-                this.fields.confirmReport, 'tap', { min: 1, max: 1, block_asterisk: true, digits_allowed: [0, 1] })
+                'confirmReport', 'tap', { min: 1, max: 1, block_asterisk: true, digits_allowed: [0, 1] })
         );
-        if (this.params[this.fields.confirmReport] === '0') {
+        if (this.params.confirmReport === '0') {
             this.globalMsg = this.texts.notConfirmedAskingAgain;
             return this.getReport();
         }
-        delete this.params[this.fields.confirmReport];
+        delete this.params.confirmReport;
     }
 
     getConfirmationMessage() {
