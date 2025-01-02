@@ -551,7 +551,7 @@ export class YemotCall extends CallBase {
     }
 
     async checkReportPeriod(reportType) {
-        this.reportPeriodData = await queryHelper.getCurrentReportPeriod(this.user.id, reportType);
+        this.reportPeriodData = await queryHelper.getCurrentReportPeriod(this.user.id, this.student.student_type_id, reportType);
         if (!this.reportPeriodData) {
             return this.send(
                 this.id_list_message({ type: 'text', text: this.texts.reportPeriodIsInvalid }),

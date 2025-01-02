@@ -7,6 +7,11 @@ import * as crudAction from '../../../common-modules/client/actions/crudAction';
 import { getPropsForAutoComplete } from '../../../common-modules/client/utils/formUtil';
 
 const getColumns = ({ studentTypes }) => [
+  {
+    field: 'student_type_id',
+    title: 'סוג התלמידה',
+    ...getPropsForAutoComplete('student_type_id', studentTypes, 'key'),
+  },
   { field: 'report_type', title: 'סוג התקופה', type: 'numeric' },
   { field: 'period_name', title: 'שם התקופה' },
   { field: 'start_date', title: 'תאריך התחלה', type: 'date' },
@@ -33,8 +38,12 @@ const ReportPeriodsContainer = ({ entity, title }) => {
     ...dataToSave,
     start_date: dataToSave.start_date ? moment(dataToSave.start_date).format('yyyy-MM-DD') : null,
     end_date: dataToSave.end_date ? moment(dataToSave.end_date).format('yyyy-MM-DD') : null,
-    start_report_date: dataToSave.start_report_date ? moment(dataToSave.start_report_date).format('yyyy-MM-DD') : null,
-    end_report_date: dataToSave.end_report_date ? moment(dataToSave.end_report_date).format('yyyy-MM-DD') : null,
+    start_report_date: dataToSave.start_report_date
+      ? moment(dataToSave.start_report_date).format('yyyy-MM-DD')
+      : null,
+    end_report_date: dataToSave.end_report_date
+      ? moment(dataToSave.end_report_date).format('yyyy-MM-DD')
+      : null,
   });
 
   return (

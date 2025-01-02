@@ -169,10 +169,10 @@ export async function getExistingStudentReportByReportDate(user_id, student_id, 
         .then(res => res ? res.toJSON() : null);
 }
 
-export async function getCurrentReportPeriod(user_id, report_type) {
+export async function getCurrentReportPeriod(user_id, student_type_id, report_type) {
     const report_date = moment().format('YYYY-MM-DD');
     return new ReportPeriod()
-        .where({ user_id, report_type })
+        .where({ user_id, student_type_id, report_type })
         .where('start_report_date', '<=', report_date)
         .where('end_report_date', '>=', report_date)
         .fetch({ require: false })
