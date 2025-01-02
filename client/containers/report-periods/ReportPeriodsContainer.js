@@ -6,13 +6,22 @@ import Table from '../../../common-modules/client/components/table/Table';
 import * as crudAction from '../../../common-modules/client/actions/crudAction';
 import { getPropsForAutoComplete } from '../../../common-modules/client/utils/formUtil';
 
+const reportTypes = [
+  { id: '1', name: 'תפילה' },
+  { id: '2', name: 'הרצאות' },
+];
+
 const getColumns = ({ studentTypes }) => [
   {
     field: 'student_type_id',
     title: 'סוג התלמידה',
     ...getPropsForAutoComplete('student_type_id', studentTypes, 'key'),
   },
-  { field: 'report_type', title: 'סוג התקופה', type: 'numeric' },
+  {
+    field: 'report_type',
+    title: 'סוג התקופה',
+    ...getPropsForAutoComplete('report_type', reportTypes),
+  },
   { field: 'period_name', title: 'שם התקופה' },
   { field: 'start_date', title: 'תאריך התחלה', type: 'date' },
   { field: 'end_date', title: 'תאריך סיום', type: 'date' },
