@@ -1,4 +1,4 @@
 [submodule "common-modules"]
-	path = common-modules
-	url = git@github.com:buzz-code/common-modules.git
+  path = common-modules
+  url = https://github.com/buzz-code/common-modules.git
 	branch = master
