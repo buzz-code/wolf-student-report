@@ -1,7 +1,7 @@
 import knex from 'knex';
 
 const dbConfig = {
-  client: 'better-sqlite3',
+  client: 'sqlite3',
   connection: {
     filename: ':memory:',
   },
