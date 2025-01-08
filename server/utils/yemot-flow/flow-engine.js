@@ -3,9 +3,7 @@ import { performAction } from './flow-actions';
 
 export async function runFlow(call, flow, context) {
   try {
-    let keepRunning = true;
-
-    while (keepRunning) {
+    while (true) {
       const currentNode = flow.nodes.find(n => n.id === context.currentNodeId);
       if (!currentNode) {
         console.warn(`Node not found: ${context.currentNodeId}`);
@@ -15,21 +13,20 @@ export async function runFlow(call, flow, context) {
       switch (currentNode.type) {
         case 'tapInput':
           await handleTapInputNode(call, context, currentNode);
-          context.currentNodeId = getNextNodeIdForInput(context, currentNode);
           break;
 
         case 'action':
           await handleActionNode(call, context, currentNode);
-          context.currentNodeId = getNextNodeIdForInput(context, currentNode);
           break;
 
         default:
           console.warn(`Unhandled node type: ${currentNode.type}`);
-          keepRunning = false;
           break;
       }
 
-      if (!keepRunning || context.currentNodeId === 'end') {
+      context.currentNodeId = getNextNodeIdForInput(context, currentNode);
+
+      if (context.currentNodeId === 'end') {
         return call.hangup();
       }
     }
