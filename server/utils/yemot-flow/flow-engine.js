@@ -67,6 +67,7 @@ async function handleTapInputNode(call, context, node) {
       min_digits: config.min ?? 1,
       block_asterisk_key: config.blockAsterisk ?? true,
       val_name: node.storeVar,
+      digits_allowed: config.allowedDigits,
     }
   );
 

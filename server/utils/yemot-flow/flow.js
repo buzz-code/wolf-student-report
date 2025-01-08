@@ -1,4 +1,5 @@
 import { musicNodes } from './music-flow';
+import { exerciseNodes } from './exercise-flow';
 
 export default {
   "nodes": [
@@ -44,10 +45,13 @@ export default {
       "message": "Welcome {studentType} {studentName}",
       "storeVar": "studentTypeId",
       "nextIf": {
-        "2": "music_start"
+        "2": "music_start",
+        "3": "exercise_start",
+        "11": "exercise_start"
       }
     },
     ...musicNodes,
+    ...exerciseNodes,
     {
       "id": "save",
       "type": "action",

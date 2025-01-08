@@ -31,7 +31,13 @@ export async function handleCall(req, res) {
 
 export const yemotRouter = YemotRouter({
     printLogs: true,
-    removeInvalidChars: true
+    removeInvalidChars: true,
+    read: {
+        removeInvalidChars: true,
+    },
+    id_list_message: {
+        removeInvalidChars: true,
+    }
 });
 
 yemotRouter.all('/', async (call) => {

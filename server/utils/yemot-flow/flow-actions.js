@@ -53,6 +53,11 @@ const ACTIONS_MAP = {
         student_id: ctx.student.id,
         kubaseTime: ctx.variables.kubaseTime,
         fluteTime: ctx.variables.fluteTime,
+        exercizeTime: ctx.variables.exercizeTime,
+        exercize1: ctx.variables.exercize1,
+        exercize2: ctx.variables.exercize2,
+        exercize3: ctx.variables.exercize3,
+        exercize4: ctx.variables.exercize4,
         report_date: new Date(),
         update_date: new Date()
       };
