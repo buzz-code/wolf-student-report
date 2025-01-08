@@ -2,7 +2,7 @@ import HttpStatus from 'http-status-codes';
 import { CallListHandler } from '../../common-modules/server/utils/callBase';
 import { YemotCall } from '../utils/yemotCall';
 import { YemotRouter } from 'yemot-router2';
-import yemotFlow from '../utils/yemot-flow/flow.json';
+import yemotFlow from '../utils/yemot-flow/flow';
 import { runFlow } from '../utils/yemot-flow/flow-engine';
 
 /**

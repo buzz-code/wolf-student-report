@@ -1,4 +1,6 @@
-{
+import { musicNodes } from './music-flow';
+
+export default {
   "nodes": [
     {
       "id": "start",
@@ -19,11 +21,12 @@
       "id": "validateStudentType",
       "type": "action",
       "action": "validateStudentType",
-      "storeVar": "studentTypeStatus",
+      "storeVar": "studentTypeId",
       "nextIf": {
-        "invalid": "errorInvalidType",
-        "valid": "welcome"
-      }
+        "undefined": "errorInvalidType",
+        "default": "errorInvalidType"
+      },
+      "next": "welcome"
     },
     {
       "id": "errorNotFound",
@@ -39,30 +42,12 @@
       "id": "welcome",
       "type": "action",
       "message": "Welcome {studentType} {studentName}",
-      "next": "askKubase"
+      "storeVar": "studentTypeId",
+      "nextIf": {
+        "2": "music_start"
+      }
     },
-    {
-      "id": "askKubase",
-      "type": "tapInput",
-      "message": "Please enter Kubase time",
-      "storeVar": "kubaseTime",
-      "inputConfig": {
-        "max": 3,
-        "min": 1
-      },
-      "next": "askFlute"
-    },
-    {
-      "id": "askFlute",
-      "type": "tapInput",
-      "message": "Please enter Flute time",
-      "storeVar": "fluteTime",
-      "inputConfig": {
-        "max": 3,
-        "min": 1
-      },
-      "next": "save"
-    },
+    ...musicNodes,
     {
       "id": "save",
       "type": "action",

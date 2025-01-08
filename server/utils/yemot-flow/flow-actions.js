@@ -43,11 +43,7 @@ const ACTIONS_MAP = {
 
     ctx.studentType = studentType.toJSON();
     ctx.variables.studentType = ctx.studentType.name;
-
-    const recognizedTypes = [2]; // Currently only music students
-    ctx.variables.studentTypeStatus = recognizedTypes.includes(ctx.student.student_type_id)
-      ? 'valid'
-      : 'invalid';
+    ctx.variables.studentTypeId = ctx.student.student_type_id ?? 'default';
   },
 
   async saveReport(ctx, call) {
