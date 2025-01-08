@@ -1,0 +1,87 @@
+{
+  "nodes": [
+    {
+      "id": "start",
+      "type": "action",
+      "action": "lookupStudent",
+      "next": "checkStatus"
+    },
+    {
+      "id": "checkStatus",
+      "type": "action",
+      "storeVar": "status",
+      "nextIf": {
+        "notFound": "errorNotFound",
+        "found": "validateStudentType"
+      }
+    },
+    {
+      "id": "validateStudentType",
+      "type": "action",
+      "action": "validateStudentType",
+      "storeVar": "studentTypeStatus",
+      "nextIf": {
+        "invalid": "errorInvalidType",
+        "valid": "welcome"
+      }
+    },
+    {
+      "id": "errorNotFound",
+      "type": "end",
+      "message": "Phone is not recognized in the system"
+    },
+    {
+      "id": "errorInvalidType",
+      "type": "end",
+      "message": "Student type is not recognized in the system"
+    },
+    {
+      "id": "welcome",
+      "type": "action",
+      "message": "Welcome {studentType} {studentName}",
+      "next": "askKubase"
+    },
+    {
+      "id": "askKubase",
+      "type": "tapInput",
+      "message": "Please enter Kubase time",
+      "storeVar": "kubaseTime",
+      "inputConfig": {
+        "max": 3,
+        "min": 1
+      },
+      "next": "askFlute"
+    },
+    {
+      "id": "askFlute",
+      "type": "tapInput",
+      "message": "Please enter Flute time",
+      "storeVar": "fluteTime",
+      "inputConfig": {
+        "max": 3,
+        "min": 1
+      },
+      "next": "save"
+    },
+    {
+      "id": "save",
+      "type": "action",
+      "action": "saveReport",
+      "storeVar": "saveStatus",
+      "nextIf": {
+        "error": "errorSave",
+        "ok": "success"
+      }
+    },
+    {
+      "id": "errorSave",
+      "type": "end",
+      "message": "Data was not saved"
+    },
+    {
+      "id": "success",
+      "type": "end",
+      "message": "Data was saved successfully"
+    }
+  ]
+}

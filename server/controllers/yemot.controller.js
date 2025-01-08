@@ -1,6 +1,9 @@
 import HttpStatus from 'http-status-codes';
 import { CallListHandler } from '../../common-modules/server/utils/callBase';
 import { YemotCall } from '../utils/yemotCall';
+import { YemotRouter } from 'yemot-router2';
+import yemotFlow from '../utils/yemot-flow/flow.json';
+import { runFlow } from '../utils/yemot-flow/flow-engine';
 
 /**
  * Take call and handle it
@@ -25,3 +28,19 @@ export async function handleCall(req, res) {
 
     call.process(req.body, res);
 }
+
+export const yemotRouter = YemotRouter({
+    printLogs: true,
+    removeInvalidChars: true
+});
+
+yemotRouter.all('/', async (call) => {
+    const context = {
+        currentNodeId: 'start',
+        variables: {},
+    };
+    console.log('start flow', call);
+
+    await runFlow(call, yemotFlow, context);
+});
+

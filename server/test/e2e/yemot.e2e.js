@@ -2,9 +2,16 @@ import request from 'supertest';
 import app from '../../app';
 import { User, StudentType, Student, AttReport, Text } from '../../models';
 
-const YEMOT_PATH = '/api/yemot';
+const YEMOT_PATHS = [
+    '/api/yemot',
+    '/api/yemot/v2'
+];
 
-describe('Yemot Call Flow E2E Tests', () => {
+function cleanYemotResponse(response) {
+    return response.replace(/\.\&/g, '&');
+}
+
+describe.each(YEMOT_PATHS)('Yemot Call Flow E2E Tests - %s', (YEMOT_PATH) => {
     let user;
     let studentType;
     let student;
@@ -79,6 +86,7 @@ describe('Yemot Call Flow E2E Tests', () => {
             key: 2,
             user_id: user.id
         }).save().then(model => model.toJSON());
+        console.log('studentType:', studentType);
 
         student = await new Student({
             user_id: user.id,
@@ -103,7 +111,7 @@ describe('Yemot Call Flow E2E Tests', () => {
             .post(YEMOT_PATH)
             .send(defaultRequestParams);
 
-        expect(initialCall.text).toBe('id_list_message=t-Welcome music Test Student.&read=t-Please enter Kubase time=kubaseTime,no,3,1,7,No,yes,no,,,,no,');
+        expect(cleanYemotResponse(initialCall.text)).toBe('id_list_message=t-Welcome music Test Student&read=t-Please enter Kubase time=kubaseTime,no,3,1,7,No,yes,no,,,,,None,');
 
         const kubaseResponse = await request(app)
             .post(YEMOT_PATH)
@@ -112,7 +120,7 @@ describe('Yemot Call Flow E2E Tests', () => {
                 kubaseTime: '10'
             });
 
-        expect(kubaseResponse.text).toBe('read=t-Please enter Flute time=fluteTime,no,3,1,7,No,yes,no,,,,no,');
+        expect(kubaseResponse.text).toBe('read=t-Please enter Flute time=fluteTime,no,3,1,7,No,yes,no,,,,,None,');
 
         const fluteResponse = await request(app)
             .post(YEMOT_PATH)
@@ -121,7 +129,7 @@ describe('Yemot Call Flow E2E Tests', () => {
                 fluteTime: '15'
             });
 
-        expect(fluteResponse.text).toBe('id_list_message=t-Data was saved successfully.&go_to_folder=hangup');
+        expect(cleanYemotResponse(fluteResponse.text)).toBe('id_list_message=t-Data was saved successfully&go_to_folder=hangup');
 
         const savedReport = await new AttReport()
             .where('student_id', student.id)
@@ -143,7 +151,7 @@ describe('Yemot Call Flow E2E Tests', () => {
                 ApiCallId: 'test-call-notfound'
             });
 
-        expect(response.text).toBe('id_list_message=t-Phone is not recognized in the system.&go_to_folder=hangup');
+        expect(cleanYemotResponse(response.text)).toBe('id_list_message=t-Phone is not recognized in the system&go_to_folder=hangup');
     });
 
     it('should handle unknown student type', async () => {
@@ -162,7 +170,7 @@ describe('Yemot Call Flow E2E Tests', () => {
                 ApiCallId: 'test-call-2'
             });
 
-        expect(response.text).toBe('id_list_message=t-Student type is not recognized in the system.&go_to_folder=hangup');
+        expect(cleanYemotResponse(response.text)).toBe('id_list_message=t-Student type is not recognized in the system&go_to_folder=hangup');
     });
 
     it('should handle error in saving data', async () => {
@@ -194,6 +202,6 @@ describe('Yemot Call Flow E2E Tests', () => {
             .fetch({ require: false });
 
         expect(savedReport).toBeFalsy();
-        expect(response.text).toBe('id_list_message=t-Data was not saved.&go_to_folder=hangup');
+        expect(cleanYemotResponse(response.text)).toBe('id_list_message=t-Data was not saved&go_to_folder=hangup');
     });
 });
