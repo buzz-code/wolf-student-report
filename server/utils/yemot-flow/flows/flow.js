@@ -31,13 +31,15 @@ export default {
     },
     {
       "id": "errorNotFound",
-      "type": "end",
-      "message": "Phone is not recognized in the system"
+      "type": "action",
+      "message": "Phone is not recognized in the system",
+      "next": "end"
     },
     {
       "id": "errorInvalidType",
-      "type": "end",
-      "message": "Student type is not recognized in the system"
+      "type": "action",
+      "message": "Student type is not recognized in the system",
+      "next": "end"
     },
     {
       "id": "welcome",
@@ -64,13 +66,15 @@ export default {
     },
     {
       "id": "errorSave",
-      "type": "end",
-      "message": "Data was not saved"
+      "type": "action",
+      "message": "Data was not saved",
+      "next": "end"
     },
     {
       "id": "success",
-      "type": "end",
-      "message": "Data was saved successfully"
+      "type": "action",
+      "message": "Data was saved successfully",
+      "next": "end"
     }
   ]
 }

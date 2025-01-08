@@ -23,14 +23,6 @@ export async function runFlow(call, flow, context) {
           context.currentNodeId = getNextNodeIdForInput(context, currentNode);
           break;
 
-        case 'end':
-          if (currentNode.message) {
-            const msg = replacePlaceholders(currentNode.message, context.variables);
-            await call.id_list_message([{ type: 'text', data: msg }], { prependToNextAction: true });
-          }
-          keepRunning = false;
-          break;
-
         default:
           console.warn(`Unhandled node type: ${currentNode.type}`);
           keepRunning = false;
