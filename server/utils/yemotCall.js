@@ -248,7 +248,7 @@ export class YemotCall extends CallBase {
             this.params[this.fields.enterHour] = moment().tz('Asia/Jerusalem').format('HHmm');
             return;
         } else {
-            this.params[this.fields.enterHour] = this.existingReport?.enterHour;
+            this.params[this.fields.enterHour] = this.existingReport?.enterHour?.replace(':', '') || '';
             this.params[this.fields.exitHour] = moment().tz('Asia/Jerusalem').format('HHmm');
         }
 
