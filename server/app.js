@@ -49,7 +49,7 @@ app.use(errorHandler.genericErrorHandler);
 app.use(errorHandler.notFound);
 app.use(errorHandler.methodNotAllowed);
 
-app.listen(app.get('port'), app.get('host'), () => {
+export const server = app.listen(app.get('port'), app.get('host'), () => {
   console.log(`Server running at http://${app.get('host')}:${app.get('port')}`);
 });
 
