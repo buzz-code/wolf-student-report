@@ -2,12 +2,22 @@ import request from 'supertest';
 import app from '../../app';
 import { User, StudentType, Student, AttReport, Text } from '../../models';
 
+const YEMOT_PATH = '/api/yemot';
+
 describe('Yemot Call Flow E2E Tests', () => {
     let user;
     let studentType;
     let student;
     const userPhone = '0500000000';
     const testPhone = '0501234567';
+
+    const defaultRequestParams = {
+        ApiPhone: testPhone,
+        ApiDID: userPhone,
+        ApiExtension: '1',
+        ApiCallId: 'test-call-1',
+        user_id: null  // Will be set in beforeEach
+    };
 
     beforeEach(async () => {
         await AttReport.query().delete();
@@ -76,6 +86,8 @@ describe('Yemot Call Flow E2E Tests', () => {
             name: 'Test Student',
             student_type_id: studentType.key
         }).save().then(model => model.toJSON());
+
+        defaultRequestParams.user_id = user.id;
     });
 
     afterEach(async () => {
@@ -88,32 +100,25 @@ describe('Yemot Call Flow E2E Tests', () => {
 
     it('should handle complete music report flow successfully', async () => {
         const initialCall = await request(app)
-            .post('/api/yemot')
-            .send({
-                ApiPhone: testPhone,
-                ApiCallId: 'test-call-1',
-                ApiDID: userPhone,
-                user_id: user.id
-            });
+            .post(YEMOT_PATH)
+            .send(defaultRequestParams);
 
         expect(initialCall.text).toBe('id_list_message=t-Welcome music Test Student.&read=t-Please enter Kubase time=kubaseTime,no,3,1,7,No,yes,no,,,,no,');
 
         const kubaseResponse = await request(app)
-            .post('/api/yemot')
+            .post(YEMOT_PATH)
             .send({
-                ApiCallId: 'test-call-1',
-                kubaseTime: '10',
-                user_id: user.id
+                ...defaultRequestParams,
+                kubaseTime: '10'
             });
 
         expect(kubaseResponse.text).toBe('read=t-Please enter Flute time=fluteTime,no,3,1,7,No,yes,no,,,,no,');
 
         const fluteResponse = await request(app)
-            .post('/api/yemot')
+            .post(YEMOT_PATH)
             .send({
-                ApiCallId: 'test-call-1',
-                fluteTime: '15',
-                user_id: user.id
+                ...defaultRequestParams,
+                fluteTime: '15'
             });
 
         expect(fluteResponse.text).toBe('id_list_message=t-Data was saved successfully.&go_to_folder=hangup');
@@ -131,12 +136,11 @@ describe('Yemot Call Flow E2E Tests', () => {
         const nonExistentPhone = '0529999999';
 
         const response = await request(app)
-            .post('/api/yemot')
+            .post(YEMOT_PATH)
             .send({
+                ...defaultRequestParams,
                 ApiPhone: nonExistentPhone,
-                ApiCallId: 'test-call-notfound',
-                ApiDID: userPhone,
-                user_id: user.id
+                ApiCallId: 'test-call-notfound'
             });
 
         expect(response.text).toBe('id_list_message=t-Phone is not recognized in the system.&go_to_folder=hangup');
@@ -151,12 +155,11 @@ describe('Yemot Call Flow E2E Tests', () => {
         }).save().then(model => model.toJSON());
 
         const response = await request(app)
-            .post('/api/yemot')
+            .post(YEMOT_PATH)
             .send({
+                ...defaultRequestParams,
                 ApiPhone: newStudent.phone,
-                ApiCallId: 'test-call-2',
-                ApiDID: userPhone,
-                user_id: user.id
+                ApiCallId: 'test-call-2'
             });
 
         expect(response.text).toBe('id_list_message=t-Student type is not recognized in the system.&go_to_folder=hangup');
@@ -164,28 +167,26 @@ describe('Yemot Call Flow E2E Tests', () => {
 
     it('should handle error in saving data', async () => {
         await request(app)
-            .post('/api/yemot')
+            .post(YEMOT_PATH)
             .send({
-                ApiCallId: 'test-call-3',
-                ApiPhone: testPhone,
-                ApiDID: userPhone,
-                user_id: user.id,
+                ...defaultRequestParams,
+                ApiCallId: 'test-call-3'
             });
 
         await request(app)
-            .post('/api/yemot')
+            .post(YEMOT_PATH)
             .send({
+                ...defaultRequestParams,
                 ApiCallId: 'test-call-3',
-                kubaseTime: 'invalid',
-                user_id: user.id
+                kubaseTime: 'invalid'
             });
 
         const response = await request(app)
-            .post('/api/yemot')
+            .post(YEMOT_PATH)
             .send({
+                ...defaultRequestParams,
                 ApiCallId: 'test-call-3',
-                fluteTime: 'invalid',
-                user_id: user.id
+                fluteTime: 'invalid'
             });
 
         const savedReport = await new AttReport()
