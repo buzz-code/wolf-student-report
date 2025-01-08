@@ -1,5 +1,3 @@
-import knex from 'knex';
-
 const dbConfig = {
   client: 'sqlite3',
   connection: {
@@ -13,12 +11,9 @@ const dbConfig = {
 
 jest.mock('../../common-modules/server/config/database', () => dbConfig);
 
-let db;
+import db from "../../common-modules/server/config/knex";
 
 beforeAll(async () => {
-  // Create new in-memory database connection
-  db = knex(dbConfig);
-
   // Run migrations
   await db.migrate.latest();
 

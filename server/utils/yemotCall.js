@@ -67,12 +67,14 @@ export class YemotCall extends CallBase {
             this.student = await queryHelper.getStudentByUserIdAndPhone(this.user.id, this.params.ApiPhone);
             console.log('got student')
             if (!this.student) {
+                console.log('student not found');
                 await this.send(
                     this.id_list_message({ type: 'text', text: this.texts.phoneIsNotRecognizedInTheSystem }),
                     this.hangup()
                 );
             }
 
+            console.log('student', this.student, this.texts.welcomeForStudent);
             this.globalMsg = format(this.texts.welcomeForStudent, this.student.student_type_name, this.student.name);
             await this.getReportAndSave();
         }
@@ -86,6 +88,7 @@ export class YemotCall extends CallBase {
     }
 
     async getReport() {
+        console.log('get report', this.student.student_type_id);
         switch (this.student.student_type_id) {
             case 1:
                 //גננות
@@ -642,6 +645,7 @@ export class YemotCall extends CallBase {
         if (![8, 9, 12].includes(this.student.student_type_id)) {
             return;
         }
+        console.log('validateReportDate');
         this.reportDateData = await queryHelper.validateReportDate(this.user.id, this.student.student_type_id, this.student.id);
         if (!this.reportDateData) {
             return this.send(
