@@ -96,10 +96,7 @@ describe('Yemot Call Flow E2E Tests', () => {
                 user_id: user.id
             });
 
-        expect(initialCall.text).toContain('Welcome');
-        expect(initialCall.text).toContain(student.name);
-        expect(initialCall.text).toContain(studentType.name);
-        expect(initialCall.text).toContain('Please enter Kubase time');
+        expect(initialCall.text).toBe('id_list_message=t-Welcome music Test Student.&read=t-Please enter Kubase time=kubaseTime,no,3,1,7,No,yes,no,,,,no,');
 
         const kubaseResponse = await request(app)
             .post('/api/yemot')
@@ -109,7 +106,7 @@ describe('Yemot Call Flow E2E Tests', () => {
                 user_id: user.id
             });
 
-        expect(kubaseResponse.text).toContain('Please enter Flute time');
+        expect(kubaseResponse.text).toBe('read=t-Please enter Flute time=fluteTime,no,3,1,7,No,yes,no,,,,no,');
 
         const fluteResponse = await request(app)
             .post('/api/yemot')
@@ -119,8 +116,7 @@ describe('Yemot Call Flow E2E Tests', () => {
                 user_id: user.id
             });
 
-        expect(fluteResponse.text).toContain('Data was saved successfully');
-        expect(fluteResponse.text).toContain('go_to_folder=hangup');
+        expect(fluteResponse.text).toBe('id_list_message=t-Data was saved successfully.&go_to_folder=hangup');
 
         const savedReport = await new AttReport()
             .where('student_id', student.id)
@@ -143,8 +139,7 @@ describe('Yemot Call Flow E2E Tests', () => {
                 user_id: user.id
             });
 
-        expect(response.text).toContain('Phone is not recognized in the system');
-        expect(response.text).toContain('go_to_folder=hangup');
+        expect(response.text).toBe('id_list_message=t-Phone is not recognized in the system.&go_to_folder=hangup');
     });
 
     it('should handle unknown student type', async () => {
@@ -164,7 +159,7 @@ describe('Yemot Call Flow E2E Tests', () => {
                 user_id: user.id
             });
 
-        expect(response.text).toContain('Student type is not recognized in the system');
+        expect(response.text).toBe('id_list_message=t-Student type is not recognized in the system.&go_to_folder=hangup');
     });
 
     it('should handle error in saving data', async () => {
@@ -198,7 +193,6 @@ describe('Yemot Call Flow E2E Tests', () => {
             .fetch({ require: false });
 
         expect(savedReport).toBeFalsy();
-        expect(response.text).toContain('Data was not saved');
-        expect(response.text).toContain('go_to_folder=hangup');
+        expect(response.text).toBe('id_list_message=t-Data was not saved.&go_to_folder=hangup');
     });
 });
