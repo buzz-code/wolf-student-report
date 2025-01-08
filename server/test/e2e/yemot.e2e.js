@@ -106,40 +106,6 @@ describe.each(YEMOT_PATHS)('Yemot Call Flow E2E Tests - %s', (YEMOT_PATH) => {
         await Text.query().delete();
     });
 
-    it('should handle complete music report flow successfully', async () => {
-        const initialCall = await request(app)
-            .post(YEMOT_PATH)
-            .send(defaultRequestParams);
-
-        expect(cleanYemotResponse(initialCall.text)).toBe('id_list_message=t-Welcome music Test Student&read=t-Please enter Kubase time=kubaseTime,no,3,1,7,No,yes,no,,,,,None,');
-
-        const kubaseResponse = await request(app)
-            .post(YEMOT_PATH)
-            .send({
-                ...defaultRequestParams,
-                kubaseTime: '10'
-            });
-
-        expect(kubaseResponse.text).toBe('read=t-Please enter Flute time=fluteTime,no,3,1,7,No,yes,no,,,,,None,');
-
-        const fluteResponse = await request(app)
-            .post(YEMOT_PATH)
-            .send({
-                ...defaultRequestParams,
-                fluteTime: '15'
-            });
-
-        expect(cleanYemotResponse(fluteResponse.text)).toBe('id_list_message=t-Data was saved successfully&go_to_folder=hangup');
-
-        const savedReport = await new AttReport()
-            .where('student_id', student.id)
-            .fetch();
-
-        expect(savedReport).toBeTruthy();
-        expect(savedReport.get('kubaseTime')).toBe(10);
-        expect(savedReport.get('fluteTime')).toBe(15);
-    });
-
     it('should handle not found student', async () => {
         const nonExistentPhone = '0529999999';
 
@@ -203,5 +169,39 @@ describe.each(YEMOT_PATHS)('Yemot Call Flow E2E Tests - %s', (YEMOT_PATH) => {
 
         expect(savedReport).toBeFalsy();
         expect(cleanYemotResponse(response.text)).toBe('id_list_message=t-Data was not saved&go_to_folder=hangup');
+    });
+
+    it('should handle complete music report flow successfully', async () => {
+        const initialCall = await request(app)
+            .post(YEMOT_PATH)
+            .send(defaultRequestParams);
+
+        expect(cleanYemotResponse(initialCall.text)).toBe('id_list_message=t-Welcome music Test Student&read=t-Please enter Kubase time=kubaseTime,no,3,1,7,No,yes,no,,,,,None,');
+
+        const kubaseResponse = await request(app)
+            .post(YEMOT_PATH)
+            .send({
+                ...defaultRequestParams,
+                kubaseTime: '10'
+            });
+
+        expect(kubaseResponse.text).toBe('read=t-Please enter Flute time=fluteTime,no,3,1,7,No,yes,no,,,,,None,');
+
+        const fluteResponse = await request(app)
+            .post(YEMOT_PATH)
+            .send({
+                ...defaultRequestParams,
+                fluteTime: '15'
+            });
+
+        expect(cleanYemotResponse(fluteResponse.text)).toBe('id_list_message=t-Data was saved successfully&go_to_folder=hangup');
+
+        const savedReport = await new AttReport()
+            .where('student_id', student.id)
+            .fetch();
+
+        expect(savedReport).toBeTruthy();
+        expect(savedReport.get('kubaseTime')).toBe(10);
+        expect(savedReport.get('fluteTime')).toBe(15);
     });
 });
