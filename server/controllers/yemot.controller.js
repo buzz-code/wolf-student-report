@@ -45,7 +45,8 @@ yemotRouter.all('/', async (call) => {
         currentNodeId: 'start',
         variables: {},
     };
-    console.log('start flow', call);
+    const {req, res, ...rest} = call;
+    console.log('start flow', rest);
 
     await runFlow(call, yemotFlow, context);
 });
