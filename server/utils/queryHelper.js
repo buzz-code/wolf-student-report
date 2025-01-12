@@ -169,6 +169,13 @@ export async function getExistingStudentReportByReportDate(user_id, student_id, 
         .then(res => res ? res.toJSON() : null);
 }
 
+export async function getExistingStudentReport(user_id, student_id, filter = {}, report_date = moment().format('YYYY-MM-DD')) {
+    return new AttReport()
+        .where({ user_id, student_id, ...filter, report_date })
+        .fetch({ require: false })
+        .then(res => res ? res.toJSON() : null);
+}
+
 export async function getCurrentReportPeriod(user_id, student_type_id, report_type) {
     const report_date = moment().format('YYYY-MM-DD');
     return new ReportPeriod()

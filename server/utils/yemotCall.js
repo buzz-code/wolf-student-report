@@ -218,16 +218,20 @@ export class YemotCall extends CallBase {
     }
 
     async getKindergartenReport() {
-        if (!this.existingReport) {
-            this.existingReport = await queryHelper.getExistingStudentReportByReportDate(this.user.id, this.student.id);
-        }
-
         // לדיווח על עבודה מעשית הקישי 1, לדיווח על מלגות הקישי 2
         await this.send(
             this.globalMsgIfExists(),
             this.read({ type: 'text', text: this.texts.askKindergartenType },
                 this.fields.kindergartenType, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [1, 2] })
         );
+
+        if (!this.existingReport) {
+            const reportFilter = {
+                [this.fields.kindergartenType]: this.params[this.fields.kindergartenType],
+            };
+            this.existingReport = await queryHelper.getExistingStudentReport(this.user.id, this.student.id, reportFilter);
+        }
+
         // //הקישי שעת כניסה ב4 ספרות
         // await this.send(
         //     this.read({ type: 'text', text: this.texts.askEnterHour },
