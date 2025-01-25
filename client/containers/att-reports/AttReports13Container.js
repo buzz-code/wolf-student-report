@@ -49,6 +49,11 @@ const getColumns = ({ students, studentTypes }) => [
   { field: 'lecture1', title: 'הרצאה 1' },
   { field: 'lecture2', title: 'הרצאה 2' },
   { field: 'lecture3', title: 'הרצאה 3' },
+  { field: 'testGeneral', title: 'מבחן כללי' },
+  { field: 'test1', title: 'מבחן 1' },
+  { field: 'test2', title: 'מבחן 2' },
+  { field: 'test7', title: 'מבחן 7' },
+  { field: 'testCombind', title: 'מבחן משולב' },
 ];
 const getFilters = ({ students, studentTypes }) => [
   { field: 'students.name', label: 'תלמידה', type: 'text', operator: 'like' },
