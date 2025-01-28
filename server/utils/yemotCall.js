@@ -479,7 +479,7 @@ export class YemotCall extends CallBase {
         await this.send(
             this.globalMsgIfExists(),
             this.read({ type: 'text', text: this.texts.askPrayerOrLecture },
-                this.fields.prayerOrLecture, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [1, 2] })
+                this.fields.prayerOrLecture, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [1, 2, 3] })
         );
 
         if (this.params[this.fields.prayerOrLecture] === '1') {
