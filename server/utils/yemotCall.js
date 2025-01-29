@@ -666,7 +666,7 @@ export class YemotCall extends CallBase {
                 // תלמידות ה - תפילה והרצאות
                 if (this.params[this.fields.prayerOrLecture] === '1') {
                     return format(this.texts.askPrayerReportConfirm, this.params[this.fields.prayer0], this.params[this.fields.prayer1], this.params[this.fields.prayer2], this.params[this.fields.prayer3], this.params[this.fields.prayer4], this.params[this.fields.prayer5]);
-                } else {
+                } else if (this.params[this.fields.prayerOrLecture] === '2') {
                     return format(this.texts.askLecturesReportConfirm, this.params[this.fields.lecture1], this.params[this.fields.lecture2], this.params[this.fields.lecture3]);
                 }
             case 14:
