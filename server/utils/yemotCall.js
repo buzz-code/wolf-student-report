@@ -546,18 +546,18 @@ export class YemotCall extends CallBase {
         // );
     }
 
-    testQuestions = {
-        1: { field: this.fields.test1, text: this.texts.askTest1 },
-        2: { field: this.fields.test2, text: this.texts.askTest2 },
-        7: { field: this.fields.test7, text: this.texts.askTest7 },
-    };
     async getTestReport() {
+        const testQuestions = {
+            1: { field: this.fields.test1, text: this.texts.askTest1 },
+            2: { field: this.fields.test2, text: this.texts.askTest2 },
+            7: { field: this.fields.test7, text: this.texts.askTest7 },
+        };
         await this.send(
             this.globalMsgIfExists(),
             this.read({ type: 'text', text: this.texts.askTestGeneral },
                 this.fields.testGeneral, 'tap', { max: 1, min: 1, block_asterisk: true })
         );
-        const nextQuestion = this.testQuestions[this.params[this.fields.testGeneral]];
+        const nextQuestion = testQuestions[this.params[this.fields.testGeneral]];
         if (nextQuestion) {
             const { field, text } = nextQuestion;
             await this.send(
