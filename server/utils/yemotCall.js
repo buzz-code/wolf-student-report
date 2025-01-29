@@ -547,9 +547,9 @@ export class YemotCall extends CallBase {
     }
 
     testQuestions = {
-        1: [this.fields.test1, this.texts.askTest1],
-        2: [this.fields.test2, this.texts.askTest2],
-        7: [this.fields.test7, this.texts.askTest7],
+        1: { field: this.fields.test1, text: this.texts.askTest1 },
+        2: { field: this.fields.test2, text: this.texts.askTest2 },
+        7: { field: this.fields.test7, text: this.texts.askTest7 },
     };
     async getTestReport() {
         await this.send(
@@ -557,8 +557,9 @@ export class YemotCall extends CallBase {
             this.read({ type: 'text', text: this.texts.askTestGeneral },
                 this.fields.testGeneral, 'tap', { max: 1, min: 1, block_asterisk: true })
         );
-        if (this.testQuestions[this.params[this.fields.testGeneral]]) {
-            const [field, text] = this.testQuestions[this.params[this.fields.testGeneral]];
+        const nextQuestion = this.testQuestions[this.params[this.fields.testGeneral]];
+        if (nextQuestion) {
+            const { field, text } = nextQuestion;
             await this.send(
                 this.read({ type: 'text', text: text },
                     field, 'tap', { max: 1, min: 1, block_asterisk: true })
@@ -668,6 +669,8 @@ export class YemotCall extends CallBase {
                     return format(this.texts.askPrayerReportConfirm, this.params[this.fields.prayer0], this.params[this.fields.prayer1], this.params[this.fields.prayer2], this.params[this.fields.prayer3], this.params[this.fields.prayer4], this.params[this.fields.prayer5]);
                 } else if (this.params[this.fields.prayerOrLecture] === '2') {
                     return format(this.texts.askLecturesReportConfirm, this.params[this.fields.lecture1], this.params[this.fields.lecture2], this.params[this.fields.lecture3]);
+                } else if (this.params[this.fields.prayerOrLecture] === '3') {
+                    return format(this.texts.askTestReportConfirm, this.params[this.fields.testCombined]);
                 }
             case 14:
                 // תלמידות ו - הרצאות
