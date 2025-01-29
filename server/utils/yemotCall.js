@@ -174,6 +174,7 @@ export class YemotCall extends CallBase {
                 update_date: new Date(),
             };
             Object.values(this.fields).forEach(key => attReport[key] = this.params[key]);
+            console.log('attReport', attReport);
             if (this.reportDateData) {
                 console.log('reportDateData', this.reportDateData);
                 // לשמור את שמות המרצים בדיווח
