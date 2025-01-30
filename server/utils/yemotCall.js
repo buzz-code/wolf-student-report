@@ -61,6 +61,7 @@ export class YemotCall extends CallBase {
         test1: 'test1',
         test2: 'test2',
         test7: 'test7',
+        test9: 'test9',
         testCombined: 'testCombined',
     }
 
@@ -145,11 +146,11 @@ export class YemotCall extends CallBase {
                 break;
             case 13:
                 // תלמידות ה - תפילה והרצאות
-                await this.getPrayerAndLecturesReport();
+                await this.getPrayerLecturesTestReport(this.shreiberModes.fifthGrade);
                 break;
             case 14:
                 // תלמידות ו - הרצאות
-                await this.getLecturesReport();
+                await this.getPrayerLecturesTestReport(this.shreiberModes.sixthGrade);
                 break;
             default:
                 await this.send(
@@ -476,11 +477,31 @@ export class YemotCall extends CallBase {
         );
     }
 
-    async getPrayerAndLecturesReport() {
+    shreiberModes = {
+        fifthGrade: 'fifthGrade',
+        sixthGrade: 'sixthGrade',
+    }
+    async getPrayerLecturesTestReport(mode) {
+        const testQuestions = {
+            [this.shreiberModes.fifthGrade]: {
+                'start': { field: this.fields.prayerOrLecture, text: this.texts.askPrayerOrLecture },
+                'general': { field: this.fields.testGeneral, text: this.texts.askTestGeneral },
+                1: { field: this.fields.test1, text: this.texts.askTest1 },
+                2: { field: this.fields.test2, text: this.texts.askTest2 },
+                7: { field: this.fields.test7, text: this.texts.askTest7 },
+            },
+            [this.shreiberModes.sixthGrade]: {
+                'start': { field: this.fields.prayerOrLecture, text: this.texts.askPrayerOrLecture6 },
+                'general': { field: this.fields.testGeneral, text: this.texts.askTestGeneral6 },
+                9: { field: this.fields.test9, text: this.texts.askTest9 },
+            }
+        }
+        const questionSet = testQuestions[mode];
+
         await this.send(
             this.globalMsgIfExists(),
-            this.read({ type: 'text', text: this.texts.askPrayerOrLecture },
-                this.fields.prayerOrLecture, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [1, 2, 3] })
+            this.read({ type: 'text', text: questionSet.start.text },
+                questionSet.start.field, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [1, 2, 3] })
         );
 
         if (this.params[this.fields.prayerOrLecture] === '1') {
@@ -488,7 +509,7 @@ export class YemotCall extends CallBase {
         } else if (this.params[this.fields.prayerOrLecture] === '2') {
             await this.getLecturesReport();
         } else if (this.params[this.fields.prayerOrLecture] === '3') {
-            await this.getTestReport();
+            await this.getTestReport(questionSet);
         }
     }
 
@@ -546,18 +567,14 @@ export class YemotCall extends CallBase {
         // );
     }
 
-    async getTestReport() {
-        const testQuestions = {
-            1: { field: this.fields.test1, text: this.texts.askTest1 },
-            2: { field: this.fields.test2, text: this.texts.askTest2 },
-            7: { field: this.fields.test7, text: this.texts.askTest7 },
-        };
+    async getTestReport(questionSet) {
         await this.send(
             this.globalMsgIfExists(),
-            this.read({ type: 'text', text: this.texts.askTestGeneral },
-                this.fields.testGeneral, 'tap', { max: 1, min: 1, block_asterisk: true })
+            this.read({ type: 'text', text: questionSet.general.text },
+                questionSet.general.field, 'tap', { max: 1, min: 1, block_asterisk: true })
         );
-        const nextQuestion = testQuestions[this.params[this.fields.testGeneral]];
+        const testGeneral = this.params[this.fields.testGeneral];
+        const nextQuestion = questionSet[testGeneral];
         if (nextQuestion) {
             const { field, text } = nextQuestion;
             await this.send(
