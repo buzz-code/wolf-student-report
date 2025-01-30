@@ -691,7 +691,13 @@ export class YemotCall extends CallBase {
                 }
             case 14:
                 // תלמידות ו - הרצאות
-                return format(this.texts.askLecturesReportConfirm, this.params[this.fields.lecture1], this.params[this.fields.lecture2], this.params[this.fields.lecture3]);
+                if (this.params[this.fields.prayerOrLecture] === '1') {
+                    return format(this.texts.askPrayerReportConfirm, this.params[this.fields.prayer0], this.params[this.fields.prayer1], this.params[this.fields.prayer2], this.params[this.fields.prayer3], this.params[this.fields.prayer4], this.params[this.fields.prayer5]);
+                } else if (this.params[this.fields.prayerOrLecture] === '2') {
+                    return format(this.texts.askLecturesReportConfirm, this.params[this.fields.lecture1], this.params[this.fields.lecture2], this.params[this.fields.lecture3]);
+                } else if (this.params[this.fields.prayerOrLecture] === '3') {
+                    return format(this.texts.askTestReportConfirm, this.params[this.fields.testCombined]);
+                }
         }
     }
 
