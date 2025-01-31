@@ -507,7 +507,9 @@ export class YemotCall extends CallBase {
         } else if (this.params[this.fields.prayerOrLecture] === '2') {
             await this.getLecturesReport();
         } else if (this.params[this.fields.prayerOrLecture] === '3') {
-            this.testNames ??= queryHelper.getTestNames(this.user.id, this.student.student_type_id);
+            if (!this.testNames) {
+                this.testNames = await queryHelper.getTestNames(this.user.id, this.student.student_type_id);
+            }
             await this.getTestReport(questionSet);
         }
     }
