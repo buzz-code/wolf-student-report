@@ -200,7 +200,7 @@ export class YemotCall extends CallBase {
 
             this.globalMsg = this.texts.dataWasSavedSuccessfully;
 
-            if ([].includes(this.student.student_type_id)) {
+            if ([13, 14].includes(this.student.student_type_id) && this.params[this.fields.prayerOrLecture] === '3') {
                 this.askForNewReport();
             } else {
                 await this.send(
@@ -498,11 +498,13 @@ export class YemotCall extends CallBase {
         }
         const questionSet = testQuestions[mode];
 
-        await this.send(
-            this.globalMsgIfExists(),
-            this.read({ type: 'text', text: questionSet.start.text },
-                questionSet.start.field, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [1, 2, 3] })
-        );
+        if (!this.params[questionSet.start.field]) { // if not already answered
+            await this.send(
+                this.globalMsgIfExists(),
+                this.read({ type: 'text', text: questionSet.start.text },
+                    questionSet.start.field, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [1, 2, 3] })
+            );
+        }
 
         if (this.params[this.fields.prayerOrLecture] === '1') {
             await this.getPrayerReport();
@@ -568,6 +570,13 @@ export class YemotCall extends CallBase {
     }
 
     async getTestReport(questionSet) {
+        // delete existing answers
+        for (const key in questionSet) {
+            if (key !== 'start' && key !== 'general') {
+                delete this.params[questionSet[key].field];
+            }
+        }
+
         await this.send(
             this.globalMsgIfExists(),
             this.read({ type: 'text', text: questionSet.general.text },
@@ -600,6 +609,7 @@ export class YemotCall extends CallBase {
             this.getReportAndSave();
         } else {
             this.send(
+                this.globalMsgIfExists(),
                 this.hangup(),
             );
         }
