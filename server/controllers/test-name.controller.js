@@ -1,4 +1,4 @@
-import { Question, StudentType } from '../models';
+import { StudentType, TestName } from '../models';
 import { applyFilters, fetchPage } from '../../common-modules/server/controllers/generic.controller';
 import { getListFromTable } from '../../common-modules/server/utils/common';
 
@@ -10,7 +10,7 @@ import { getListFromTable } from '../../common-modules/server/utils/common';
  * @returns {*}
  */
 export async function findAll(req, res) {
-    const dbQuery = new Question().where({ 'test_names.user_id': req.currentUser.id })
+    const dbQuery = new TestName().where({ 'test_names.user_id': req.currentUser.id })
         .query(qb => {
             qb.leftJoin('student_types', 'student_types.key', 'test_names.student_type_id')
             qb.select('test_names.*')
