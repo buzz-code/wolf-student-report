@@ -7,6 +7,12 @@ import Table from '../../../common-modules/client/components/table/Table';
 import * as crudAction from '../../../common-modules/client/actions/crudAction';
 import { getPropsForAutoComplete } from '../../../common-modules/client/utils/formUtil';
 
+const reportTypeList = [
+  { key: '1', value: 'תפילה' },
+  { key: '2', value: 'הרצאה' },
+  { key: '3', value: 'מבחן' },
+];
+
 const getColumns = ({ students, studentTypes }) => [
   {
     field: 'student_tz',
@@ -40,7 +46,7 @@ const getColumns = ({ students, studentTypes }) => [
     isHebrewDate: true,
   },
   // { field: 'update_date', title: 'תאריך עדכון', type: 'date' },
-  // { field: 'prayerOrLecture', title: 'תפילה/הרצאה' },
+  { field: 'prayerOrLecture', title: 'סוג דיווח' },
   // { field: 'prayer0', title: 'תפילה 0' },
   // { field: 'prayer1', title: 'תפילה 1' },
   // { field: 'prayer2', title: 'תפילה 2' },
@@ -50,6 +56,11 @@ const getColumns = ({ students, studentTypes }) => [
   { field: 'lecture1', title: 'הרצאה 1' },
   { field: 'lecture2', title: 'הרצאה 2' },
   { field: 'lecture3', title: 'הרצאה 3' },
+  { field: 'testGeneral', title: 'מבחן כללי' },
+  { field: 'test1', title: 'מבחן 1' },
+  { field: 'test2', title: 'מבחן 2' },
+  { field: 'test7', title: 'מבחן 7' },
+  { field: 'testCombined', title: 'מבחן משולב' },
 ];
 const getFilters = ({ students, studentTypes }) => [
   { field: 'students.name', label: 'תלמידה', type: 'text', operator: 'like' },
@@ -62,6 +73,14 @@ const getFilters = ({ students, studentTypes }) => [
     idField: 'key',
     defaultValue: 14,
     disabled: true,
+  },
+  {
+    field: 'prayerOrLecture',
+    label: 'סוג דיווח',
+    type: 'list',
+    list: reportTypeList,
+    operator: 'eq',
+    idField: 'key',
   },
   { field: 'report_date', label: 'מתאריך', type: 'date', operator: 'date-before' },
   { field: 'report_date', label: 'עד תאריך', type: 'date', operator: 'date-after' },
