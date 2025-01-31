@@ -24,6 +24,7 @@ router.use('/teachers', require('./teacher.route').default);
 router.use('/students', require('./student.route').default);
 router.use('/att-types', require('./att-type.route').default);
 router.use('/student-types', require('./student-type.route').default);
+router.use('/test-names', require('./test-name.route').default);
 router.use('/prices', require('./price.route').default);
 router.use('/texts', require('./text.route').default);
 router.use('/att-reports', require('./att-report.route').default);
