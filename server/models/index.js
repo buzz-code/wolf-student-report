@@ -85,3 +85,9 @@ export const ReportPeriod = createModel('report_periods', {
         return this.belongsTo(User);
     }
 })
+
+export const TestName = createModel('test_names', {
+    user() {
+        return this.belongsTo(User);
+    }
+})

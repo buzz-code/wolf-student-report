@@ -507,6 +507,7 @@ export class YemotCall extends CallBase {
         } else if (this.params[this.fields.prayerOrLecture] === '2') {
             await this.getLecturesReport();
         } else if (this.params[this.fields.prayerOrLecture] === '3') {
+            this.testNames ??= queryHelper.getTestNames(this.user.id, this.student.student_type_id);
             await this.getTestReport(questionSet);
         }
     }
@@ -693,7 +694,8 @@ export class YemotCall extends CallBase {
                 } else if (this.params[this.fields.prayerOrLecture] === '2') {
                     return format(this.texts.askLecturesReportConfirm, this.params[this.fields.lecture1], this.params[this.fields.lecture2], this.params[this.fields.lecture3]);
                 } else if (this.params[this.fields.prayerOrLecture] === '3') {
-                    return format(this.texts.askTestReportConfirm, this.params[this.fields.testCombined]);
+                    const testId = this.params[this.fields.testCombined];
+                    return format(this.texts.askTestReportConfirm, this.testNames[testId] || testId);
                 }
             case 14:
                 // תלמידות ו - הרצאות
@@ -702,7 +704,8 @@ export class YemotCall extends CallBase {
                 } else if (this.params[this.fields.prayerOrLecture] === '2') {
                     return format(this.texts.askLecturesReportConfirm, this.params[this.fields.lecture1], this.params[this.fields.lecture2], this.params[this.fields.lecture3]);
                 } else if (this.params[this.fields.prayerOrLecture] === '3') {
-                    return format(this.texts.askTestReportConfirm, this.params[this.fields.testCombined]);
+                    const testId = this.params[this.fields.testCombined];
+                    return format(this.texts.askTestReportConfirm, this.testNames[testId] || testId);
                 }
         }
     }
