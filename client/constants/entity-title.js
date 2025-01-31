@@ -3,6 +3,7 @@ export const TEACHERS = 'מורות';
 export const STUDENTS = 'תלמידות';
 export const ATT_TYPES = 'סוגי היעדרות';
 export const STUDENT_TYPES = 'סוגי תלמידות';
+export const TEST_NAMES = 'שמות מבחנים';
 export const PRICES = 'מחירים';
 export const TEXTS = 'הודעות';
 export const ATT_REPORTS = 'תיקופים';

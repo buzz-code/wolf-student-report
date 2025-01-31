@@ -130,6 +130,13 @@ export default [
           title: titles.REPORT_PERIODS,
           props: { entity: entities.REPORT_PERIODS, title: titles.REPORT_PERIODS },
         },
+        {
+          path: '/test-names',
+          component: TestNamesContainer,
+          icon: AssignmentIcon,
+          title: titles.TEST_NAMES,
+          props: { entity: entities.TEST_NAMES, title: titles.TEST_NAMES },
+        },
         // {
         //   path: '/questions',
         //   component: Questions,

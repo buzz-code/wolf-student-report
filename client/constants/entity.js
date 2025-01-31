@@ -3,6 +3,7 @@ export const TEACHERS = 'teachers';
 export const STUDENTS = 'students';
 export const ATT_TYPES = 'att-types';
 export const STUDENT_TYPES = 'student-types';
+export const TEST_NAMES = 'test-names';
 export const PRICES = 'prices';
 export const TEXTS = 'texts';
 export const ATT_REPORTS = 'att-reports';
