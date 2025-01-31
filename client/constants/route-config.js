@@ -26,6 +26,7 @@ import Teachers from '../containers/teachers/TeachersContainer';
 import Students from '../containers/students/StudentsContainer';
 import AttTypes from '../containers/att-types/AttTypesContainer';
 import StudentTypes from '../containers/student-types/StudentTypesContainer';
+import TestNamesContainer from '../containers/test-names/TestNamesContainer';
 import Prices from '../containers/prices/PricesContainer';
 import Texts from '../containers/texts/TextsContainer';
 import Questions from '../containers/questions/QuestionsContainer';
