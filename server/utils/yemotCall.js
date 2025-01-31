@@ -146,11 +146,11 @@ export class YemotCall extends CallBase {
                 break;
             case 13:
                 // תלמידות ה - תפילה והרצאות
-                await this.getPrayerLecturesTestReport(this.shreiberModes.fifthGrade);
+                await this.getPrayerLecturesTestReport();
                 break;
             case 14:
                 // תלמידות ו - הרצאות
-                await this.getPrayerLecturesTestReport(this.shreiberModes.sixthGrade);
+                await this.getPrayerLecturesTestReport();
                 break;
             default:
                 await this.send(
@@ -477,26 +477,22 @@ export class YemotCall extends CallBase {
         );
     }
 
-    shreiberModes = {
-        fifthGrade: 'fifthGrade',
-        sixthGrade: 'sixthGrade',
-    }
-    async getPrayerLecturesTestReport(mode) {
+    async getPrayerLecturesTestReport() {
         const testQuestions = {
-            [this.shreiberModes.fifthGrade]: {
+            [13]: {
                 'start': { field: this.fields.prayerOrLecture, text: this.texts.askPrayerOrLecture },
                 'general': { field: this.fields.testGeneral, text: this.texts.askTestGeneral },
                 1: { field: this.fields.test1, text: this.texts.askTest1 },
                 2: { field: this.fields.test2, text: this.texts.askTest2 },
                 7: { field: this.fields.test7, text: this.texts.askTest7 },
             },
-            [this.shreiberModes.sixthGrade]: {
+            [14]: {
                 'start': { field: this.fields.prayerOrLecture, text: this.texts.askPrayerOrLecture6 },
                 'general': { field: this.fields.testGeneral, text: this.texts.askTestGeneral6 },
                 9: { field: this.fields.test9, text: this.texts.askTest9 },
             }
         }
-        const questionSet = testQuestions[mode];
+        const questionSet = testQuestions[this.student.student_type_id];
 
         if (!this.params[questionSet.start.field]) { // if not already answered
             await this.send(
