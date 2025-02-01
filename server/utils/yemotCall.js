@@ -201,7 +201,7 @@ export class YemotCall extends CallBase {
             this.globalMsg = this.texts.dataWasSavedSuccessfully;
 
             if ([13, 14].includes(this.student.student_type_id) && this.params[this.fields.prayerOrLecture] === '3') {
-                this.askForNewReport();
+                await this.askForNewReport();
             } else {
                 await this.send(
                     this.globalMsgIfExists(),
