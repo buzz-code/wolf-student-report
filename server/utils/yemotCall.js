@@ -605,9 +605,12 @@ export class YemotCall extends CallBase {
                 'isNewReport', 'tap', { max: 1, min: 1, block_asterisk: true })
         );
         if (this.params.isNewReport == 1) {
-            this.getReportAndSave();
+            return this.getReportAndSave();
         } else {
-            await this.end();
+            await this.send(
+                this.id_list_message({ type: 'text', text: this.texts.dataWasSavedSuccessfully }),
+                this.hangup()
+            )
         }
     }
 
