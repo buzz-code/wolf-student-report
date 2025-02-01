@@ -607,9 +607,7 @@ export class YemotCall extends CallBase {
         if (this.params.isNewReport == 1) {
             this.getReportAndSave();
         } else {
-            await this.send(
-                this.hangup(),
-            );
+            await this.end();
         }
     }
 
