@@ -59,7 +59,6 @@ const getColumns = ({ students, studentTypes }) => [
   { field: 'testGeneral', title: 'מבחן כללי' },
   { field: 'test1', title: 'מבחן 1' },
   { field: 'test2', title: 'מבחן 2' },
-  { field: 'test7', title: 'מבחן 7' },
   { field: 'testCombined', title: 'מבחן משולב' },
 ];
 const getFilters = ({ students, studentTypes }) => [

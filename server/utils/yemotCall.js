@@ -489,7 +489,8 @@ export class YemotCall extends CallBase {
             [14]: {
                 'start': { field: this.fields.prayerOrLecture, text: this.texts.askPrayerOrLecture6 },
                 'general': { field: this.fields.testGeneral, text: this.texts.askTestGeneral6 },
-                9: { field: this.fields.test9, text: this.texts.askTest9 },
+                1: { field: this.fields.test1, text: this.texts.ask6Test1 },
+                2: { field: this.fields.test2, text: this.texts.ask6Test2 },
             }
         }
         const questionSet = testQuestions[this.student.student_type_id];
