@@ -152,6 +152,10 @@ export class YemotCall extends CallBase {
                 // תלמידות ו - הרצאות
                 await this.getPrayerLecturesTestReport();
                 break;
+            case 15:
+                // ניתוח התנהגות
+                await this.getBehaviorAnalysisReport();
+                break;
             default:
                 await this.send(
                     this.id_list_message({ type: 'text', text: this.texts.studentTypeIsNotRecognizedInTheSystem }),
@@ -457,6 +461,32 @@ export class YemotCall extends CallBase {
         }
     }
 
+    async getBehaviorAnalysisReport() {
+        if (!this.existingReport) {
+            this.existingReport = await queryHelper.getExistingStudentReport(this.user.id, this.student.id);
+        }
+
+        // לתיקוף כניסה הקישי 1 לתיקוף יציאה הקישי 2 
+        await this.send(
+            this.globalMsgIfExists(),
+            this.read({ type: 'text', text: this.texts.askEnterExitHour },
+                'enterExitHour', 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [1, 2] })
+        );
+        if (this.params.enterExitHour === '1') {
+            this.params[this.fields.enterHour] = moment().tz('Asia/Jerusalem').format('HHmm');
+            return;
+        } else {
+            this.params[this.fields.enterHour] = this.existingReport?.enterHour?.replace(':', '') || '';
+            this.params[this.fields.exitHour] = moment().tz('Asia/Jerusalem').format('HHmm');
+
+            // האם מסרת שיעור? אם כן הקישי 1, אם לא הקישי 0
+            await this.send(
+                this.read({ type: 'text', text: this.texts.askWasLessonTeaching },
+                    this.fields.wasLessonTeaching, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
+            );
+        }
+    }
+
     async getExcellencyReport() {
         // עם 2 שאלות - לשאול סתם - נוכחות ושיעורי בית
         await this.send(
@@ -710,6 +740,9 @@ export class YemotCall extends CallBase {
                     const testId = this.params[this.fields.testCombined];
                     return format(this.texts.askTestReportConfirm, this.testNames[testId] || testId);
                 }
+            case 15:
+                // ניתוח התנהגות
+                break;
         }
     }
 

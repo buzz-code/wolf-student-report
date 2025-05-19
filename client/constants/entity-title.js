@@ -33,6 +33,7 @@ export const ATT_REPORTS_11 = 'תיקופי התעמלות ו';
 export const ATT_REPORTS_12 = 'תיקופי הוראה לתיכונים שנה ב קב 2';
 export const ATT_REPORTS_13 = 'תיקופי ה - תפילה והרצאות';
 export const ATT_REPORTS_14 = 'תיקופי ו - הרצאות';
+export const ATT_REPORTS_15 = 'תיקופי ניתוח התנהגות';
 export const ATT_REPORTS_PIVOT = 'תיקופים פיבוט';
 export const EXCELLENCY_DATE = 'תאריכי תיקוף';
 export const EXCELLENCY_TOTAL_REPORT = 'דוח מצוינות בהוראה';
