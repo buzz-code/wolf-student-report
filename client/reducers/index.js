@@ -45,6 +45,9 @@ import {
   EXCELLENCY_TOTAL_REPORT,
   ATT_REPORTS_AND_DATES_1,
   ATT_REPORTS_AND_DATES_8,
+  SPECIALTIES,
+  STUDENT_SPECIALTIES,
+  SPECIALTY_ABSENCES,
 } from '../constants/entity';
 
 const appReducer = (history) =>
@@ -91,6 +94,9 @@ const appReducer = (history) =>
     [EXCELLENCY_TOTAL_REPORT]: crudReducer(EXCELLENCY_TOTAL_REPORT),
     [ATT_REPORTS_AND_DATES_1]: crudReducer(ATT_REPORTS_AND_DATES_1),
     [ATT_REPORTS_AND_DATES_8]: crudReducer(ATT_REPORTS_AND_DATES_8),
+    [SPECIALTIES]: crudReducer(SPECIALTIES),
+    [STUDENT_SPECIALTIES]: crudReducer(STUDENT_SPECIALTIES),
+    [SPECIALTY_ABSENCES]: crudReducer(SPECIALTY_ABSENCES),
   });
 
 const rootReducer = (state, action) => {
