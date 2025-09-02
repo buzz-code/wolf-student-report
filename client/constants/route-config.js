@@ -17,6 +17,7 @@ import PrintIcon from '@material-ui/icons/Print';
 import GroupWorkIcon from '@material-ui/icons/GroupWork';
 import StorageIcon from '@material-ui/icons/Storage';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import EventBusyIcon from '@material-ui/icons/EventBusy';
 
 import * as entities from './entity';
 import * as titles from './entity-title';
@@ -62,6 +63,9 @@ import ExcellencyDatesContainer from '../containers/excellency-dates/ExcellencyD
 import ExcellencyTotalReportContainer from '../containers/excellency-total-report/ExcellencyTotalReportContainer';
 import AttReportsAndDates1Container from '../containers/att-reports/AttReportsAndDates1Container';
 import AttReportsAndDates8Container from '../containers/att-reports/AttReportsAndDates8Container';
+import SpecialtiesContainer from '../containers/specialties/SpecialtiesContainer';
+import StudentSpecialtiesContainer from '../containers/student-specialties/StudentSpecialtiesContainer';
+import SpecialtyAbsencesContainer from '../containers/specialty-absences/SpecialtyAbsencesContainer';
 
 export default [
   [
@@ -138,6 +142,27 @@ export default [
           icon: AssignmentIcon,
           title: titles.TEST_NAMES,
           props: { entity: entities.TEST_NAMES, title: titles.TEST_NAMES },
+        },
+        {
+          path: '/specialties',
+          component: SpecialtiesContainer,
+          icon: MenuIcon,
+          title: titles.SPECIALTIES,
+          props: { entity: entities.SPECIALTIES, title: titles.SPECIALTIES },
+        },
+        {
+          path: '/student-specialties',
+          component: StudentSpecialtiesContainer,
+          icon: PeopleIcon,
+          title: titles.STUDENT_SPECIALTIES,
+          props: { entity: entities.STUDENT_SPECIALTIES, title: titles.STUDENT_SPECIALTIES },
+        },
+        {
+          path: '/specialty-absences',
+          component: SpecialtyAbsencesContainer,
+          icon: EventBusyIcon,
+          title: titles.SPECIALTY_ABSENCES,
+          props: { entity: entities.SPECIALTY_ABSENCES, title: titles.SPECIALTY_ABSENCES },
         },
         // {
         //   path: '/questions',

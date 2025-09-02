@@ -39,3 +39,6 @@ export const EXCELLENCY_DATE = 'excellency-dates';
 export const EXCELLENCY_TOTAL_REPORT = 'att-reports/getExcellencyTotalReport';
 export const ATT_REPORTS_AND_DATES_1 = 'att-reports/getAttReportsAndDates';
 export const ATT_REPORTS_AND_DATES_8 = 'att-reports/getAttReportsAndDates';
+export const SPECIALTIES = 'specialties';
+export const STUDENT_SPECIALTIES = 'student-specialties';
+export const SPECIALTY_ABSENCES = 'specialty-absences';

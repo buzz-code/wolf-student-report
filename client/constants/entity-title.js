@@ -39,3 +39,6 @@ export const EXCELLENCY_DATE = 'תאריכי תיקוף';
 export const EXCELLENCY_TOTAL_REPORT = 'דוח מצוינות בהוראה';
 export const ATT_REPORTS_AND_DATES_1 = 'תיקופי ודיווחי תאריכים - גננות';
 export const ATT_REPORTS_AND_DATES_8 = 'תיקופי ודיווחי תאריכים - מצוינות בהוראה';
+export const SPECIALTIES = 'התמחויות';
+export const STUDENT_SPECIALTIES = 'שיוך תלמידות להתמחויות';
+export const SPECIALTY_ABSENCES = 'היעדרויות לפי התמחות';

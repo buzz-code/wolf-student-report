@@ -91,3 +91,21 @@ export const TestName = createModel('test_names', {
         return this.belongsTo(User);
     }
 })
+
+export const Specialty = createModel('specialties', {
+    user() {
+        return this.belongsTo(User);
+    }
+})
+
+export const StudentSpecialty = createModel('student_specialties', {
+    user() {
+        return this.belongsTo(User);
+    }
+})
+
+export const SpecialtyAbsence = createModel('specialty_absences', {
+    user() {
+        return this.belongsTo(User);
+    }
+})

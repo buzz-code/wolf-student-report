@@ -16,6 +16,21 @@ const supportedEntities = [
     title: titles.STUDENTS,
     columns: ['tz', 'name', 'phone', 'klass', 'student_type_id'],
   },
+  {
+    value: entities.SPECIALTIES,
+    title: titles.SPECIALTIES,
+    columns: ['key', 'name'],
+  },
+  {
+    value: entities.STUDENT_SPECIALTIES,
+    title: titles.STUDENT_SPECIALTIES,
+    columns: ['student_tz', 'specialty_key'],
+  },
+  {
+    value: entities.SPECIALTY_ABSENCES,
+    title: titles.SPECIALTY_ABSENCES,
+    columns: ['absence_date', 'specialty_key'],
+  },
   // { value: entities.ATT_TYPES, title: titles.ATT_TYPES, columns: ['key', 'name'] },
   // { value: entities.STUDENT_TYPES, title: titles.STUDENT_TYPES, columns: ['key', 'name'] },
   // { value: entities.PRICES, title: titles.PRICES, columns: ['key', 'name', 'price'] },
