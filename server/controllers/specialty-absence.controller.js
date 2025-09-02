@@ -10,7 +10,7 @@ import { getListFromTable } from '../../common-modules/server/utils/common';
  */
 export async function getEditData(req, res) {
     const [specialties] = await Promise.all([
-        getListFromTable(Specialty, req.currentUser.id, 'key', 'name'),
+        getListFromTable(Specialty, req.currentUser.id, 'key'),
     ]);
     res.json({
         error: null,
