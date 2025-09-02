@@ -18,7 +18,7 @@ const getColumns = ({ specialties }) => [
 const getFilters = ({ specialties }) => [
   { field: 'absence_date', label: 'תאריך היעדרות', type: 'date', operator: 'eq' },
   {
-    field: 'specialties.key',
+    field: 'specialty_key',
     label: 'התמחות',
     type: 'list',
     list: specialties,

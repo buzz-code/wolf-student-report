@@ -20,7 +20,7 @@ const getColumns = ({ students, specialties }) => [
 
 const getFilters = ({ students, specialties }) => [
   {
-    field: 'students.tz',
+    field: 'student_tz',
     label: 'תלמידה',
     type: 'list',
     list: students,
@@ -28,7 +28,7 @@ const getFilters = ({ students, specialties }) => [
     idField: 'tz',
   },
   {
-    field: 'specialties.key',
+    field: 'specialty_key',
     label: 'התמחות',
     type: 'list',
     list: specialties,
