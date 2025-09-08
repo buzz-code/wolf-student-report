@@ -820,12 +820,15 @@ export class YemotCall extends CallBase {
             const day = parseInt(this.params.tempAbsenceDay);
             const month = parseInt(this.params.tempAbsenceMonth);
             
+            console.log(`validateAbsenceDate: Hebrew date input - day: ${day}, month: ${month}`);
+            
             // Get current Jewish year
             const currentJewishDate = getJewishDate(new Date());
             const currentYear = currentJewishDate.year;
             
             // Validate the Hebrew date parameters
             if (!day || !month || day < 1 || day > 30 || month < 1 || month > 12) {
+                console.log(`validateAbsenceDate: Invalid parameters`);
                 return {
                     isValid: false,
                     message: this.texts.invalidHebrewDate,
@@ -837,7 +840,10 @@ export class YemotCall extends CallBase {
             const hebrewDate = { day, month, year: currentYear };
             let gregorianDate = getGregDate(day, month, currentYear);
             
+            console.log(`validateAbsenceDate: Converted to: ${gregorianDate} (year: ${currentYear})`);
+            
             if (!gregorianDate) {
+                console.log('validateAbsenceDate: Conversion failed');
                 return {
                     isValid: false,
                     message: this.texts.invalidHebrewDate,
@@ -848,6 +854,7 @@ export class YemotCall extends CallBase {
             // If date is more than 6 months ago, try next year (handles year-end transitions)
             const sixMonthsAgo = moment().subtract(6, 'months');
             if (moment(gregorianDate).isBefore(sixMonthsAgo)) {
+                console.log(`validateAbsenceDate: Trying next Hebrew year (${currentYear + 1})`);
                 const nextHebrewYear = currentYear + 1;
                 const gregorianDateNextYear = getGregDate(day, month, nextHebrewYear);
                 if (gregorianDateNextYear) {
@@ -867,6 +874,7 @@ export class YemotCall extends CallBase {
 
             // Check if date is valid for student's specialty
             const isDateValidForSpecialty = await queryHelper.checkSpecialtyAbsenceDate(this.user.id, this.student.id, gregorianDate);
+            console.log(`validateAbsenceDate: Specialty check result: ${isDateValidForSpecialty ? 'valid' : 'invalid'}`);
             if (!isDateValidForSpecialty) {
                 return {
                     isValid: false,
@@ -875,13 +883,14 @@ export class YemotCall extends CallBase {
                 };
             }
 
+            console.log(`validateAbsenceDate: Success - final date: ${gregorianDate}`);
             return {
                 isValid: true,
                 hebrewDate,
                 gregorianDate
             };
         } catch (error) {
-            console.error('Error validating absence date:', error);
+            console.error('validateAbsenceDate: Error:', error);
             return {
                 isValid: false,
                 message: this.texts.invalidHebrewDate,
