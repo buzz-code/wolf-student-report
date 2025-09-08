@@ -876,7 +876,7 @@ export class YemotCall extends CallBase {
             }
 
             // Check if date is valid for student's specialty
-            const isDateValidForSpecialty = await queryHelper.checkSpecialtyAbsenceDate(this.user.id, this.student.id, gregorianDate);
+            const isDateValidForSpecialty = await queryHelper.checkSpecialtyAbsenceDate(this.user.id, this.student.tz, gregorianDate);
             console.log(`validateAbsenceDate: Specialty check result: ${isDateValidForSpecialty ? 'valid' : 'invalid'}`);
             if (!isDateValidForSpecialty) {
                 return {

@@ -195,20 +195,10 @@ export async function getTestNames(user_id, student_type_id) {
     return dict;
 }
 
-export async function checkSpecialtyAbsenceDate(user_id, student_id, date) {
-    // First get the student to check their specialty
-    const student = await new Student()
-        .where({ user_id, id: student_id })
-        .fetch({ require: false })
-        .then(res => res ? res.toJSON() : null);
-    
-    if (!student) {
-        return null;
-    }
-
+export async function checkSpecialtyAbsenceDate(user_id, student_tz, date) {
     // Get the student's specialty from StudentSpecialty table
     const studentSpecialty = await new StudentSpecialty()
-        .where({ user_id, student_id })
+        .where({ user_id, student_tz })
         .fetch({ require: false })
         .then(res => res ? res.toJSON() : null);
     
