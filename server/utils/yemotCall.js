@@ -3,7 +3,7 @@ import format from 'string-format';
 import moment from 'moment-timezone';
 import * as queryHelper from './queryHelper';
 import { AttReport } from "../models";
-import { formatJewishDateHebrew, getJewishDate } from "jewish-dates-core";
+import { formatJewishDateHebrew, getJewishDate, getGregDate } from "jewish-dates-core";
 
 const reportTypes = {
     prayer: 1,
@@ -63,6 +63,8 @@ export class YemotCall extends CallBase {
         test7: 'test7',
         test9: 'test9',
         testCombined: 'testCombined',
+        absenceDate: 'absenceDate',
+        absenceLessonsCount: 'absenceLessonsCount',
     }
 
     async start() {
@@ -177,6 +179,8 @@ export class YemotCall extends CallBase {
                 student_id: this.student.id,
                 report_date: new Date(),
                 update_date: new Date(),
+                absenceDate: this.params[this.fields.absenceDate],
+                absenceLessonsCount: this.params[this.fields.absenceLessonsCount],
             };
             Object.values(this.fields).forEach(key => attReport[key] = this.params[key]);
             console.log('attReport', attReport);
@@ -529,7 +533,7 @@ export class YemotCall extends CallBase {
             await this.send(
                 this.globalMsgIfExists(),
                 this.read({ type: 'text', text: questionSet.start.text },
-                    questionSet.start.field, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [1, 2, 3] })
+                    questionSet.start.field, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [1, 2, 3, 4] })
             );
         }
 
@@ -542,6 +546,8 @@ export class YemotCall extends CallBase {
                 this.testNames = await queryHelper.getTestNames(this.user.id, this.student.student_type_id);
             }
             await this.getTestReport(questionSet);
+        } else if (this.params[this.fields.prayerOrLecture] === '4') {
+            await this.getAbsenceReport();
         }
     }
 
@@ -624,6 +630,46 @@ export class YemotCall extends CallBase {
         } else {
             this.params[this.fields.testCombined] = this.params[this.fields.testGeneral];
         }
+    }
+
+    async getAbsenceReport() {
+        // הקישי את היום בתאריך העברי בספרות כגון כף אלף 21
+        await this.send(
+            this.globalMsgIfExists(),
+            this.read({ type: 'text', text: this.texts.askAbsenceDay },
+                'tempAbsenceDay', 'tap', { max: 2, min: 1, block_asterisk: true })
+        );
+
+        // הקישי את מספר החודש לאלול הקישי 12
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askAbsenceMonth },
+                'tempAbsenceMonth', 'tap', { max: 2, min: 1, block_asterisk: true })
+        );
+
+        // Validate the absence date before asking for lessons count
+        const validationResult = await this.validateAbsenceDate();
+        if (!validationResult.isValid) {
+            this.globalMsg = validationResult.message;
+            if (validationResult.shouldRetry) {
+                return this.getAbsenceReport();
+            } else {
+                return this.send(
+                    this.globalMsgIfExists(),
+                    this.hangup()
+                );
+            }
+        }
+
+        // Store the Gregorian date for saving
+        this.params[this.fields.absenceDate] = moment(validationResult.gregorianDate).format('YYYY-MM-DD');
+        
+        // הקישי את מספר השיעורים שחסרת
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askAbsenceLessonsCount },
+                this.fields.absenceLessonsCount, 'tap', { max: 2, min: 1, block_asterisk: true })
+        );
+        
+        this.globalMsg = this.texts.absenceRecorded;
     }
 
 
@@ -729,7 +775,11 @@ export class YemotCall extends CallBase {
                 } else if (this.params[this.fields.prayerOrLecture] === '3') {
                     const testId = this.params[this.fields.testCombined];
                     return format(this.texts.askTestReportConfirm, this.testNames[testId] || testId);
+                } else if (this.params[this.fields.prayerOrLecture] === '4') {
+                    return format(this.texts.askAbsenceReportConfirm, 
+                        formatJewishDateHebrew(this.params[this.fields.absenceDate]), this.params[this.fields.absenceLessonsCount]);
                 }
+                break;
             case 14:
                 // תלמידות ו - הרצאות
                 if (this.params[this.fields.prayerOrLecture] === '1') {
@@ -739,7 +789,11 @@ export class YemotCall extends CallBase {
                 } else if (this.params[this.fields.prayerOrLecture] === '3') {
                     const testId = this.params[this.fields.testCombined];
                     return format(this.texts.askTestReportConfirm, this.testNames[testId] || testId);
+                } else if (this.params[this.fields.prayerOrLecture] === '4') {
+                    return format(this.texts.askAbsenceReportConfirm, 
+                        formatJewishDateHebrew(this.params[this.fields.absenceDate]), this.params[this.fields.absenceLessonsCount]);
                 }
+                break;
             case 15:
                 // ניתוח התנהגות
                 break;
@@ -757,6 +811,82 @@ export class YemotCall extends CallBase {
                 this.id_list_message({ type: 'text', text: this.texts.excellencyReportDateIsInvalid }),
                 this.hangup()
             );
+        }
+    }
+
+    async validateAbsenceDate() {
+        try {
+            // Convert Hebrew date to Gregorian
+            const day = parseInt(this.params.tempAbsenceDay);
+            const month = parseInt(this.params.tempAbsenceMonth);
+            
+            // Get current Jewish year
+            const currentJewishDate = getJewishDate(new Date());
+            const currentYear = currentJewishDate.year;
+            
+            // Validate the Hebrew date parameters
+            if (!day || !month || day < 1 || day > 30 || month < 1 || month > 12) {
+                return {
+                    isValid: false,
+                    message: this.texts.invalidHebrewDate,
+                    shouldRetry: true
+                };
+            }
+            
+            // Convert Hebrew date to Gregorian date using jewish-dates-core
+            const hebrewDate = { day, month, year: currentYear };
+            let gregorianDate = getGregDate(day, month, currentYear);
+            
+            if (!gregorianDate) {
+                return {
+                    isValid: false,
+                    message: this.texts.invalidHebrewDate,
+                    shouldRetry: true
+                };
+            }
+
+            // If date is more than 6 months ago, try next year (handles year-end transitions)
+            const sixMonthsAgo = moment().subtract(6, 'months');
+            if (moment(gregorianDate).isBefore(sixMonthsAgo)) {
+                const nextHebrewYear = currentYear + 1;
+                const gregorianDateNextYear = getGregDate(day, month, nextHebrewYear);
+                if (gregorianDateNextYear) {
+                    gregorianDate = gregorianDateNextYear;
+                }
+            }
+
+            // Check if date is more than a week ago
+            const oneWeekAgo = moment().subtract(7, 'days');
+            if (moment(gregorianDate).isBefore(oneWeekAgo)) {
+                return {
+                    isValid: false,
+                    message: this.texts.absenceTooOld,
+                    shouldRetry: false
+                };
+            }
+
+            // Check if date is valid for student's specialty
+            const isDateValidForSpecialty = await queryHelper.checkSpecialtyAbsenceDate(this.user.id, this.student.id, gregorianDate);
+            if (!isDateValidForSpecialty) {
+                return {
+                    isValid: false,
+                    message: this.texts.absenceDateNotApproved,
+                    shouldRetry: true
+                };
+            }
+
+            return {
+                isValid: true,
+                hebrewDate,
+                gregorianDate
+            };
+        } catch (error) {
+            console.error('Error validating absence date:', error);
+            return {
+                isValid: false,
+                message: this.texts.invalidHebrewDate,
+                shouldRetry: true
+            };
         }
     }
 }

@@ -64,6 +64,15 @@ const getColumns = ({ students, studentTypes }) => [
   { field: 'excellencyHomework', title: 'מצוינות - ש"ב' },
   { field: 'excellencyExtra1', title: 'מרצה 1' },
   { field: 'excellencyExtra2', title: 'מרצה 2' },
+  { field: 'absenceDate', title: 'תאריך חיסור', type: 'date' },
+  {
+    field: 'absenceDate',
+    title: 'תאריך חיסור עברי',
+    render: ({ absenceDate }) =>
+      absenceDate && formatJewishDateHebrew(getJewishDate(new Date(absenceDate))),
+    isHebrewDate: true,
+  },
+  { field: 'absenceLessonsCount', title: 'מספר שיעורים שחסרו', type: 'numeric' },
 ];
 const getFilters = ({ students, studentTypes }) => [
   { field: 'students.name', label: 'תלמידה', type: 'text', operator: 'like' },
@@ -94,6 +103,7 @@ const AttReportsContainer = ({ entity, title }) => {
     ...dataToSave,
     report_date: dataToSave.report_date && moment(dataToSave.report_date).format('yyyy-MM-DD'),
     update_date: dataToSave.update_date && moment(dataToSave.update_date).format('yyyy-MM-DD'),
+    absenceDate: dataToSave.absenceDate && moment(dataToSave.absenceDate).format('yyyy-MM-DD'),
     student_type_name: undefined,
     student_klass_name: undefined,
     student_tz: undefined,

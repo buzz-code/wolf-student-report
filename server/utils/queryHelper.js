@@ -1,4 +1,4 @@
-import { Teacher, AttReport, User, Question, Answer, WorkingDate, Student, Price, ExcellencyDate, ReportPeriod, TestName } from "../models";
+import { Teacher, AttReport, User, Question, Answer, WorkingDate, Student, Price, ExcellencyDate, ReportPeriod, TestName, SpecialtyAbsence, StudentSpecialty } from "../models";
 
 import moment from 'moment';
 
@@ -193,4 +193,32 @@ export async function getTestNames(user_id, student_type_id) {
         .then(result => result.toJSON());
     const dict = data.reduce((a, b) => ({ ...a, [b.key]: b.name }), {});
     return dict;
+}
+
+export async function checkSpecialtyAbsenceDate(user_id, student_id, date) {
+    // First get the student to check their specialty
+    const student = await new Student()
+        .where({ user_id, id: student_id })
+        .fetch({ require: false })
+        .then(res => res ? res.toJSON() : null);
+    
+    if (!student) {
+        return null;
+    }
+
+    // Get the student's specialty from StudentSpecialty table
+    const studentSpecialty = await new StudentSpecialty()
+        .where({ user_id, student_id })
+        .fetch({ require: false })
+        .then(res => res ? res.toJSON() : null);
+    
+    if (!studentSpecialty) {
+        return null;
+    }
+
+    // Check if there are any specialty absence dates for this specialty and date
+    return new SpecialtyAbsence()
+        .where({ user_id, specialty_key: studentSpecialty.specialty_key, date })
+        .fetch({ require: false })
+        .then(result => result ? result.toJSON() : null);
 }
