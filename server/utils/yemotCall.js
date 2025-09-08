@@ -3,7 +3,7 @@ import format from 'string-format';
 import moment from 'moment-timezone';
 import * as queryHelper from './queryHelper';
 import { AttReport } from "../models";
-import { formatJewishDateHebrew, getJewishDate, getGregDate } from "jewish-dates-core";
+import { formatJewishDateHebrew, getJewishDate, getGregDate, getJewishMonths } from "jewish-dates-core";
 
 const reportTypes = {
     prayer: 1,
@@ -662,13 +662,13 @@ export class YemotCall extends CallBase {
 
         // Store the Gregorian date for saving
         this.params[this.fields.absenceDate] = moment(validationResult.gregorianDate).format('YYYY-MM-DD');
-        
+
         // הקישי את מספר השיעורים שחסרת
         await this.send(
             this.read({ type: 'text', text: this.texts.askAbsenceLessonsCount },
                 this.fields.absenceLessonsCount, 'tap', { max: 2, min: 1, block_asterisk: true })
         );
-        
+
         this.globalMsg = this.texts.absenceRecorded;
     }
 
@@ -776,7 +776,7 @@ export class YemotCall extends CallBase {
                     const testId = this.params[this.fields.testCombined];
                     return format(this.texts.askTestReportConfirm, this.testNames[testId] || testId);
                 } else if (this.params[this.fields.prayerOrLecture] === '4') {
-                    return format(this.texts.askAbsenceReportConfirm, 
+                    return format(this.texts.askAbsenceReportConfirm,
                         formatJewishDateHebrew(this.params[this.fields.absenceDate]), this.params[this.fields.absenceLessonsCount]);
                 }
                 break;
@@ -790,7 +790,7 @@ export class YemotCall extends CallBase {
                     const testId = this.params[this.fields.testCombined];
                     return format(this.texts.askTestReportConfirm, this.testNames[testId] || testId);
                 } else if (this.params[this.fields.prayerOrLecture] === '4') {
-                    return format(this.texts.askAbsenceReportConfirm, 
+                    return format(this.texts.askAbsenceReportConfirm,
                         formatJewishDateHebrew(this.params[this.fields.absenceDate]), this.params[this.fields.absenceLessonsCount]);
                 }
                 break;
@@ -819,13 +819,13 @@ export class YemotCall extends CallBase {
             // Convert Hebrew date to Gregorian
             const day = parseInt(this.params.tempAbsenceDay);
             const month = parseInt(this.params.tempAbsenceMonth);
-            
+
             console.log(`validateAbsenceDate: Hebrew date input - day: ${day}, month: ${month}`);
-            
+
             // Get current Jewish year
             const currentJewishDate = getJewishDate(new Date());
             const currentYear = currentJewishDate.year;
-            
+
             // Validate the Hebrew date parameters
             if (!day || !month || day < 1 || day > 30 || month < 1 || month > 12) {
                 console.log(`validateAbsenceDate: Invalid parameters`);
@@ -835,13 +835,14 @@ export class YemotCall extends CallBase {
                     shouldRetry: true
                 };
             }
-            
+
             // Convert Hebrew date to Gregorian date using jewish-dates-core
-            const hebrewDate = { day, month, year: currentYear };
-            let gregorianDate = getGregDate(day, month, currentYear);
-            
+            const months = getJewishMonths(currentYear);
+            const monthName = months[month - 1]?.text;
+            let gregorianDate = getGregDate({ day, monthName, year: currentYear });
+
             console.log(`validateAbsenceDate: Converted to: ${gregorianDate} (year: ${currentYear})`);
-            
+
             if (!gregorianDate) {
                 console.log('validateAbsenceDate: Conversion failed');
                 return {
@@ -856,7 +857,9 @@ export class YemotCall extends CallBase {
             if (moment(gregorianDate).isBefore(sixMonthsAgo)) {
                 console.log(`validateAbsenceDate: Trying next Hebrew year (${currentYear + 1})`);
                 const nextHebrewYear = currentYear + 1;
-                const gregorianDateNextYear = getGregDate(day, month, nextHebrewYear);
+                const monthsNextYear = getJewishMonths(nextHebrewYear);
+                const monthNameNextYear = monthsNextYear[month - 1]?.text;
+                const gregorianDateNextYear = getGregDate({ day, monthName: monthNameNextYear, year: nextHebrewYear });
                 if (gregorianDateNextYear) {
                     gregorianDate = gregorianDateNextYear;
                 }
