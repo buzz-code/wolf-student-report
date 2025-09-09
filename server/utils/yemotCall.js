@@ -889,7 +889,6 @@ export class YemotCall extends CallBase {
             console.log(`validateAbsenceDate: Success - final date: ${gregorianDate}`);
             return {
                 isValid: true,
-                hebrewDate,
                 gregorianDate
             };
         } catch (error) {
