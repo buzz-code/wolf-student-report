@@ -777,7 +777,7 @@ export class YemotCall extends CallBase {
                     return format(this.texts.askTestReportConfirm, this.testNames[testId] || testId);
                 } else if (this.params[this.fields.prayerOrLecture] === '4') {
                     return format(this.texts.askAbsenceReportConfirm,
-                        formatJewishDateHebrew(this.params[this.fields.absenceDate]), this.params[this.fields.absenceLessonsCount]);
+                        formatJewishDateHebrew(getJewishDate(new Date(this.params[this.fields.absenceDate]))), this.params[this.fields.absenceLessonsCount]);
                 }
                 break;
             case 14:
@@ -791,7 +791,7 @@ export class YemotCall extends CallBase {
                     return format(this.texts.askTestReportConfirm, this.testNames[testId] || testId);
                 } else if (this.params[this.fields.prayerOrLecture] === '4') {
                     return format(this.texts.askAbsenceReportConfirm,
-                        formatJewishDateHebrew(this.params[this.fields.absenceDate]), this.params[this.fields.absenceLessonsCount]);
+                        formatJewishDateHebrew(getJewishDate(new Date(this.params[this.fields.absenceDate]))), this.params[this.fields.absenceLessonsCount]);
                 }
                 break;
             case 15:
