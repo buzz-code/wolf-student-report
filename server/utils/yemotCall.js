@@ -112,19 +112,19 @@ export class YemotCall extends CallBase {
                 break;
             case 4:
                 //הוראה מתקנת
-                await this.getTrainingReport();
+                await this.getGroups4567Report();
                 break;
             case 5:
                 //הומ שנה ב
-                await this.getTraining2Report();
+                await this.getGroups4567Report();
                 break;
             case 6:
                 //ח"מ שנה א'
-                await this.getSpecialEducationReport();
+                await this.getGroups4567Report();
                 break;
             case 7:
                 //ח"מ    שנה ב'
-                await this.getSpecialEducation2Report();
+                await this.getGroups4567Report();
                 break;
             case 8:
                 // מצוינות בהוראה
@@ -347,6 +347,44 @@ export class YemotCall extends CallBase {
         //     this.read({ type: 'text', text: this.texts.askExercize5 },
         //         this.fields.exercize5, 'tap', { min: 1, max: 1, block_asterisk: true, digits_allowed: [0, 1] })
         // );
+    }
+    // New common flow for groups 4,5,6,7
+    async getGroups4567Report() {
+        // שעת כניסה
+        await this.send(
+            this.globalMsgIfExists(),
+            this.read({ type: 'text', text: this.texts.askEnterHour },
+                this.fields.enterHour, 'tap', { max: 4, min: 4, block_asterisk: true })
+        );
+        // שעת יציאה
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askExitHour },
+                this.fields.exitHour, 'tap', { max: 4, min: 4, block_asterisk: true })
+        );
+
+        // האם מסרת שיעור?
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askWasLessonTeaching },
+                this.fields.wasLessonTeaching, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
+        );
+
+        // האם מסרת מטלה שבועית?
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askWeeklyHomework },
+                this.fields.excellencyHomework, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
+        );
+
+        // האם ערכתן דיון על הכיתה?
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askClassDiscussion },
+                this.fields.phoneDiscussing, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
+        );
+
+        // האם נהנית בצפיה?
+        await this.send(
+            this.read({ type: 'text', text: this.texts.askEnjoyedWatching },
+                this.fields.openQuestion, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
+        );
     }
 
     async getTrainingReport() {

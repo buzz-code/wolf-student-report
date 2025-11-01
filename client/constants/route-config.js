@@ -58,6 +58,7 @@ import AttReports12Container from '../containers/att-reports/AttReports12Contain
 import AttReports13Container from '../containers/att-reports/AttReports13Container';
 import AttReports14Container from '../containers/att-reports/AttReports14Container';
 import AttReports15Container from '../containers/att-reports/AttReports15Container';
+import AttReports4567Container from '../containers/att-reports/AttReports4567Container';
 import AttReportsPivotContainer from '../containers/att-reports/AttReportsPivotContainer';
 import ExcellencyDatesContainer from '../containers/excellency-dates/ExcellencyDatesContainer';
 import ExcellencyTotalReportContainer from '../containers/excellency-total-report/ExcellencyTotalReportContainer';
@@ -215,34 +216,34 @@ export default [
           title: titles.ATT_REPORTS_3,
           props: { entity: entities.ATT_REPORTS_3, title: titles.ATT_REPORTS_3 },
         },
-        {
-          path: '/att-reports-4',
-          component: AttReports4Container,
-          icon: StorageIcon,
-          title: titles.ATT_REPORTS_4,
-          props: { entity: entities.ATT_REPORTS_4, title: titles.ATT_REPORTS_4 },
-        },
-        {
-          path: '/att-reports-5',
-          component: AttReports5Container,
-          icon: StorageIcon,
-          title: titles.ATT_REPORTS_5,
-          props: { entity: entities.ATT_REPORTS_5, title: titles.ATT_REPORTS_5 },
-        },
-        {
-          path: '/att-reports-6',
-          component: AttReports6Container,
-          icon: StorageIcon,
-          title: titles.ATT_REPORTS_6,
-          props: { entity: entities.ATT_REPORTS_6, title: titles.ATT_REPORTS_6 },
-        },
-        {
-          path: '/att-reports-7',
-          component: AttReports7Container,
-          icon: StorageIcon,
-          title: titles.ATT_REPORTS_7,
-          props: { entity: entities.ATT_REPORTS_7, title: titles.ATT_REPORTS_7 },
-        },
+        // {
+        //   path: '/att-reports-4',
+        //   component: AttReports4Container,
+        //   icon: StorageIcon,
+        //   title: titles.ATT_REPORTS_4,
+        //   props: { entity: entities.ATT_REPORTS_4, title: titles.ATT_REPORTS_4 },
+        // },
+        // {
+        //   path: '/att-reports-5',
+        //   component: AttReports5Container,
+        //   icon: StorageIcon,
+        //   title: titles.ATT_REPORTS_5,
+        //   props: { entity: entities.ATT_REPORTS_5, title: titles.ATT_REPORTS_5 },
+        // },
+        // {
+        //   path: '/att-reports-6',
+        //   component: AttReports6Container,
+        //   icon: StorageIcon,
+        //   title: titles.ATT_REPORTS_6,
+        //   props: { entity: entities.ATT_REPORTS_6, title: titles.ATT_REPORTS_6 },
+        // },
+        // {
+        //   path: '/att-reports-7',
+        //   component: AttReports7Container,
+        //   icon: StorageIcon,
+        //   title: titles.ATT_REPORTS_7,
+        //   props: { entity: entities.ATT_REPORTS_7, title: titles.ATT_REPORTS_7 },
+        // },
         {
           path: '/att-reports-8',
           component: AttReports8Container,
@@ -298,6 +299,13 @@ export default [
           icon: StorageIcon,
           title: titles.ATT_REPORTS_15,
           props: { entity: entities.ATT_REPORTS_15, title: titles.ATT_REPORTS_15 },
+        },
+        {
+          path: '/att-reports-4567',
+          component: AttReports4567Container,
+          icon: StorageIcon,
+          title: titles.ATT_REPORTS_4567,
+          props: { entity: entities.ATT_REPORTS_4567, title: titles.ATT_REPORTS_4567 },
         },
         {
           path: '/att-reports-pivot',
