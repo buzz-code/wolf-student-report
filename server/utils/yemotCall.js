@@ -237,7 +237,7 @@ export class YemotCall extends CallBase {
         await this.send(
             this.globalMsgIfExists(),
             this.read({ type: 'text', text: this.texts.askKindergartenType },
-                this.fields.kindergartenType, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [1, 2] })
+                this.fields.kindergartenType, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [1, 2, 3] })
         );
 
         if (!this.existingReport) {
@@ -271,7 +271,7 @@ export class YemotCall extends CallBase {
             this.params[this.fields.exitHour] = moment().tz('Asia/Jerusalem').format('HHmm');
         }
 
-        if (this.params[this.fields.kindergartenType] === '1') {
+        if (this.params[this.fields.kindergartenType] === '1' || this.params[this.fields.kindergartenType] === '3') {
             // //מהי הפעילות שבצעת היום בגן, 	למסירת פעילות באוכל הקישי 1 , 	למסירת שיחה הקישי 2, 	למסירת פעילות תפילה או ברכת המזון הקישי 3
             // await this.send(
             //     this.read({ type: 'text', text: this.texts.askKindergartenActivity },
