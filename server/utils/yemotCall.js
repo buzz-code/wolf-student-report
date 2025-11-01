@@ -23,6 +23,8 @@ export class YemotCall extends CallBase {
         kindergartenActivity1: 'kindergartenActivity1',
         kindergartenActivity2: 'kindergartenActivity2',
         kindergartenActivity3: 'kindergartenActivity3',
+        kindergartenActivity4: 'kindergartenActivity4',
+        kindergartenActivity5: 'kindergartenActivity5',
         kindergartenNumber: 'kindergartenNumber',
         kubaseTime: 'kubaseTime',
         fluteTime: 'fluteTime',
@@ -291,6 +293,16 @@ export class YemotCall extends CallBase {
             await this.send(
                 this.read({ type: 'text', text: this.texts.askKindergartenActivity3 },
                     this.fields.kindergartenActivity3, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
+            );
+            // האם תרצי לדווח על ספור בהפעלה
+            await this.send(
+                this.read({ type: 'text', text: this.texts.askKindergartenActivity4 },
+                    this.fields.kindergartenActivity4, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
+            );
+            // האם תרצי לדווח על ספור ברצף
+            await this.send(
+                this.read({ type: 'text', text: this.texts.askKindergartenActivity5 },
+                    this.fields.kindergartenActivity5, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
             );
         } else {
             //הקישי את מספר הגן
