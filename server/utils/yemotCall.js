@@ -157,7 +157,11 @@ export class YemotCall extends CallBase {
                 await this.getPrayerLecturesTestReport();
                 break;
             case 15:
-                // ניתוח התנהגות
+                // ניתוח התנהגות שנה א
+                await this.getBehaviorAnalysisReport();
+                break;
+            case 16:
+                // ניתוח התנהגות שנה ב
                 await this.getBehaviorAnalysisReport();
                 break;
             default:
@@ -845,7 +849,10 @@ export class YemotCall extends CallBase {
                 }
                 break;
             case 15:
-                // ניתוח התנהגות
+                // ניתוח התנהגות שנה א
+                break;
+            case 16:
+                // ניתוח התנהגות שנה ב
                 break;
         }
     }
