@@ -158,11 +158,11 @@ export class YemotCall extends CallBase {
                 break;
             case 15:
                 // ניתוח התנהגות שנה א
-                await this.getBehaviorAnalysisReport();
+                await this.getGroups4567Report();
                 break;
             case 16:
                 // ניתוח התנהגות שנה ב
-                await this.getBehaviorAnalysisReport();
+                await this.getGroups4567Report();
                 break;
             default:
                 await this.send(
@@ -790,15 +790,15 @@ export class YemotCall extends CallBase {
                 return format(this.texts.askTrainingReportConfirm, readingLessons, this.params[this.fields.mathLessons]);
             case 5:
                 //הומ שנה ב
-                //עבודה מעשית
-                if (this.params[this.fields.trainingType] === '1') {
-                    return format(this.texts.askTraining21ReportConfirm, this.params[this.fields.enterHour], this.params[this.fields.exitHour], this.params[this.fields.wasLessonTeaching]);
-                }
-                //פרטני
-                // if(this.params[this.fields.trainingType] === '2')
-                else {
-                    return format(this.texts.askTraining22ReportConfirm, this.params[this.fields.lessonLengthHavana], this.params[this.fields.lessonLengthKtiv]);
-                }
+                // //עבודה מעשית
+                // if (this.params[this.fields.trainingType] === '1') {
+                //     return format(this.texts.askTraining21ReportConfirm, this.params[this.fields.enterHour], this.params[this.fields.exitHour], this.params[this.fields.wasLessonTeaching]);
+                // }
+                // //פרטני
+                // // if(this.params[this.fields.trainingType] === '2')
+                // else {
+                //     return format(this.texts.askTraining22ReportConfirm, this.params[this.fields.lessonLengthHavana], this.params[this.fields.lessonLengthKtiv]);
+                // }
             case 6:
                 //ח"מ שנה א'
                 break;

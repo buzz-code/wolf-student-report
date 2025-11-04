@@ -46,7 +46,7 @@ const getFilters = ({ students, studentTypes }) => [
     field: 'student_types.key',
     label: 'סוג תלמידה',
     type: 'list',
-    list: studentTypes?.filter((st) => [4, 5, 6, 7].includes(st.key)),
+    list: studentTypes?.filter((st) => [4, 5, 6, 7, 15, 16].includes(st.key)),
     operator: 'eq',
     idField: 'key',
     defaultValue: 4,
