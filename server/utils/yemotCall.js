@@ -773,6 +773,16 @@ export class YemotCall extends CallBase {
         delete this.params.confirmReport;
     }
 
+    getGroups4567ConfirmationMessage() {
+        return format(this.texts.askGroups4567ReportConfirm, 
+            this.params[this.fields.enterHour], 
+            this.params[this.fields.exitHour], 
+            this.params[this.fields.wasLessonTeaching] === '1' ? 'כן' : 'לא',
+            this.params[this.fields.excellencyHomework] === '1' ? 'כן' : 'לא',
+            this.params[this.fields.phoneDiscussing] === '1' ? 'כן' : 'לא',
+            this.params[this.fields.openQuestion] === '1' ? 'כן' : 'לא');
+    }
+
     getConfirmationMessage() {
         switch (this.student.student_type_id) {
             case 1:
@@ -786,25 +796,16 @@ export class YemotCall extends CallBase {
                 return format(this.texts.askExercizeReportConfirm, this.params[this.fields.exercizeTime], this.params[this.fields.exercize1], this.params[this.fields.exercize2], this.params[this.fields.exercize3], this.params[this.fields.exercize4], this.params[this.fields.exercize5]);
             case 4:
                 //הוראה מתקנת
-                const readingLessons = parseInt(this.params[this.fields.haknayaLessons]) + parseInt(this.params[this.fields.tikunLessons]);
-                return format(this.texts.askTrainingReportConfirm, readingLessons, this.params[this.fields.mathLessons]);
+                return this.getGroups4567ConfirmationMessage();
             case 5:
                 //הומ שנה ב
-                // //עבודה מעשית
-                // if (this.params[this.fields.trainingType] === '1') {
-                //     return format(this.texts.askTraining21ReportConfirm, this.params[this.fields.enterHour], this.params[this.fields.exitHour], this.params[this.fields.wasLessonTeaching]);
-                // }
-                // //פרטני
-                // // if(this.params[this.fields.trainingType] === '2')
-                // else {
-                //     return format(this.texts.askTraining22ReportConfirm, this.params[this.fields.lessonLengthHavana], this.params[this.fields.lessonLengthKtiv]);
-                // }
+                return this.getGroups4567ConfirmationMessage();
             case 6:
                 //ח"מ שנה א'
-                break;
+                return this.getGroups4567ConfirmationMessage();
             case 7:
                 //ח"מ    שנה ב'
-                break;
+                return this.getGroups4567ConfirmationMessage();
             case 8:
                 // מצוינות בהוראה
                 break;
@@ -850,10 +851,10 @@ export class YemotCall extends CallBase {
                 break;
             case 15:
                 // ניתוח התנהגות שנה א
-                break;
+                return this.getGroups4567ConfirmationMessage();
             case 16:
                 // ניתוח התנהגות שנה ב
-                break;
+                return this.getGroups4567ConfirmationMessage();
         }
     }
 
