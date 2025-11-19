@@ -206,9 +206,9 @@ export async function checkSpecialtyAbsenceDate(user_id, student_tz, date) {
         return null;
     }
 
-    // Check if there are any specialty absence dates for this specialty and date
+    // Check if there are any confirmed specialty absence dates for this specialty and date
     return new SpecialtyAbsence()
-        .where({ user_id, specialty_key: studentSpecialty.specialty_key, absence_date: date })
+        .where({ user_id, specialty_key: studentSpecialty.specialty_key, absence_date: date, is_confirmed: true })
         .fetch({ require: false })
         .then(result => result ? result.toJSON() : null);
 }

@@ -29,7 +29,7 @@ const supportedEntities = [
   {
     value: entities.SPECIALTY_ABSENCES,
     title: titles.SPECIALTY_ABSENCES,
-    columns: ['absence_date', 'specialty_key'],
+    columns: ['absence_date', 'specialty_key', 'is_confirmed'],
   },
   // { value: entities.ATT_TYPES, title: titles.ATT_TYPES, columns: ['key', 'name'] },
   // { value: entities.STUDENT_TYPES, title: titles.STUDENT_TYPES, columns: ['key', 'name'] },

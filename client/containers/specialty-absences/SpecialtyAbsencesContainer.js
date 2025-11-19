@@ -13,6 +13,7 @@ const getColumns = ({ specialties }) => [
     title: 'התמחות',
     ...getPropsForAutoComplete('specialty_key', specialties, 'key', 'name'),
   },
+  { field: 'is_confirmed', title: 'מאושר', type: 'boolean' },
 ];
 
 const getFilters = ({ specialties }) => [
@@ -25,6 +26,7 @@ const getFilters = ({ specialties }) => [
     operator: 'eq',
     idField: 'key',
   },
+  { field: 'is_confirmed', label: 'מאושר', type: 'boolean', operator: 'eq' },
 ];
 
 const SpecialtyAbsencesContainer = ({ entity, title }) => {
