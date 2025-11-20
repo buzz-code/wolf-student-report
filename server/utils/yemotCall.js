@@ -25,6 +25,7 @@ export class YemotCall extends CallBase {
         kindergartenActivity3: 'kindergartenActivity3',
         kindergartenActivity4: 'kindergartenActivity4',
         kindergartenActivity5: 'kindergartenActivity5',
+        kindergartenActivity6: 'kindergartenActivity6',
         kindergartenNumber: 'kindergartenNumber',
         kubaseTime: 'kubaseTime',
         fluteTime: 'fluteTime',
@@ -307,6 +308,11 @@ export class YemotCall extends CallBase {
             await this.send(
                 this.read({ type: 'text', text: this.texts.askKindergartenActivity5 },
                     this.fields.kindergartenActivity5, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
+            );
+            // האם עשית סיפור קודש
+            await this.send(
+                this.read({ type: 'text', text: this.texts.askKindergartenActivity6 },
+                    this.fields.kindergartenActivity6, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [0, 1] })
             );
         } else {
             //הקישי את מספר הגן
@@ -774,9 +780,9 @@ export class YemotCall extends CallBase {
     }
 
     getGroups4567ConfirmationMessage() {
-        return format(this.texts.askGroups4567ReportConfirm, 
-            this.params[this.fields.enterHour], 
-            this.params[this.fields.exitHour], 
+        return format(this.texts.askGroups4567ReportConfirm,
+            this.params[this.fields.enterHour],
+            this.params[this.fields.exitHour],
             this.params[this.fields.wasLessonTeaching] === '1' ? 'כן' : 'לא',
             this.params[this.fields.excellencyHomework] === '1' ? 'כן' : 'לא',
             this.params[this.fields.phoneDiscussing] === '1' ? 'כן' : 'לא',

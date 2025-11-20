@@ -42,6 +42,7 @@ const getColumns = ({ students, studentTypes }) => [
   { field: 'kindergartenActivity3', title: 'שיחה' },
   { field: 'kindergartenActivity4', title: 'ספור בהפעלה' },
   { field: 'kindergartenActivity5', title: 'ספור ברצף' },
+  { field: 'kindergartenActivity6', title: 'סיפור קודש' },
   { field: 'kindergartenNumber', title: 'מספר הגן' },
 ];
 
