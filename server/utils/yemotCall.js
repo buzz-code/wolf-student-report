@@ -642,6 +642,15 @@ export class YemotCall extends CallBase {
             this.read({ type: 'text', text: this.texts.askPrayer5 },
                 this.fields.prayer5, 'tap', { max: 2, min: 1, block_asterisk: true })
         );
+
+        // Validate prayer report sum
+        const validationResult = await this.validatePrayerReport();
+        if (!validationResult.isValid) {
+            await this.send(
+                this.id_list_message({ type: 'text', text: validationResult.message })
+            );
+            return this.getPrayerReport();
+        }
     }
 
     async getLecturesReport() {
@@ -963,5 +972,22 @@ export class YemotCall extends CallBase {
                 shouldRetry: true
             };
         }
+    }
+
+    async validatePrayerReport() {
+        const prayer0 = parseInt(this.params[this.fields.prayer0]) || 0;
+        const sumPrayers = (parseInt(this.params[this.fields.prayer1]) || 0) +
+                           (parseInt(this.params[this.fields.prayer2]) || 0) +
+                           (parseInt(this.params[this.fields.prayer3]) || 0) +
+                           (parseInt(this.params[this.fields.prayer4]) || 0) +
+                           (parseInt(this.params[this.fields.prayer5]) || 0);
+
+        if (sumPrayers !== prayer0) {
+            return {
+                isValid: false,
+                message: this.texts.prayerSumMismatch
+            };
+        }
+        return { isValid: true };
     }
 }
