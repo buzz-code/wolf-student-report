@@ -27,6 +27,11 @@ const getColumns = ({ students, studentTypes }) => [
     columnOrder: 'students.name',
   },
   {
+    field: 'student_phone',
+    title: 'טלפון תלמידה',
+    editable: 'never',
+  },
+  {
     field: 'student_type_name',
     title: 'סוג תלמידה',
     columnOrder: 'student_types.name',
@@ -115,6 +120,7 @@ const AttReports13Container = ({ entity, title }) => {
     student_type_name: undefined,
     student_klass_name: undefined,
     student_tz: undefined,
+    student_phone: undefined,
   });
 
   useEffect(() => {

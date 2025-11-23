@@ -21,7 +21,8 @@ export async function findAll(req, res) {
             qb.select({
                 student_tz: 'students.tz',
                 student_klass_name: 'students.klass',
-                student_type_name: 'student_types.name'
+                student_type_name: 'student_types.name',
+                student_phone: 'students.phone',
             })
         });
     applyFilters(dbQuery, req.query.filters);
