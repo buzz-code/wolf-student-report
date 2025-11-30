@@ -44,3 +44,4 @@ export const ATT_REPORTS_AND_DATES_8 = 'תיקופי ודיווחי תאריכי
 export const SPECIALTIES = 'התמחויות';
 export const STUDENT_SPECIALTIES = 'שיוך תלמידות להתמחויות';
 export const SPECIALTY_ABSENCES = 'היעדרויות לפי התמחות';
+export const GRADES = 'ציונים';

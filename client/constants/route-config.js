@@ -68,6 +68,7 @@ import AttReportsAndDates8Container from '../containers/att-reports/AttReportsAn
 import SpecialtiesContainer from '../containers/specialties/SpecialtiesContainer';
 import StudentSpecialtiesContainer from '../containers/student-specialties/StudentSpecialtiesContainer';
 import SpecialtyAbsencesContainer from '../containers/specialty-absences/SpecialtyAbsencesContainer';
+import GradesContainer from '../containers/grades/GradesContainer';
 
 export default [
   [
@@ -165,6 +166,13 @@ export default [
           icon: EventBusyIcon,
           title: titles.SPECIALTY_ABSENCES,
           props: { entity: entities.SPECIALTY_ABSENCES, title: titles.SPECIALTY_ABSENCES },
+        },
+        {
+          path: '/grades',
+          component: GradesContainer,
+          icon: AssignmentIcon,
+          title: titles.GRADES,
+          props: { entity: entities.GRADES, title: titles.GRADES },
         },
         // {
         //   path: '/questions',

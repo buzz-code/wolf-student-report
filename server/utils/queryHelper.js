@@ -1,4 +1,4 @@
-import { Teacher, AttReport, User, Question, Answer, WorkingDate, Student, Price, ExcellencyDate, ReportPeriod, TestName, SpecialtyAbsence, StudentSpecialty } from "../models";
+import { Teacher, AttReport, User, Question, Answer, WorkingDate, Student, Price, ExcellencyDate, ReportPeriod, TestName, SpecialtyAbsence, StudentSpecialty, Grade } from "../models";
 
 import moment from 'moment';
 
@@ -211,4 +211,26 @@ export async function checkSpecialtyAbsenceDate(user_id, student_tz, date) {
         .where({ user_id, specialty_key: studentSpecialty.specialty_key, absence_date: date, is_confirmed: true })
         .fetch({ require: false })
         .then(result => result ? result.toJSON() : null);
+}
+
+export async function getLatestStudentAttReport(user_id, student_id) {
+    return new AttReport()
+        .where({ user_id, student_id })
+        .query(qb => {
+            qb.orderBy('report_date', 'desc');
+            qb.limit(1);
+        })
+        .fetch({ require: false })
+        .then(res => res ? res.toJSON() : null);
+}
+
+export async function getLatestGradeByStudentTz(user_id, student_tz) {
+    return new Grade()
+        .where({ user_id, student_tz })
+        .query(qb => {
+            qb.orderBy('id', 'desc');
+            qb.limit(1);
+        })
+        .fetch({ require: false })
+        .then(res => res ? res.toJSON() : null);
 }

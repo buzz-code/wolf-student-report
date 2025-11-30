@@ -593,7 +593,7 @@ export class YemotCall extends CallBase {
             await this.send(
                 this.globalMsgIfExists(),
                 this.read({ type: 'text', text: questionSet.start.text },
-                    questionSet.start.field, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [1, 2, 3, 4] })
+                    questionSet.start.field, 'tap', { max: 1, min: 1, block_asterisk: true, digits_allowed: [1, 2, 3, 4, 5] })
             );
         }
 
@@ -608,6 +608,8 @@ export class YemotCall extends CallBase {
             await this.getTestReport(questionSet);
         } else if (this.params[this.fields.prayerOrLecture] === '4') {
             await this.getAbsenceReport();
+        } else if (this.params[this.fields.prayerOrLecture] === '5') {
+            await this.getGradeAndReportInfo();
         }
     }
 
@@ -739,6 +741,57 @@ export class YemotCall extends CallBase {
         );
 
         this.globalMsg = this.texts.absenceRecorded;
+    }
+
+    async getGradeAndReportInfo() {
+        const [latestReport, latestGrade] = await Promise.all([
+            queryHelper.getLatestStudentAttReport(this.user.id, this.student.id),
+            queryHelper.getLatestGradeByStudentTz(this.user.id, this.student.tz),
+        ]);
+
+        const gradeValue = latestGrade ? latestGrade.grade : 'אין';
+        let message;
+
+        if (!latestReport) {
+            // No report found - use message for no report
+            message = format(this.texts.gradeInfoNoReport, gradeValue);
+        } else {
+            // Report found - show report date and details
+            const reportDate = formatJewishDateHebrew(getJewishDate(new Date(latestReport.report_date)));
+            const reportType = latestReport.prayerOrLecture;
+            
+            let reportDetails = '';
+            if (reportType === '1') {
+                // Prayer report
+                reportDetails = format(this.texts.prayerReportDetails,
+                    latestReport.prayer0 || 0,
+                    latestReport.prayer1 || 0,
+                    latestReport.prayer2 || 0,
+                    latestReport.prayer3 || 0,
+                    latestReport.prayer4 || 0,
+                    latestReport.prayer5 || 0);
+            } else if (reportType === '2') {
+                // Lecture report
+                reportDetails = format(this.texts.lectureReportDetails,
+                    latestReport.lecture1 || 0,
+                    latestReport.lecture2 || 0);
+            } else if (reportType === '3') {
+                // Test report
+                reportDetails = format(this.texts.testReportDetails, latestReport.testCombined || '');
+            } else if (reportType === '4') {
+                // Absence report
+                reportDetails = format(this.texts.absenceReportDetails,
+                    latestReport.absenceDate || '',
+                    latestReport.absenceLessonsCount || 0);
+            }
+
+            message = format(this.texts.gradeInfoWithReport, reportDate, reportDetails, gradeValue);
+        }
+
+        await this.send(
+            this.id_list_message({ type: 'text', text: message }),
+            this.hangup()
+        );
     }
 
 

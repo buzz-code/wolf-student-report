@@ -31,6 +31,11 @@ const supportedEntities = [
     title: titles.SPECIALTY_ABSENCES,
     columns: ['absence_date', 'specialty_key', 'is_confirmed'],
   },
+  {
+    value: entities.GRADES,
+    title: titles.GRADES,
+    columns: ['student_tz', 'grade'],
+  },
   // { value: entities.ATT_TYPES, title: titles.ATT_TYPES, columns: ['key', 'name'] },
   // { value: entities.STUDENT_TYPES, title: titles.STUDENT_TYPES, columns: ['key', 'name'] },
   // { value: entities.PRICES, title: titles.PRICES, columns: ['key', 'name', 'price'] },

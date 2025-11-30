@@ -109,3 +109,9 @@ export const SpecialtyAbsence = createModel('specialty_absences', {
         return this.belongsTo(User);
     }
 })
+
+export const Grade = createModel('grades', {
+    user() {
+        return this.belongsTo(User);
+    }
+})

@@ -51,6 +51,7 @@ import {
   STUDENT_SPECIALTIES,
   SPECIALTY_ABSENCES,
   ATT_REPORTS_4567,
+  GRADES,
 } from '../constants/entity';
 
 const appReducer = (history) =>
@@ -103,6 +104,7 @@ const appReducer = (history) =>
     [SPECIALTIES]: crudReducer(SPECIALTIES),
     [STUDENT_SPECIALTIES]: crudReducer(STUDENT_SPECIALTIES),
     [SPECIALTY_ABSENCES]: crudReducer(SPECIALTY_ABSENCES),
+    [GRADES]: crudReducer(GRADES),
   });
 
 const rootReducer = (state, action) => {

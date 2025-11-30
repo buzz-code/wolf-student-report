@@ -37,5 +37,6 @@ router.use('/report-periods', require('./report-period.route').default);
 router.use('/specialties', require('./specialty.route').default);
 router.use('/student-specialties', require('./student-specialty.route').default);
 router.use('/specialty-absences', require('./specialty-absence.route').default);
+router.use('/grades', require('./grade.route').default);
 
 export default router;

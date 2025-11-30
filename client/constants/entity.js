@@ -44,3 +44,4 @@ export const ATT_REPORTS_AND_DATES_8 = 'att-reports/getAttReportsAndDates';
 export const SPECIALTIES = 'specialties';
 export const STUDENT_SPECIALTIES = 'student-specialties';
 export const SPECIALTY_ABSENCES = 'specialty-absences';
+export const GRADES = 'grades';
