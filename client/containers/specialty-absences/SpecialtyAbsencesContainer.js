@@ -8,6 +8,7 @@ import { getPropsForAutoComplete } from '../../../common-modules/client/utils/fo
 
 const getColumns = ({ specialties }) => [
   { field: 'absence_date', title: 'תאריך היעדרות', type: 'date' },
+  { field: 'report_until_date', title: 'תאריך אחרון לדיווח', type: 'date' },
   {
     field: 'specialty_key',
     title: 'התמחות',
@@ -46,6 +47,8 @@ const SpecialtyAbsencesContainer = ({ entity, title }) => {
     (dataToSave) => ({
       ...dataToSave,
       absence_date: dataToSave.absence_date && moment(dataToSave.absence_date).format('yyyy-MM-DD'),
+      report_until_date:
+        dataToSave.report_until_date && moment(dataToSave.report_until_date).format('yyyy-MM-DD'),
     }),
     []
   );

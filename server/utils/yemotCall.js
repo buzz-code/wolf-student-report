@@ -991,25 +991,27 @@ export class YemotCall extends CallBase {
                 }
             }
 
-            // Check if date is more than a week ago
-            const oneWeekAgo = moment().subtract(7, 'days');
-            if (moment(gregorianDate).isBefore(oneWeekAgo)) {
-                return {
-                    isValid: false,
-                    message: this.texts.absenceTooOld,
-                    shouldRetry: false
-                };
-            }
-
             // Check if date is valid for student's specialty
-            const isDateValidForSpecialty = await queryHelper.checkSpecialtyAbsenceDate(this.user.id, this.student.tz, gregorianDate);
-            console.log(`validateAbsenceDate: Specialty check result: ${isDateValidForSpecialty ? 'valid' : 'invalid'}`);
-            if (!isDateValidForSpecialty) {
+            const specialtyAbsenceData = await queryHelper.checkSpecialtyAbsenceDate(this.user.id, this.student.tz, gregorianDate);
+            console.log(`validateAbsenceDate: Specialty check result: ${specialtyAbsenceData ? 'valid' : 'invalid'}`);
+            if (!specialtyAbsenceData) {
                 return {
                     isValid: false,
                     message: this.texts.absenceDateNotApproved,
                     shouldRetry: true
                 };
+            }
+
+            // Check if date is more than a week ago
+            if (!specialtyAbsenceData.report_until_date) {
+                const oneWeekAgo = moment().subtract(7, 'days');
+                if (moment(gregorianDate).isBefore(oneWeekAgo)) {
+                    return {
+                        isValid: false,
+                        message: this.texts.absenceTooOld,
+                        shouldRetry: false
+                    };
+                }
             }
 
             console.log(`validateAbsenceDate: Success - final date: ${gregorianDate}`);

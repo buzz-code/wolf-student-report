@@ -207,8 +207,15 @@ export async function checkSpecialtyAbsenceDate(user_id, student_tz, date) {
     }
 
     // Check if there are any confirmed specialty absence dates for this specialty and date
+    const today = moment().format('YYYY-MM-DD');
     return new SpecialtyAbsence()
         .where({ user_id, specialty_key: studentSpecialty.specialty_key, absence_date: date, is_confirmed: true })
+        .query(qb => {
+            qb.where(function () {
+                this.where('report_until_date', '>=', today)
+                    .orWhereNull('report_until_date');
+            });
+        })
         .fetch({ require: false })
         .then(result => result ? result.toJSON() : null);
 }
