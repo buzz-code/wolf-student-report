@@ -9,7 +9,7 @@ import {
   getPropsForAutoComplete,
 } from '../../../common-modules/client/utils/formUtil';
 
-const getColumns = ({ students, studentTypes }, data) => [
+const getColumns = ({ students, studentTypes, specialties }, data) => [
   {
     field: 'student_tz',
     title: 'תז תלמידה',
@@ -27,15 +27,29 @@ const getColumns = ({ students, studentTypes }, data) => [
     columnOrder: 'student_types.name',
     editable: 'never',
   },
+  {
+    field: 'student_specialty_key',
+    title: 'התמחות תלמידה',
+    ...getPropsForAutoComplete('student_specialty_key', specialties, 'key'),
+    editable: 'never',
+  },
   ...getColumnsForPivot(data),
 ];
-const getFilters = ({ students, studentTypes }) => [
+const getFilters = ({ students, studentTypes, specialties }) => [
   { field: 'students.name', label: 'תלמידה', type: 'text', operator: 'like' },
   {
     field: 'student_types.key',
     label: 'סוג תלמידה',
     type: 'list',
     list: studentTypes,
+    operator: 'eq',
+    idField: 'key',
+  },
+  {
+    field: 'student_specialties.specialty_key',
+    label: 'התמחות תלמידה',
+    type: 'list',
+    list: specialties,
     operator: 'eq',
     idField: 'key',
   },

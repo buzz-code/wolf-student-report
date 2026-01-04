@@ -1,4 +1,4 @@
-import { AttReport, Student, StudentType, ExcellencyDate } from '../models';
+import { AttReport, Student, StudentType, ExcellencyDate, Specialty } from '../models';
 import { applyFilters, fetchPage, fetchPagePromise } from '../../common-modules/server/controllers/generic.controller';
 import { getListFromTable } from '../../common-modules/server/utils/common';
 import bookshelf from '../../common-modules/server/config/bookshelf';
@@ -17,12 +17,14 @@ export async function findAll(req, res) {
         .query(qb => {
             qb.leftJoin('students', 'students.id', 'att_reports.student_id')
             qb.leftJoin('student_types', { 'student_types.key': 'students.student_type_id', 'student_types.user_id': 'students.user_id' })
+            qb.leftJoin('student_specialties', { 'student_specialties.student_tz': 'students.tz', 'student_specialties.user_id': 'students.user_id' })
             qb.select('att_reports.*')
             qb.select({
                 student_tz: 'students.tz',
                 student_klass_name: 'students.klass',
                 student_type_name: 'student_types.name',
                 student_phone: 'students.phone',
+                student_specialty_key: 'student_specialties.specialty_key',
             })
         });
     applyFilters(dbQuery, req.query.filters);
@@ -37,13 +39,14 @@ export async function findAll(req, res) {
  * @returns {*}
  */
 export async function getEditData(req, res) {
-    const [students, studentTypes] = await Promise.all([
+    const [students, studentTypes, specialties] = await Promise.all([
         getListFromTable(Student, req.currentUser.id),
         getListFromTable(StudentType, req.currentUser.id, 'key'),
+        getListFromTable(Specialty, req.currentUser.id, 'key'),
     ]);
     res.json({
         error: null,
-        data: { students, studentTypes }
+        data: { students, studentTypes, specialties }
     });
 }
 
@@ -68,7 +71,13 @@ export async function getPivotData(req, res) {
         .where({ 'students.user_id': req.currentUser.id })
         .query(qb => {
             qb.leftJoin('student_types', { 'student_types.key': 'students.student_type_id', 'student_types.user_id': 'students.user_id' })
-            qb.select({ student_id: 'students.id', student_tz: 'students.tz', student_type_name: 'student_types.name' })
+            qb.leftJoin('student_specialties', { 'student_specialties.student_tz': 'students.tz', 'student_specialties.user_id': 'students.user_id' })
+            qb.select({
+                student_id: 'students.id',
+                student_tz: 'students.tz',
+                student_type_name: 'student_types.name',
+                student_specialty_key: 'student_specialties.specialty_key'
+            })
         });
 
     applyFilters(dbQuery, JSON.stringify(studentFilters));
