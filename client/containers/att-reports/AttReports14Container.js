@@ -14,7 +14,7 @@ const reportTypeList = [
   { key: '4', value: 'חיסור' },
 ];
 
-const getColumns = ({ students, studentTypes }) => [
+const getColumns = ({ students, studentTypes, specialties }) => [
   {
     field: 'student_tz',
     title: 'תז תלמידה',
@@ -41,6 +41,12 @@ const getColumns = ({ students, studentTypes }) => [
     field: 'student_type_name',
     title: 'סוג תלמידה',
     columnOrder: 'student_types.name',
+    editable: 'never',
+  },
+  {
+    field: 'student_specialty_key',
+    title: 'התמחות תלמידה',
+    ...getPropsForAutoComplete('student_specialty_key', specialties, 'key'),
     editable: 'never',
   },
   { field: 'report_date', title: 'תאריך הדיווח', type: 'date' },
@@ -76,7 +82,7 @@ const getColumns = ({ students, studentTypes }) => [
   },
   { field: 'absenceLessonsCount', title: 'מספר שיעורים שחסרו', type: 'numeric' },
 ];
-const getFilters = ({ students, studentTypes }) => [
+const getFilters = ({ students, studentTypes, specialties }) => [
   { field: 'students.name', label: 'תלמידה', type: 'text', operator: 'like' },
   {
     field: 'student_types.key',
@@ -87,6 +93,14 @@ const getFilters = ({ students, studentTypes }) => [
     idField: 'key',
     defaultValue: 14,
     disabled: true,
+  },
+  {
+    field: 'student_specialties.specialty_id',
+    label: 'התמחות תלמידה',
+    type: 'list',
+    list: specialties,
+    operator: 'eq',
+    idField: 'key',
   },
   {
     field: 'prayerOrLecture',
@@ -120,6 +134,7 @@ const AttReports14Container = ({ entity, title }) => {
     student_klass_name: undefined,
     student_tz: undefined,
     student_phone: undefined,
+    student_specialty_key: undefined,
   });
 
   useEffect(() => {
