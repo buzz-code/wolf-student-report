@@ -22,14 +22,17 @@ exports.up = function(knex) {
     'grades'
   ];
 
-  return knex.transaction(trx => {
-    let query = trx.raw('SET FOREIGN_KEY_CHECKS = 0');
+  return knex.transaction(async trx => {
+    await trx.raw('SET FOREIGN_KEY_CHECKS = 0');
     
-    tables.forEach(table => {
-      query = query.then(() => trx.raw(`ALTER TABLE ${table} CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`));
-    });
+    for (const table of tables) {
+      const exists = await trx.schema.hasTable(table);
+      if (exists) {
+        await trx.raw(`ALTER TABLE ${table} CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`);
+      }
+    }
 
-    return query.then(() => trx.raw('SET FOREIGN_KEY_CHECKS = 1'));
+    await trx.raw('SET FOREIGN_KEY_CHECKS = 1');
   });
 };
 
