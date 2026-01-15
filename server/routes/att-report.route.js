@@ -52,6 +52,11 @@ const router = genericRouteWithController('att-report', 'AttReport', (router, ct
             ctrl.getExcellencyTotalReport(req, res);
         });
 
+    router.route('/getScholarshipSummary')
+        .get((req, res) => {
+            ctrl.getScholarshipSummary(req, res);
+        });
+
     router.route('/getAttReportsAndDates')
         .get((req, res) => {
             ctrl.getAttReportsAndDates(req, res);

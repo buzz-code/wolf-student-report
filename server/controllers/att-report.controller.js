@@ -185,3 +185,37 @@ export async function getAttReportsAndDates(req, res) {
     applyFilters(dbQuery, req.query.filters);
     fetchPage({ dbQuery }, req.query, res);
 }
+
+export async function getScholarshipSummary(req, res) {
+    const dbQuery = new AttReport()
+        .where({
+            'att_reports.user_id': req.currentUser.id,
+            'att_reports.kindergartenType': 2 // Scholarship
+        })
+        .query(qb => {
+            qb.leftJoin('students', 'students.id', 'att_reports.student_id')
+            qb.groupBy('students.id', 'students.name', 'students.tz', 'students.phone')
+            qb.select({
+                student_id: 'students.id',
+                name: 'students.name',
+                tz: 'students.tz',
+                phone: 'students.phone',
+                totalHours: bookshelf.knex.raw(
+                    `ROUND(SUM(
+                        IF(STR_TO_DATE(att_reports.exitHour, '%H:%i') > STR_TO_DATE(att_reports.enterHour, '%H:%i'),
+                           TIME_TO_SEC(TIMEDIFF(STR_TO_DATE(att_reports.exitHour, '%H:%i'), STR_TO_DATE(att_reports.enterHour, '%H:%i'))),
+                           0
+                        )
+                    ) / 3600, 2)`
+                )
+            })
+        });
+
+    try {
+        const results = await dbQuery.fetchAll();
+        res.json({ data: results.toJSON() });
+    } catch (err) {
+        console.error('Error in getScholarshipSummary:', err);
+        res.status(500).json({ error: err.message });
+    }
+}
