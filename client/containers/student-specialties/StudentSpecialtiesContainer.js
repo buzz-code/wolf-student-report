@@ -6,11 +6,13 @@ import * as crudAction from '../../../common-modules/client/actions/crudAction';
 import { getPropsForAutoComplete } from '../../../common-modules/client/utils/formUtil';
 
 const getColumns = ({ students, specialties }) => [
+  { field: 'student_tz', title: 'תז תלמידה' },
   {
     field: 'student_tz',
     title: 'תלמידה',
     ...getPropsForAutoComplete('student_tz', students, 'tz', 'name'),
   },
+  { field: 'specialty_key', title: 'קוד התמחות' },
   {
     field: 'specialty_key',
     title: 'התמחות',
